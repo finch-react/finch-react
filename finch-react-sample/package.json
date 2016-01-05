@@ -1,7 +1,8 @@
 {
   "name": "finch-react-sample",
   "scripts": {
-    "start": "finch-react-build"
+    "start": "finch-react-build",
+    "recli": "npm install finch-react-cli --force"
   },
   "dependencies": {
     "babel-cli": "6.3.17",
