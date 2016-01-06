@@ -1,10 +1,12 @@
 {
   "name": "finch-react-sample",
   "scripts": {
-    "start": "finch-react-build",
+    "build": "finch-react-build",
+    "build-dev": "NODE_PATH=../finch-react-cli node ../finch-react-cli/finch-react-build.js",
     "recli": "npm install finch-react-cli --force"
   },
   "dependencies": {
-    "finch-react-cli": "../finch-react-cli"
+    "finch-react-cli": "../finch-react-cli",
+    "babel-plugin-add-module-exports": "^0.1.1"
   }
 }

@@ -1,4 +1,10 @@
-import babel from 'babel-core';
 import path from 'path';
 
-console.log(require(process.cwd() + "/webpack.server.js"));
+var serverWebpackConfig = null;
+
+try {
+    serverWebpackConfig = require(path.join(process.cwd(), "webpack.server.js"));
+} catch (_) {
+}
+
+console.log(serverWebpackConfig);
