@@ -1,4 +1,4 @@
-import React, {Component} from 'finch-react';
+import React from 'finch-react';
 
 const styles = (theme)=>({
     "main:active": {},

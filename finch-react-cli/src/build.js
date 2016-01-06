@@ -1,4 +1,5 @@
 import path from 'path';
+import webpack from 'webpack';
 
 var serverWebpackConfig = null;
 
@@ -7,4 +8,13 @@ try {
 } catch (_) {
 }
 
-console.log(serverWebpackConfig);
+const bundler = webpack(serverWebpackConfig);
+
+bundler.run((err, stats)=> {
+    if(err) {
+        console.error(err);
+        throw err;
+    }
+    console.log(stats.toString(serverWebpackConfig.stats));
+});
+
