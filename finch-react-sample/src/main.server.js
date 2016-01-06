@@ -1,23 +1,38 @@
 import React from 'finch-react';
 
-const styles = (theme)=>({
-    "main:active": {},
-    "foo:active": {
-        borderColor: theme("mainColor")
+class Page extends React.Component {
+}
+
+class PageHandler extends React.Component {
+    const propTypes = {a:1};
+
+    static use(env) {
+
     }
-});
+}
 
-export default class Foo extends Component {
-    static defaultProps = {
-        styles: styles,
-        active: true
-    };
+class SuperPageHandler extends PageHandler {
 
-    render() {
-        return (
-            <div>
-                <div element="foo"></div>
-            </div>
-        );
+
+    handle(...params) {
+
+    }
+}
+const SuperPage = (...props)=><Page {...props} name="SuperPage" handler={<SuperPageHandler/>}/>;
+
+let Pages = (props)=>
+    <Page url={props.contextRoot + "/foo/:userId"} handler={()=>null}>
+        <Page url="/bar"/>
+        <SuperPage url="/super"/>
+    </Page>;
+
+
+class ComponentFactory extends React.Component {
+    use(componentDescription) {
+
+    }
+
+    create(componentDescription) {
+
     }
 }

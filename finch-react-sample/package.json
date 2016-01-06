@@ -1,6 +1,7 @@
 {
   "name": "finch-react-sample",
   "scripts": {
+    "start": "node ./build/main.server.js",
     "build": "finch-react-build",
     "build-dev": "NODE_PATH=../finch-react-cli node ../finch-react-cli/finch-react-build.js",
     "recli": "npm install finch-react-cli --force",
