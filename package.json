@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/index.js",
-  "scripts": {
-    "lint": "eslint . --ext .js --ext .jsx"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/finch-react/finch-react.git"
@@ -17,16 +14,6 @@
   },
   "homepage": "https://github.com/finch-react/finch-react",
   "dependencies": {
-    "fbjs": "^0.6.0",
-    "lodash": "^4.0.0",
-    "react": "^0.14.6",
-    "react-native": "^0.18.1",
-    "react-web": "^0.1.0"
-  },
-  "devDependencies": {
-    "babel-eslint": "^5.0.0-beta6",
-    "eslint": "^1.10.3",
-    "eslint-loader": "^1.2.0",
-    "eslint-plugin-react": "^3.15.0"
+    "finch-react-styles": "finch-react/finch-react-styles"
   }
 }

@@ -1,13 +1,5 @@
-import React from 'react-native';
-import StyledComponent from './components/StyledComponent';
-import Theme from './components/Theme';
-import Styles from './lib/Styles';
-import Themes from './lib/Themes';
+import Styles from 'finch-react-styles';
 
 export default {
-  ...React,
-  StyledComponent,
-  Theme,
-  Styles,
-  Themes
+  ...Styles
 };

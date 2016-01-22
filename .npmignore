@@ -1,0 +1,6 @@
+src/
+webpack.config.js
+.eslint*
+.editorconfig
+.gitignore
+README.md
