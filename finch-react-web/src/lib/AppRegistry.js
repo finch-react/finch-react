@@ -1,12 +1,18 @@
-import runApplication from './runApplication';
+import appRunnerDefault from './appRunner';
+
+let appRunner = appRunnerDefault;
 
 const components = {};
 
 export default class AppRegistry {
+  constructor(...props) {
+    Object.assign(this, props);
+  }
+
   static registerComponent(appKey, getComponentFunc) {
     components[appKey] = {
       run: (appParameters) =>
-        runApplication(getComponentFunc(), appParameters.initialProps, appParameters.rootTag)
+        appRunner(getComponentFunc(), appParameters.initialProps, appParameters.rootTag)
     };
     return appKey;
   }
@@ -24,5 +30,10 @@ export default class AppRegistry {
 
   static runApplication(appKey, appParameters) {
     components[appKey].run(appParameters);
+  }
+
+  static withAppRunner(r) {
+    appRunner = r;
+    return AppRegistry;
   }
 };

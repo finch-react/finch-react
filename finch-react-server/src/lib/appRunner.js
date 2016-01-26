@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOMServer from 'react-dom/server';
-import WithContext from '../WithContext';
+import WithContext from '../components/WithContext';
 
 export default function runApplication(RootComponent, initialProps, rootTag) {
   let styles = {};
