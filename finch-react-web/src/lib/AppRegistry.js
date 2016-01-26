@@ -1,15 +1,12 @@
 import appRunnerDefault from './appRunner';
-
-let appRunner = appRunnerDefault;
+import With from './With';
 
 const components = {};
 
-export default class AppRegistry {
-  constructor(...props) {
-    Object.assign(this, props);
-  }
+class AppRegistry extends With {
+  appRunner = appRunnerDefault;
 
-  static registerComponent(appKey, getComponentFunc) {
+  registerComponent(appKey, getComponentFunc) {
     components[appKey] = {
       run: (appParameters) =>
         appRunner(getComponentFunc(), appParameters.initialProps, appParameters.rootTag)
@@ -17,23 +14,24 @@ export default class AppRegistry {
     return appKey;
   }
 
-  static registerRunnable(appKey, func) {
+  registerRunnable(appKey, func) {
     components[appKey] = {
       run: func
     };
     return appKey;
   }
 
-  static getAppKeys() {
+  getAppKeys() {
     return Object.keys(components);
   }
 
-  static runApplication(appKey, appParameters) {
+  runApplication(appKey, appParameters) {
     components[appKey].run(appParameters);
   }
 
-  static withAppRunner(r) {
-    appRunner = r;
-    return AppRegistry;
+  withAppRunner(appRunner) {
+    return this.with({appRunner});
   }
-};
+}
+
+export default new AppRegistry();
