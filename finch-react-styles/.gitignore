@@ -4,6 +4,7 @@
 
 # Xcode
 #
+build/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -29,5 +30,5 @@ local.properties
 
 # node.js
 #
-node_modules
+node_modules/
 npm-debug.log
