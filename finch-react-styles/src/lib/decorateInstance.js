@@ -22,6 +22,16 @@ export default function decorateInstance(component) {
       if (element.props.className) {
         extraProps.className += ' ' + element.props.className;
       }
+      if(element.props.props) {
+        let props = element.props.props;
+        if (_.isString(props)) {
+          props = props.split(/\s*,\s*/);
+        }
+        for (let i = 0; i < props.length; i++) {
+          let name = props[i];
+          extraProps[name] = component.props[name];
+        }
+      }
       if (element.props.element && element.props.events) {
         let events = element.props.events;
         if (_.isString(events)) {
