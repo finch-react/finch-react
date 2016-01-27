@@ -23,7 +23,7 @@ export default class App extends StyledComponent {
     return (
       <View>
         <Text>Welcome to React Native in Web!</Text>
-        <Text element="text" events="onClick, onPress">{this.state.a}Welcome to React Native in
+        <Text element="text" attach="onClick, onPress">{this.state.a}Welcome to React Native in
           Web!</Text>
       </View>
     );

@@ -44,7 +44,7 @@ export default function decorateInstance(component) {
           if (_.isFunction(component[methodName])) {
             extraProps[name] = component[methodName].bind(component);
           } else {
-            warning(false, `Component has no method ${methodName}`);
+            warning(false, `Component "${component.constructor.name}" has no method "${methodName}"`);
           }
         }
       }
