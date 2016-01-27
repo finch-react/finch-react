@@ -7,7 +7,14 @@ import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 let styleId = -1;
 let cssRefsCounters = {};
 
-let normalize = "* {flex-direction:column}";
+let normalize = `
+  .view {
+    position:relative;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+   }
+`;
 let normalized = false;
 
 export default class Style {
