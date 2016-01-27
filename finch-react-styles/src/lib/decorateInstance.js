@@ -2,6 +2,7 @@ import Theme from './Theme';
 import reactTransform from './reactTransform';
 import {Platform} from 'react-native';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import warning from 'fbjs/lib/warning';
 import _ from 'lodash';
 
 export default function decorateInstance(component) {
@@ -43,7 +44,7 @@ export default function decorateInstance(component) {
           if (_.isFunction(component[methodName])) {
             extraProps[name] = component[methodName].bind(component);
           } else {
-            console.warn(`Component has no method ${methodName}`);
+            warning(false, `Component has no method ${methodName}`);
           }
         }
       }
