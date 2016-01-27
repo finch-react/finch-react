@@ -12,6 +12,7 @@
   },
   "homepage": "https://github.com/finch-react/finch-react",
   "scripts": {
-    "install": "sh install.sh"
+    "install": "sh install.sh",
+    "start": "cd finch-react-example && npm run web-dev && cd -"
   }
 }
