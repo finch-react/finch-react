@@ -1,8 +1,11 @@
 import React from 'react-native';
+import warning from 'fbjs/lib/warning';
 
 export default function reactTransform(element, callback, isMain=true) {
-  let extraProps = callback(element, isMain);
+  warning(isMain && element.props.element && "main" !== element.props.element,
+    "Main element can't have any element property, except 'main'");
 
+  let extraProps = callback(element, isMain);
 
   let newChildren =
     React.isValidElement(element.props.children)
