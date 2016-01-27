@@ -32,13 +32,13 @@ export default function decorateInstance(component) {
           extraProps[name] = component.props[name];
         }
       }
-      if (element.props.element && element.props.events) {
-        let events = element.props.events;
-        if (_.isString(events)) {
-          events = events.split(/\s*,\s*/);
+      if (element.props.element && element.props.attach) {
+        let attach = element.props.attach;
+        if (_.isString(attach)) {
+          attach = attach.split(/\s*,\s*/);
         }
-        for (let i = 0; i < events.length; i++) {
-          let name = events[i];
+        for (let i = 0; i < attach.length; i++) {
+          let name = attach[i];
           let methodName = element.props.element + "_" + name;
           if (_.isFunction(component[methodName])) {
             extraProps[name] = component[methodName].bind(component);
