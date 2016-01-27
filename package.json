@@ -10,5 +10,8 @@
   "bugs": {
     "url": "https://github.com/finch-react/finch-react/issues"
   },
-  "homepage": "https://github.com/finch-react/finch-react"
+  "homepage": "https://github.com/finch-react/finch-react",
+  "scripts": {
+    "install": "sh install.sh"
+  }
 }
