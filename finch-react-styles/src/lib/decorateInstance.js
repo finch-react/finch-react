@@ -10,8 +10,8 @@ export default function decorateInstance(component) {
   component.render = function () {
     let theme = component.context.theme || Theme.get();
     let style = theme.style(component);
-    return reactTransform(render.call(component), (element, isMain)=> {
-      let extraProps = {};
+    let result = reactTransform(render.call(component), (element, isMain)=> {
+      let extraProps = {element:undefined, attach:undefined};
       if (Platform.OS === 'web') {
         if (!canUseDOM && this.context.onServerStyle) {
           this.context.onServerStyle(style);
@@ -50,6 +50,8 @@ export default function decorateInstance(component) {
       }
       return extraProps;
     });
+    style.render();
+    return result;
   };
 
   let componentWillUnmount = component.componentWillUnmount;

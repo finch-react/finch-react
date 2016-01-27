@@ -14,14 +14,19 @@ function style(component) {
       //component.__theme.unmount();
     }
     component.__theme = this;
-    if(component.__style) {
+    if (component.__style) {
       component.__style.unuse();
     }
-    if(!component.constructor._id) {
+    if (!component.constructor._id) {
       component.constructor._id = ++id;
     }
-    if(!this.componentStyles[component.constructor._id]) {
-      this.componentStyles[component.constructor._id] = new Style(this, component.styles).use();
+    if (!this.componentStyles[component.constructor._id]) {
+      let style = this.componentStyles[component.constructor._id] = new Style(this, component.constructor.styles, component);
+      style.render = () => {
+        style.render = ()=> {
+        };
+        style.use();
+      }
     }
     component.__style = this.componentStyles[component.constructor._id];
   }
