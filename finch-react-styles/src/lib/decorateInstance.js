@@ -29,7 +29,12 @@ export default function decorateInstance(component) {
         }
         for (let i = 0; i < events.length; i++) {
           let name = events[i];
-          extraProps[name] = component[element.props.element + "_" + name].bind(component);
+          let methodName = element.props.element + "_" + name;
+          if (_.isFunction(component[methodName])) {
+            extraProps[name] = component[methodName].bind(component);
+          } else {
+            console.warn(`Component has no method ${methodName}`);
+          }
         }
       }
       return extraProps;
