@@ -16,7 +16,7 @@ server.get('/public/bundle.js', function (req, res, next) {
 server.use('/public', express.static(webBundle));
 
 export default function ServerAppRunner(RootComponent, initialProps, rootTag) {
-  server.get('*', async (req, res, next) => {
+  server.get('*', (req, res, next) => {
     try {
       let statusCode = 200;
       let styles = {};
@@ -25,7 +25,7 @@ export default function ServerAppRunner(RootComponent, initialProps, rootTag) {
           styles[style._id] = style;
         }
       };
-      let initFluxPromise = null;
+      //let initFluxPromise = null;
       var body = ReactDOMServer.renderToStaticMarkup(<WithContext context={context}><RootComponent /></WithContext>);
       res.status(statusCode);
       res.write(htmlHeader({
@@ -34,12 +34,12 @@ export default function ServerAppRunner(RootComponent, initialProps, rootTag) {
           .join(''),
         body
       }));
-      if (initFluxPromise != null) {
-        await initFluxPromise;
-      }
+      //if (initFluxPromise != null) {
+      //  await initFluxPromise;
+      //}
       res.end(htmlFooter());
     } catch (err) {
-      console.err(err);
+      console.log(err);
       next(err);
     }
   });
@@ -50,7 +50,7 @@ export default function ServerAppRunner(RootComponent, initialProps, rootTag) {
 
 function htmlHeader({css, body}) {
   return `<!doctype html><html className="no-js" lang="">
-<head><style>${css}</style></head>
+<head><style id="server-style">${css}</style></head>
 <body>
 <script>
 var script = document.createElement("script");
@@ -60,6 +60,6 @@ document.body.appendChild(script);
 <div id="app">${body}`;
 }
 
-function htmlFooter({}) {
-  return `</div><script type="text/javascript"></script></html>`;
+function htmlFooter() {
+  return '\</div></html>';
 }
