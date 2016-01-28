@@ -16,37 +16,50 @@ server.get('/public/bundle.js', function (req, res, next) {
 server.use('/public', express.static(webBundle));
 
 export default function ServerAppRunner(RootComponent, initialProps, rootTag) {
-  server.get('*', (req, res, next) => {
-    let statusCode = 200;
-    let styles = {};
-    let context = {
-      onServerStyle(style) {
-        styles[style._id] = style;
+  server.get('*', async (req, res, next) => {
+    try {
+      let statusCode = 200;
+      let styles = {};
+      let context = {
+        onServerStyle(style) {
+          styles[style._id] = style;
+        }
+      };
+      let initFluxPromise = null;
+      var body = ReactDOMServer.renderToStaticMarkup(<WithContext context={context}><RootComponent /></WithContext>);
+      res.status(statusCode);
+      res.write(htmlHeader({
+        css: Object.keys(styles)
+          .map(name=>styles[name].toString())
+          .join(''),
+        body
+      }));
+      if (initFluxPromise != null) {
+        await initFluxPromise;
       }
-    };
-    var body = ReactDOMServer.renderToStaticMarkup(<WithContext context={context}><RootComponent /></WithContext>);
-    res.status(statusCode);
-    res.write(`<!doctype html><html className="no-js" lang="">
-<head><style>${Object.keys(styles).map(name=>styles[name].toString()).join('')}</style></head>
+      res.end(htmlFooter());
+    } catch (err) {
+      console.err(err);
+      next(err);
+    }
+  });
+  server.listen(server.get('port'), () => {
+    console.log('The server is running at http://localhost:' + server.get('port'));
+  });
+}
+
+function htmlHeader({css, body}) {
+  return `<!doctype html><html className="no-js" lang="">
+<head><style>${css}</style></head>
 <body>
 <script>
 var script = document.createElement("script");
 script.src = '/public/bundle.js';
 document.body.appendChild(script);
 </script>
-<div id="app">
-    ${body}
-    `);
-    //if (initFluxPromise != null) {
-    //  await initFluxPromise;
-    //}
-    res.end('</div><script type="text/javascript"></script></html>');
+<div id="app">${body}`;
+}
 
-  });
-  server.listen(server.get('port'), () => {
-    console.log('The server is running at http://localhost:' + server.get('port'));
-  });
-  //for(let style in styles) {
-  //  console.log(styles[style].toString());
-  //}
+function htmlFooter({}) {
+  return `</div><script type="text/javascript"></script></html>`;
 }
