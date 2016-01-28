@@ -58,6 +58,8 @@ export default function decorateInstance(component) {
   component.componentWillUnmount = function () {
     let theme = component.context.theme || Theme.get();
     theme.unmount(component);
-    return componentWillUnmount.apply(component, arguments);
+    if (_.isFunction(componentWillUnmount)) {
+      return componentWillUnmount.apply(component, arguments);
+    }
   }
 }
