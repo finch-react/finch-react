@@ -1,6 +1,9 @@
 import invariant from 'fbjs/lib/invariant';
 import _ from 'lodash';
 import Style from './Style';
+import {Platform} from 'react-native';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+
 
 const DEFAULT_NAME = 'default';
 
@@ -9,7 +12,9 @@ let themes = {};
 let templates = {};
 
 function style(component) {
+  console.log("theme.style ");
   if (component.__theme !== this) {
+    console.log("theme Create style " + component.__style)
     if (component.__theme) {
       //component.__theme.unmount();
     }
@@ -20,15 +25,22 @@ function style(component) {
     if (!component.constructor._id) {
       component.constructor._id = ++id;
     }
-    if (!this.componentStyles[component.constructor._id]) {
-      let style = this.componentStyles[component.constructor._id] = new Style(this, component.constructor.styles, component);
-      style.render = () => {
-        style.render = ()=> {
-        };
-        style.use();
+
+    let style = null;
+    if (Platform.OS === "web" && !canUseDOM) {
+      style = new Style(this, component.constructor.styles, component);
+    } else {
+      if (!this.componentStyles[component.constructor._id]) {
+        style = this.componentStyles[component.constructor._id] = new Style(this, component.constructor.styles, component);
       }
     }
-    component.__style = this.componentStyles[component.constructor._id];
+    style.render = () => {
+      console.log("theme.style render");
+      style.render = ()=> {
+      };
+      style.use(component.context);
+    };
+    component.__style = style;
   }
   return component.__style;
 }
@@ -47,6 +59,7 @@ function themeFunction(name, def) {
 function unmount(component) {
   if (component.__style) {
     component.__style.unuse();
+    delete component.__theme.componentStyles[component.constructor._id];
   }
 }
 
@@ -60,6 +73,7 @@ export default class Theme {
   }
 
   static build(name = DEFAULT_NAME) {
+    console.log("Theme.build(" + name + ")");
     let themeProps = {};
 
     let theme = themeFunction.bind(themeProps);
@@ -105,12 +119,13 @@ export default class Theme {
     }
     let theme = themes[name];
     if (theme) {
+      console.log("Theme.rebuild not implemented")
       if (theme._timeout) {
         clearTimeout(theme._timeout);
       }
-      theme._timeout = setTimeout(()=> {
-        Theme.build(name);
-      }, 0);
+      //theme._timeout = setTimeout(()=> {
+      //  Theme.build(name);
+      //}, 0);
     }
   }
 

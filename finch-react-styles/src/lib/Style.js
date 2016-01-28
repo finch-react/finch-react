@@ -5,7 +5,6 @@ import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
 let styleId = -1;
-let cssRefsCounters = {};
 
 let normalize = `
   .view {
@@ -15,9 +14,11 @@ let normalize = `
     flex-direction:column;
    }
 `;
-let normalized = false;
+
 
 export default class Style {
+  cssRefsCounter = 0;
+
   static stylesToWeb = {
     flex: (value)=>({
       flex: value,
@@ -93,29 +94,43 @@ export default class Style {
     return s;
   }
 
-  appendStyle(content, id) {
-    let style = document.createElement('style');
-    id && style.setAttribute('data-css-id', id);
-    style.type = 'text/css';
-    style.innerHTML = content;
-    document.getElementsByTagName('head')[0].appendChild(style);
+  static appendStyle(content, id, onServerStyle) {
+    if (!content || !id) {
+      return;
+    }
+    if (canUseDOM) {
+      let style = document.createElement('style');
+      id && style.setAttribute('data-css-id', id);
+      style.type = 'text/css';
+      style.innerHTML = content;
+      document.getElementsByTagName('head')[0].appendChild(style);
+    } else {
+      if (onServerStyle) {
+        onServerStyle(id, content);
+      }
+    }
   }
 
-  use() {
+  use(context) {
+    console.log("Style.use")
     if (Platform.OS === 'web') {
+      //TODO грабли
+      if(canUseDOM) {
+        if(!document.querySelectorAll("style[data-css-id='normalize']")[0]) {
+          Style.appendStyle(normalize, "normalize", context.onServerStyle);
+        }
+      }else {
+        Style.appendStyle(normalize, "normalize", context.onServerStyle);
+      }
+      // end грабли
       let styles = this._css;
-      if (canUseDOM) {
-        if (!normalized) {
-          normalized = true;
-          this.appendStyle(normalize);
-        }
-        let id = `s${this._id}`;
-        cssRefsCounters[id] = (typeof cssRefsCounters[id] !== 'undefined') ? ++cssRefsCounters[id] : 1;
-        if (cssRefsCounters[id] === 1) {
-          this.appendStyle(styles, id);
-        }
-      } else {
-        //TODO write css file on server
+      let id = `s${this._id}`;
+      this.cssRefsCounter++;
+      if (this.cssRefsCounter === 1) {
+        Style.appendStyle(styles, id, context.onServerStyle);
+      }
+      if(!canUseDOM) {
+        this.unuse();
       }
     }
 
@@ -123,10 +138,11 @@ export default class Style {
   }
 
   unuse() {
+    console.log("style.unuse")
     if (Platform.OS === 'web' && canUseDOM) {
       let id = `s${this._id}`;
-      cssRefsCounters[id] = --cssRefsCounters[id];
-      if (cssRefsCounters[id] === 0) {
+      this.cssRefsCounter--;
+      if (this.cssRefsCounter === 0) {
         let style = document.querySelectorAll(`style[data-css-id=\'${id}']`);
         style[0].parentNode.removeChild(style[0]);
       }

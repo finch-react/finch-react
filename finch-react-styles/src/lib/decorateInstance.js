@@ -8,14 +8,15 @@ import _ from 'lodash';
 export default function decorateInstance(component) {
   let render = component.render;
   component.render = function () {
+    console.log("component render "+ component.constructor.name)
     let theme = component.context.theme || Theme.get();
     let style = theme.style(component);
     let result = reactTransform(render.call(component), (element, isMain)=> {
       let extraProps = {element:undefined, attach:undefined};
       if (Platform.OS === 'web') {
-        if (!canUseDOM && this.context.onServerStyle) {
-          this.context.onServerStyle(style);
-        }
+        //if (!canUseDOM && this.context.onServerStyle) {
+        //  this.context.onServerStyle(style);
+        //}
         extraProps.className = style.className(element, component.props, isMain);
       } else {
         extraProps.style = style.style(element, component.props, isMain);

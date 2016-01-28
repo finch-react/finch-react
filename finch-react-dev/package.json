@@ -6,6 +6,7 @@
     "web-dev": "node web/start-dev-server",
     "web-bundle": "NODE_ENV=production webpack --config web/webpack.config.js --colors",
     "server": "npm run web-bundle && npm run server-bundle && WEB_BUNDLE='./web/output/' node server/output/bundle.js",
+    "server-only": "npm run server-bundle && WEB_BUNDLE='./web/output/' node server/output/bundle.js",
     "server-bundle": "NODE_ENV=production webpack --config server/webpack.config.js --colors"
   },
   "dependencies": {

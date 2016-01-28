@@ -19,12 +19,16 @@ export default function ServerAppRunner(RootComponent, initialProps, rootTag) {
   server.get('*', (req, res, next) => {
     try {
       let statusCode = 200;
-      let styles = {};
+      let styles = {
+
+      };
       let context = {
-        onServerStyle(style) {
-          styles[style._id] = style;
+        onServerStyle(id, style) {
+          console.log(id, style);
+          styles[id] = style;
         }
       };
+
       //let initFluxPromise = null;
       var body = ReactDOMServer.renderToStaticMarkup(<WithContext context={context}><RootComponent /></WithContext>);
       res.status(statusCode);
