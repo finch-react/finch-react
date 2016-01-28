@@ -47,38 +47,34 @@ module.exports = {
       platform: 'web',
       nodeModules: ['react-web']
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(isProd ? PROD : DEV),
-      }
-    }),
     new webpack.ProvidePlugin({
       React: "react"
     }),
-    new webpack.NoErrorsPlugin(),
-    new HtmlPlugin()
+    new webpack.NoErrorsPlugin()
   ],
   module: {
-    loaders: [{
-      test: /\.json$/,
-      loader: 'json'
-    }, {
-      test: /\.jsx?$/,
-      loaders: ['react-hot', 'babel-loader?' + JSON.stringify({
-        cacheDirectory: true,
-        presets: ['es2015', 'stage-0', 'react'],
-        plugins: ['add-module-exports']
-      })],
-      include: [
-        config.paths.src,
-        path.resolve(__dirname, "../../finch-react-styles/src/"),
-        path.resolve(__dirname, "../../finch-react-web/src/"),
-        path.resolve(__dirname, "../../finch-react-server/src/")
-      ],
-      exclude: [
-        /node_modules/,
-        /output/
-      ]
-    }]
+    loaders: [
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      },
+      {
+        test: /\.jsx?$/,
+        loaders: ['react-hot', 'babel-loader?' + JSON.stringify({
+          cacheDirectory: true,
+          presets: ['es2015', 'stage-0', 'react'],
+          plugins: ['add-module-exports']
+        })],
+        include: [
+          config.paths.src,
+          path.resolve(__dirname, "../../finch-react-styles/src/"),
+          path.resolve(__dirname, "../../finch-react-web/src/"),
+          path.resolve(__dirname, "../../finch-react-server/src/")
+        ],
+        exclude: [
+          /node_modules/,
+          /output/
+        ]
+      }]
   }
 };

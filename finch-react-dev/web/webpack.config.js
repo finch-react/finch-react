@@ -4,6 +4,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlPlugin = require('webpack-html-plugin');
 var HasteResolverPlugin = require('haste-resolver-webpack-plugin');
+var CompressionPlugin = require('compression-webpack-plugin');
 
 var IP = '0.0.0.0';
 var PORT = 3000;
@@ -23,7 +24,7 @@ var config = {
 module.exports = {
   ip: IP,
   port: PORT,
-  devtool: 'cheap-inline-source-map',
+  devtool: isProd ? false : 'source-map',
   resolve: {
     alias: {
       'react-native': path.resolve(__dirname, "../../finch-react-web/src/index.js"),
@@ -32,13 +33,16 @@ module.exports = {
     },
     extensions: ['', '.js', '.jsx'],
   },
-  entry: isProd ? [
-    config.paths.index
-  ] : [
-    'webpack-dev-server/client?http://' + IP + ':' + PORT,
-    'webpack/hot/only-dev-server',
-    config.paths.index,
-  ],
+  entry: isProd ?
+    [
+      config.paths.index
+    ]
+    :
+    [
+      'webpack-dev-server/client?http://' + IP + ':' + PORT,
+      'webpack/hot/only-dev-server',
+      config.paths.index,
+    ],
   output: {
     path: path.join(__dirname, 'output'),
     filename: 'bundle.js'
@@ -57,28 +61,57 @@ module.exports = {
       React: "react"
     }) : new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new HtmlPlugin(),
+    new HtmlPlugin()
   ],
   module: {
-    loaders: [{
-      test: /\.json$/,
-      loader: 'json',
-    }, {
-      test: /\.jsx?$/,
-      loaders: ['react-hot', 'babel-loader?' + JSON.stringify({
-          cacheDirectory: true,
-          presets: ['es2015', 'stage-0', 'react'],
-          plugins: ['add-module-exports']
-      })],
-      include: [
-        config.paths.src,
-        path.resolve(__dirname, "../../finch-react-styles/src/"),
-        path.resolve(__dirname, "../../finch-react-web/src/")
-      ],
-      exclude: [
-        /node_modules/,
-        /output/
-      ]
-    },]
+    loaders: [
+      {
+        test: /\.json$/,
+        loader: 'json',
+      },
+      {
+        test: /\.jsx?$/,
+        loaders: isProd ?
+          [
+            'babel-loader?' + JSON.stringify({
+              cacheDirectory: true,
+              presets: ['es2015', 'stage-0', 'react'],
+              plugins: ['add-module-exports']
+            })
+          ]
+          :
+          [
+            'react-hot',
+            'babel-loader?' + JSON.stringify({
+              cacheDirectory: true,
+              presets: ['es2015', 'stage-0', 'react'],
+              plugins: ['add-module-exports']
+            })
+          ],
+        include: [
+          config.paths.src,
+          path.resolve(__dirname, "../../finch-react-styles/src/"),
+          path.resolve(__dirname, "../../finch-react-web/src/")
+        ],
+        exclude: [
+          /node_modules/,
+          /output/
+        ]
+      },
+    ]
   }
 };
+
+if (isProd) {
+  module.exports.plugins.push(
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+    new CompressionPlugin({
+      asset: "{file}.gz",
+      algorithm: "gzip",
+      regExp: /\.js$|\.html$/
+    })
+  );
+
+}
+
