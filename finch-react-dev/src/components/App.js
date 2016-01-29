@@ -4,8 +4,9 @@ import React, {
   Text
 } from 'react-native';
 import FinchReactStyles from 'finch-react-styles';
-let {StyledComponent} = FinchReactStyles;
-import ButtonDummy from './ButtonDummy'
+let {StyledComponent, SwitchTheme} = FinchReactStyles;
+
+import Button from './Button'
 
 
 export default class App extends StyledComponent {
@@ -15,65 +16,42 @@ export default class App extends StyledComponent {
 
   static styles = T =>[
     {
-      main: {
-        flex: 1
-      },
-      text: {
-        color: "red"
-      },
+      main: {},
       button: {
-        color: "red"
-      }
-    },
-    {
-      $props: props => props.open,
-      text: {
-        color: "green"
-      }
-    },
-    {
-      $props: {
-        open: true
+
       },
-      text: {
-        color: "blue"
+      buttonWrapper: {
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "flex-start"
       }
     },
   ];
 
   state = {
-    a: 1
+    isActive: false
   };
 
   render() {
     return (
       <View>
-        <Text>Welcome to React Native in Web!</Text>
-        <Text element="text" attach="onClick, onPress">{this.state.a}Welcome to React Native in
-          Web!</Text>
-        <ButtonDummy attach="onClick, onPress" element="button1">Dummy button</ButtonDummy>
-        <ButtonDummy attach="onClick, onPress" element="button1">Dummy button</ButtonDummy>
+        <Text>Color</Text>
+        <View element="buttonWrapper">
+          <Button>1</Button>
+          <Button color="primary">2</Button>
+          <Button color="success">3</Button>
+          <Button color="info">4</Button>
+          <Button color="warning">5</Button>
+          <Button color="danger">6</Button>
+        </View>
+        <Text>Size</Text>
+        <View element="buttonWrapper">
+          <Button size="tiny">1</Button>
+          <Button size="small">2</Button>
+          <Button>3</Button>
+          <Button size="large">4</Button>
+        </View>
       </View>
     );
-  }
-
-  text_onClick() {
-    this.setState(s=> ({
-      a: s.a + 1
-    }))
-  }
-
-  text_onPress() {
-    this.text_onClick();
-  }
-
-  button1_onClick() {
-    this.setState(s=> ({
-      a: s.a + 1
-    }))
-  }
-
-  button1_onPress() {
-    this.button1_onClick();
   }
 }
