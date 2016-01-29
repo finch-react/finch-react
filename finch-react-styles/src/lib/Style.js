@@ -28,7 +28,8 @@ export default class Style {
 
   static stylesToMobile = {
     cursor: (value) => null,
-    display: (value) => null
+    display: (value) => null,
+    boxShadow: (value) => null
   };
 
   _locals = {};
