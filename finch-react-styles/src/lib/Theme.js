@@ -32,6 +32,8 @@ function style(component) {
     } else {
       if (!this.componentStyles[component.constructor._id]) {
         style = this.componentStyles[component.constructor._id] = new Style(this, component.constructor.styles, component);
+      } else {
+        style = this.componentStyles[component.constructor._id]
       }
     }
     style.render = () => {

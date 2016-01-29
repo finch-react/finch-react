@@ -24,7 +24,7 @@ var config = {
 module.exports = {
   ip: IP,
   port: PORT,
-  devtool: isProd ? false : 'source-map',
+  devtool: false,
   resolve: {
     alias: {
       'react-native': path.resolve(__dirname, "../../finch-react-web/src/index.js"),
