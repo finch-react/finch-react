@@ -9,37 +9,183 @@ let {StyledComponent} = FinchReactStyles;
 
 export default class ButtonDummy extends StyledComponent {
   static propTypes = {
-    inline: PropTypes.bool,
-    onClick: PropTypes.func
+    color: PropTypes.oneOf(["default", "primary", "success", "info", "warning", "danger"]),
+    size: PropTypes.oneOf(["tiny", "small", "medium", "large"]),
+    onClick: PropTypes.func,
+    onPress: PropTypes.func,
+    onTouchStart: PropTypes.func,
+    onTouchEnd: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onMouseOut: PropTypes.func
   };
 
   static defaultProps = {
-    inline: false
+    color: "default",
+    size: "medium"
   };
 
   static styles = T => [
     {
       main: {
-        flex: 1,
+        //flex: 1,
+        textAlign: "center",
+        justifyContent: "center",
         marginBottom: 0,
         fontWeight: "normal",
-        textAlign: "center",
         borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0)',
+        borderColor: 'transparent',
+        borderStyle: "solid",
+        paddingTop: 9,
+        paddingBottom: 9,
+        paddingLeft: 16,
+        paddingRight: 16,
+        fontSize: 15,
+        borderRadius: 2,
+        cursor: "pointer",
+        display: "flex"
+      },
+    },
+    {
+      $props: {
+        color: "primary"
+      },
+      main: {
+        ...T('button.color.primary')
       }
     },
     {
       $props: {
-        inline: true
+        color: "default"
       },
       main: {
+        ...T('button.color.default')
       }
     },
+    {
+      $props: {
+        color: "success"
+      },
+      main: {
+        ...T('button.color.success')
+      }
+    },
+    {
+      $props: {
+        color: "info"
+      },
+      main: {
+        ...T('button.color.info')
+      }
+    },
+    {
+      $props: {
+        color: "warning"
+      },
+      main: {
+        ...T('button.color.warning')
+      }
+    },
+    {
+      $props: {
+        color: "danger"
+      },
+      main: {
+        ...T('button.color.danger')
+      }
+    },
+    {
+      $props: {
+        size: "tiny"
+      },
+      main: {
+        ...T('button.size.tiny')
+      }
+    },
+    {
+      $props: {
+        size: "small"
+      },
+      main: {
+        ...T('button.size.small')
+      }
+    },
+    {
+      $props: {
+        size: "medium"
+      },
+      main: {
+        ...T('button.size.medium')
+      }
+    },
+    {
+      $props: {
+        size: "large"
+      },
+      main: {
+        ...T('button.size.large')
+      }
+    },
+    {
+      $props: {
+        active: true,
+        color: "default"
+      },
+      main: {
+        ...T('button.active.default')
+      }
+    },
+    {
+      $props: {
+        active: true,
+        color: "primary"
+      },
+      main: {
+        ...T('button.active.primary')
+      }
+    },
+    {
+      $props: {
+        active: true,
+        color: "success"
+      },
+      main: {
+        ...T('button.active.success')
+      }
+    },
+    {
+      $props: {
+        active: true,
+        color: "info"
+      },
+      main: {
+        ...T('button.active.info')
+      }
+    },
+    {
+      $props: {
+        active: true,
+        color: "warning"
+      },
+      main: {
+        ...T('button.active.warning')
+      }
+    },
+    {
+      $props: {
+        active: true,
+        color: "danger"
+      },
+      main: {
+        ...T('button.active.danger')
+      }
+    },
+
   ];
 
   render() {
     return (
-        <Text props="onClick, onPress">{this.props.children}</Text>
+        <Text props="onClick, onPress, onTouchStart, onTouchEnd, onMouseDown, onMouseUp, onMouseOut">{this.props.children}</Text>
     );
   }
 }
