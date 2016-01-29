@@ -26,6 +26,11 @@ export default class Style {
     })
   };
 
+  static stylesToMobile = {
+    cursor: (value) => null,
+    display: (value) => null
+  };
+
   _locals = {};
 
   constructor(theme, styles, component) {
@@ -115,11 +120,11 @@ export default class Style {
     console.log("Style.use")
     if (Platform.OS === 'web') {
       //TODO грабли
-      if(canUseDOM) {
-        if(!document.querySelectorAll("style[data-css-id='normalize']")[0]) {
+      if (canUseDOM) {
+        if (!document.querySelectorAll("style[data-css-id='normalize']")[0]) {
           Style.appendStyle(normalize, "normalize", context.onServerStyle);
         }
-      }else {
+      } else {
         Style.appendStyle(normalize, "normalize", context.onServerStyle);
       }
       // end грабли
@@ -129,7 +134,7 @@ export default class Style {
       if (this.cssRefsCounter === 1) {
         Style.appendStyle(styles, id, context.onServerStyle);
       }
-      if(!canUseDOM) {
+      if (!canUseDOM) {
         this.unuse();
       }
     }
@@ -186,6 +191,20 @@ export default class Style {
             }
           }
           css.push(`.${local.className} {${CSSPropertyOperations.createMarkupForStyles(cssRule)}}\n`);
+        } else {
+          let mobileRule = {};
+          Object.keys(rule).map((name)=>{
+            let result = rule[name];
+            if (Style.stylesToMobile[name]) {
+              result = Style.stylesToMobile[name](result);
+            }
+            if (result) {
+              let r = {};
+              r[name] = result;
+              Object.assign(mobileRule, r);
+            }
+          });
+          style[name] = mobileRule;
         }
       }
     }
