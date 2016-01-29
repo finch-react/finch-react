@@ -17,7 +17,8 @@ export default class ButtonDummy extends StyledComponent {
     onTouchEnd: PropTypes.func,
     onMouseDown: PropTypes.func,
     onMouseUp: PropTypes.func,
-    onMouseOut: PropTypes.func
+    onMouseOut: PropTypes.func,
+    onMouseOver: PropTypes.func
   };
 
   static defaultProps = {
@@ -180,12 +181,66 @@ export default class ButtonDummy extends StyledComponent {
         ...T('button.active.danger')
       }
     },
+    {
+      $props: {
+        hover: true,
+        color: "default"
+      },
+      main: {
+        ...T('button.hover.default')
+      }
+    },
+    {
+      $props: {
+        hover: true,
+        color: "primary"
+      },
+      main: {
+        ...T('button.hover.primary')
+      }
+    },
+    {
+      $props: {
+        hover: true,
+        color: "success"
+      },
+      main: {
+        ...T('button.hover.success')
+      }
+    },
+    {
+      $props: {
+        hover: true,
+        color: "info"
+      },
+      main: {
+        ...T('button.hover.info')
+      }
+    },
+    {
+      $props: {
+        hover: true,
+        color: "warning"
+      },
+      main: {
+        ...T('button.hover.warning')
+      }
+    },
+    {
+      $props: {
+        hover: true,
+        color: "danger"
+      },
+      main: {
+        ...T('button.hover.danger')
+      }
+    },
 
   ];
 
   render() {
     return (
-        <Text props="onClick, onPress, onTouchStart, onTouchEnd, onMouseDown, onMouseUp, onMouseOut">{this.props.children}</Text>
+        <Text props="onClick, onPress, onTouchStart, onTouchEnd, onMouseDown, onMouseUp, onMouseOut, onMouseOver, onMouseOut">{this.props.children}</Text>
     );
   }
 }

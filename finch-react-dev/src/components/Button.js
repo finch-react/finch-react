@@ -24,15 +24,17 @@ export default class Button extends StyledComponent {
   ];
 
   state = {
-    isActive: false
+    isActive: false,
+    isHover: false
   };
 
   render() {
     return (
       <ButtonDummy {...this.props}
         active={this.state.isActive}
+        hover={this.state.isHover}
         element="main"
-        attach="onClick, onPress, onTouchStart, onTouchEnd, onMouseDown, onMouseUp, onMouseOut">
+        attach="onClick, onPress, onTouchStart, onTouchEnd, onMouseDown, onMouseUp, onMouseOut, onMouseOver, onMouseOut">
         {this.props.children}
       </ButtonDummy>
     );
@@ -55,6 +57,11 @@ export default class Button extends StyledComponent {
 
   main_onMouseOut() {
     this.setState({isActive: false});
+    this.setState({isHover: false});
+  }
+
+  main_onMouseOver() {
+    this.setState({isHover: true});
   }
 
   main_onTouchStart() {

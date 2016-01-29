@@ -111,6 +111,38 @@ Theme.register({
         borderColor: "#a61439",
         boxShadow: "inset 0 3px 5px rgba(0,0,0,.125)"
       },
+    },
+    hover: {
+      default: {
+        color: "#54565b",
+        backgroundColor: "#e6e6e6",
+        borderColor: "#c4c9d3",
+      },
+      primary: {
+        color: "#fff",
+        backgroundColor: "#2181b1",
+        borderColor: "#1b6b93",
+      },
+      success: {
+        color: "#fff",
+        backgroundColor: "#248249",
+        borderColor: "#1c663a",
+      },
+      info: {
+        color: "#fff",
+        backgroundColor: "#2181b1",
+        borderColor: "#1b6b93",
+      },
+      warning: {
+        color: "#fff",
+        backgroundColor: "#d93d1b",
+        borderColor: "#b93417",
+      },
+      danger: {
+        color: "#fff",
+        backgroundColor: "#c61843",
+        borderColor: "#a61439",
+      },
     }
   },
 });
