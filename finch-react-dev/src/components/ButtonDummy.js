@@ -11,6 +11,7 @@ export default class ButtonDummy extends StyledComponent {
   static propTypes = {
     color: PropTypes.oneOf(["default", "primary", "success", "info", "warning", "danger"]),
     size: PropTypes.oneOf(["tiny", "small", "medium", "large"]),
+    flex: PropTypes.oneOf(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]),
     onClick: PropTypes.func,
     onPress: PropTypes.func,
     onTouchStart: PropTypes.func,
@@ -29,7 +30,6 @@ export default class ButtonDummy extends StyledComponent {
   static styles = T => [
     {
       main: {
-        //flex: 1,
         textAlign: "center",
         justifyContent: "center",
         marginBottom: 0,
@@ -43,8 +43,7 @@ export default class ButtonDummy extends StyledComponent {
         paddingRight: 16,
         fontSize: 15,
         borderRadius: 2,
-        cursor: "pointer",
-        display: "flex"
+        cursor: "pointer"
       },
     },
     {
@@ -233,6 +232,110 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.hover.danger')
+      }
+    },
+    {
+      $props: {
+        flex: "1",
+      },
+      main: {
+        ...T('button.flex.f1')
+      }
+    },
+    {
+      $props: {
+        flex: "2",
+      },
+      main: {
+        ...T('button.flex.f2')
+      }
+    },
+    {
+      $props: {
+        flex: "3",
+      },
+      main: {
+        ...T('button.flex.f3')
+      }
+    },
+    {
+      $props: {
+        flex: "4",
+      },
+      main: {
+        ...T('button.flex.f4')
+      }
+    },
+    {
+      $props: {
+        flex: "5",
+      },
+      main: {
+        ...T('button.flex.f5')
+      }
+    },
+    {
+      $props: {
+        flex: "6",
+      },
+      main: {
+        ...T('button.flex.f6')
+      }
+    },
+    {
+      $props: {
+        flex: "7",
+      },
+      main: {
+        ...T('button.flex.f7')
+      }
+    },
+    {
+      $props: {
+        flex: "8",
+      },
+      main: {
+        ...T('button.flex.f8')
+      }
+    },
+    {
+      $props: {
+        flex: "1",
+      },
+      main: {
+        ...T('button.flex.f1')
+      }
+    },
+    {
+      $props: {
+        flex: "9",
+      },
+      main: {
+        ...T('button.flex.f9')
+      }
+    },
+    {
+      $props: {
+        flex: "10",
+      },
+      main: {
+        ...T('button.flex.f10')
+      }
+    },
+    {
+      $props: {
+        flex: "11",
+      },
+      main: {
+        ...T('button.flex.f11')
+      }
+    },
+    {
+      $props: {
+        flex: "12",
+      },
+      main: {
+        ...T('button.flex.f12')
       }
     },
 
