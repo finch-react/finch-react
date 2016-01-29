@@ -30,10 +30,8 @@ export default class ButtonDummy extends StyledComponent {
   static styles = T => [
     {
       main: {
-        textAlign: "center",
         justifyContent: "center",
         marginBottom: 0,
-        fontWeight: "normal",
         borderWidth: 1,
         borderColor: 'transparent',
         borderStyle: "solid",
@@ -41,10 +39,14 @@ export default class ButtonDummy extends StyledComponent {
         paddingBottom: 9,
         paddingLeft: 16,
         paddingRight: 16,
-        fontSize: 15,
         borderRadius: 2,
         cursor: "pointer"
       },
+      buttonText: {
+        textAlign: "center",
+        fontWeight: "normal",
+        fontSize: 15,
+      }
     },
     {
       $props: {
@@ -52,6 +54,9 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.color.primary')
+      },
+      buttonText: {
+        ...T('button.color.primaryText')
       }
     },
     {
@@ -60,6 +65,9 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.color.default')
+      },
+      buttonText: {
+        ...T('button.color.defaultText')
       }
     },
     {
@@ -68,6 +76,9 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.color.success')
+      },
+      buttonText: {
+        ...T('button.color.successText')
       }
     },
     {
@@ -76,6 +87,9 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.color.info')
+      },
+      buttonText: {
+        ...T('button.color.infoText')
       }
     },
     {
@@ -84,6 +98,9 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.color.warning')
+      },
+      buttonText: {
+        ...T('button.color.warningText')
       }
     },
     {
@@ -92,6 +109,9 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.color.danger')
+      },
+      buttonText: {
+        ...T('button.color.dangerText')
       }
     },
     {
@@ -100,7 +120,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.size.tiny')
-      }
+      },
+      buttonText: {
+        ...T('button.size.tinyText')
+      },
     },
     {
       $props: {
@@ -108,7 +131,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.size.small')
-      }
+      },
+      buttonText: {
+        ...T('button.size.smallText')
+      },
     },
     {
       $props: {
@@ -116,7 +142,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.size.medium')
-      }
+      },
+      buttonText: {
+        ...T('button.size.mediumText')
+      },
     },
     {
       $props: {
@@ -124,7 +153,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.size.large')
-      }
+      },
+      buttonText: {
+        ...T('button.size.largeText')
+      },
     },
     {
       $props: {
@@ -133,7 +165,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.active.default')
-      }
+      },
+      buttonText: {
+        ...T('button.active.defaultText')
+      },
     },
     {
       $props: {
@@ -142,7 +177,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.active.primary')
-      }
+      },
+      buttonText: {
+        ...T('button.active.primaryText')
+      },
     },
     {
       $props: {
@@ -151,7 +189,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.active.success')
-      }
+      },
+      buttonText: {
+        ...T('button.active.successText')
+      },
     },
     {
       $props: {
@@ -160,7 +201,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.active.info')
-      }
+      },
+      buttonText: {
+        ...T('button.active.infoText')
+      },
     },
     {
       $props: {
@@ -169,7 +213,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.active.warning')
-      }
+      },
+      buttonText: {
+        ...T('button.active.warningText')
+      },
     },
     {
       $props: {
@@ -178,7 +225,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.active.danger')
-      }
+      },
+      buttonText: {
+        ...T('button.active.dangerText')
+      },
     },
     {
       $props: {
@@ -187,7 +237,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.hover.default')
-      }
+      },
+      buttonText: {
+        ...T('button.hover.defaultText')
+      },
     },
     {
       $props: {
@@ -196,7 +249,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.hover.primary')
-      }
+      },
+      buttonText: {
+        ...T('button.hover.primaryText')
+      },
     },
     {
       $props: {
@@ -205,7 +261,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.hover.success')
-      }
+      },
+      buttonText: {
+        ...T('button.hover.successText')
+      },
     },
     {
       $props: {
@@ -214,7 +273,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.hover.info')
-      }
+      },
+      buttonText: {
+        ...T('button.hover.infoText')
+      },
     },
     {
       $props: {
@@ -223,7 +285,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.hover.warning')
-      }
+      },
+      buttonText: {
+        ...T('button.hover.warningText')
+      },
     },
     {
       $props: {
@@ -232,7 +297,10 @@ export default class ButtonDummy extends StyledComponent {
       },
       main: {
         ...T('button.hover.danger')
-      }
+      },
+      buttonText: {
+        ...T('button.hover.dangerText')
+      },
     },
     {
       $props: {
@@ -343,7 +411,9 @@ export default class ButtonDummy extends StyledComponent {
 
   render() {
     return (
-        <Text props="onClick, onPress, onTouchStart, onTouchEnd, onMouseDown, onMouseUp, onMouseOut, onMouseOver, onMouseOut">{this.props.children}</Text>
+      <View props="onClick, onPress, onTouchStart, onTouchEnd, onMouseDown, onMouseUp, onMouseOut, onMouseOver, onMouseOut">
+        <Text element="buttonText">{this.props.children}</Text>
+      </View>
     );
   }
 }
