@@ -6,12 +6,12 @@ import _ from 'lodash';
 export default function decorateInstance(component) {
   let render = component.render;
   component.render = function () {
-    console.log("component render "+ component.constructor.name)
+    console.log("component render " + component.constructor.name)
     let theme = component.context.theme || Theme.get();
     let style = theme.style(component);
     let result = reactTransform(render.call(component), (element, isMain)=> {
-      let extraProps = {element:undefined, attach:undefined};
-      if(element.props.props) {
+      let extraProps = {element: undefined, attach: undefined};
+      if (element.props.props) {
         let props = element.props.props;
         if (_.isString(props)) {
           props = props.split(/\s*,\s*/);
@@ -31,7 +31,16 @@ export default function decorateInstance(component) {
           let name = attach[i];
           let methodName = element.props.element + "_" + name;
           if (_.isFunction(component[methodName])) {
-            extraProps[name] = component[methodName].bind(component);
+            if (_.isFunction(element.props[name])) {
+              extraProps[name] = (...args)=> {
+                if (element.props[name](...args) === false) {
+                  return false;
+                }
+                return component[methodName].call(component, ...args);
+              };
+            } else {
+              extraProps[name] = component[methodName].bind(component);
+            }
           } else {
             warning(false, `Component "${component.constructor.name}" has no method "${methodName}"`);
           }
