@@ -23,14 +23,14 @@ var config = {
 module.exports = {
   ip: IP,
   port: PORT,
-  devtool: 'cheap-inline-source-map',
+  devtool: false,
   target: 'node',
   resolve: {
     alias: {
       'react-native': path.resolve(__dirname, "../../finch-react-server/src/index.js"),
       'finch-react-web': path.resolve(__dirname, "../../finch-react-web/src/index.js"),
       'finch-react-styles': path.resolve(__dirname, "../../finch-react-styles/src/index.js"),
-      'ReactNativeART': 'react-art',
+      'ReactNativeART': 'react-art'
     },
     extensions: ['', '.js', '.jsx'],
   },

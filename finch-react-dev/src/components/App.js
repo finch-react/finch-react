@@ -3,11 +3,9 @@ import React, {
   View,
   Text
 } from 'react-native';
+import Button from './Button'
 import FinchReactStyles from 'finch-react-styles';
 let {StyledComponent, SwitchTheme} = FinchReactStyles;
-
-import Button from './Button'
-
 
 export default class App extends StyledComponent {
   static defaultProps = {

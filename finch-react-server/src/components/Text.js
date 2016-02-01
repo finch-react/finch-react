@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-export default class Text extends Component {
+export default class View extends Component {
   render() {
     return (
       <span {...this.props}>
