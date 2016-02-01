@@ -33,10 +33,10 @@ export default function decorateInstance(component) {
           if (_.isFunction(component[methodName])) {
             if (_.isFunction(element.props[name])) {
               extraProps[name] = (...args)=> {
-                if (element.props[name](...args) === false) {
+                if (component[methodName].apply(component, args) === false) {
                   return false;
                 }
-                return component[methodName].call(component, ...args);
+                return element.props[name](...args);
               };
             } else {
               extraProps[name] = component[methodName].bind(component);
