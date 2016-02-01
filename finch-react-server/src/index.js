@@ -1,7 +1,14 @@
-import React from 'finch-react-web';
+import React from 'react';
+import View from './components/View';
+import Text from './components/Text';
+import Platform from './lib/Platform';
+import AppRegistry from './lib/AppRegistry';
 import appRunner from './lib/appRunner';
 
 export default {
   ...React,
-  AppRegistry: React.AppRegistry.withAppRunner(appRunner)
+  View,
+  Text,
+  Platform,
+  AppRegistry: AppRegistry.withAppRunner(appRunner)
 }

@@ -28,7 +28,6 @@
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-hot-loader": "1.2.7",
-    "webpack": "1.9.10",
-    "finch-react-web": "../finch-react-web"
+    "webpack": "1.9.10"
   }
 }
