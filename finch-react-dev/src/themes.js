@@ -96,7 +96,6 @@ Theme.register({
       default: {
         backgroundColor: "#e6e6e6",
         borderColor: "#c4c9d3",
-        boxShadow: "inset 0 3px 5px rgba(0,0,0,.125)"
       },
       defaultText: {
         color: "#54565b",
@@ -104,7 +103,6 @@ Theme.register({
       primary: {
         backgroundColor: "#2181b1",
         borderColor: "#1b6b93",
-        boxShadow: "inset 0 3px 5px rgba(0,0,0,.125)"
       },
       primaryText: {
         color: "#fff",
@@ -112,7 +110,6 @@ Theme.register({
       success: {
         backgroundColor: "#248249",
         borderColor: "#1c663a",
-        boxShadow: "inset 0 3px 5px rgba(0,0,0,.125)"
       },
       successText: {
         color: "#fff",
@@ -120,7 +117,6 @@ Theme.register({
       info: {
         backgroundColor: "#2181b1",
         borderColor: "#1b6b93",
-        boxShadow: "inset 0 3px 5px rgba(0,0,0,.125)"
       },
       infoText: {
         color: "#fff",
@@ -128,7 +124,6 @@ Theme.register({
       warning: {
         backgroundColor: "#d93d1b",
         borderColor: "#b93417",
-        boxShadow: "inset 0 3px 5px rgba(0,0,0,.125)"
       },
       warningText: {
         color: "#fff",
@@ -136,7 +131,6 @@ Theme.register({
       danger: {
         backgroundColor: "#c61843",
         borderColor: "#a61439",
-        boxShadow: "inset 0 3px 5px rgba(0,0,0,.125)"
       },
       dangerText: {
         color: "#fff",
