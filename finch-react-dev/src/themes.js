@@ -17,6 +17,7 @@ Theme.register({
         color: "#fff",
       },
       default: {
+        shadowOpacity: 1,
         backgroundColor: "#fff",
         borderColor: "#e7e9ed"
       },
@@ -24,6 +25,12 @@ Theme.register({
         color: "#54565b",
       },
       success: {
+        shadowOpacity: 1,
+        shadowColor: '#f00',
+        shadowOffset: {
+          width: 1,
+          height: -3
+        },
         backgroundColor: "#2faa60",
         borderColor: "#299655"
       },
@@ -66,8 +73,8 @@ Theme.register({
       small: {
         paddingLeft: 10,
         paddingRight: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
+        paddingTop: 15,
+        paddingBottom: 15,
         borderRadius: 2,
       },
       smallText: {

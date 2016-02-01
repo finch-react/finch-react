@@ -23,7 +23,13 @@ export default class Style {
     flex: (value)=>({
       flex: value,
       display: 'flex'
-    })
+    }),
+    shadowOpacity: (value, rule) => ({
+      boxShadow: `${(rule.shadowOffset) ? rule.shadowOffset.width : 0}px ${(rule.shadowOffset) ? rule.shadowOffset.height : -3}px ${rule.shadowRadius || 10}px ${rule.shadowColor || 'rgba(0,0,0,' + value + ')'}`
+    }),
+    shadowOffset: () => null,
+    shadowRadius: () => null,
+    shadowColor: () => null,
   };
 
   static stylesToMobile = {
@@ -190,18 +196,19 @@ export default class Style {
           for (let prop in rule) {
             let styleToWeb = Style.stylesToWeb[prop];
             if (styleToWeb) {
-              Object.assign(cssRule, styleToWeb(rule[prop]));
+              Object.assign(cssRule, styleToWeb(rule[prop], rule));
             } else {
               cssRule[prop] = rule[prop];
             }
           }
+          style[name] = cssRule;
           css.push(`.${local.className} {${CSSPropertyOperations.createMarkupForStyles(cssRule)}}\n`);
         } else {
           let mobileRule = {};
           Object.keys(rule).map((name)=>{
             let result = rule[name];
             if (Style.stylesToMobile[name]) {
-              result = Style.stylesToMobile[name](result);
+              result = Style.stylesToMobile[name](result, rule);
             }
             if (result) {
               let r = {};
