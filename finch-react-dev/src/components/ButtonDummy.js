@@ -112,7 +112,7 @@ export default class ButtonDummy extends StyledComponent {
         flex: flex,
       },
       main: {
-        flex: flex
+        flex: +flex
       }
     }
     )),
