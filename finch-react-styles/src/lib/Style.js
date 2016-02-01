@@ -30,6 +30,23 @@ export default class Style {
     shadowOffset: () => null,
     shadowRadius: () => null,
     shadowColor: () => null,
+    paddingVertical: (value) => ({
+      paddingTop: value,
+      paddingBottom: value
+    }),
+    paddingHorizontal: (value) => ({
+      paddingLeft: value,
+      paddingRight: value
+    }),
+    marginVertical: (value) => ({
+      marginTop: value,
+      marginBottom: value
+    }),
+    marginHorizontal: (value) => ({
+      marginLeft: value,
+      marginRight: value
+    }),
+
   };
 
   static stylesToMobile = {

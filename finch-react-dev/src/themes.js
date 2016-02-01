@@ -61,39 +61,31 @@ Theme.register({
     },
     size: {
       tiny: {
-        paddingLeft: 5,
-        paddingRight: 5,
-        paddingTop: 1,
-        paddingBottom: 1,
+        paddingHorizontal: 5,
+        paddingVertical: 1,
         borderRadius: 2,
       },
       tinyText: {
         fontSize: 13,
       },
       small: {
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 15,
-        paddingBottom: 15,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
         borderRadius: 2,
       },
       smallText: {
         fontSize: 13,
       },
       medium: {
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingTop: 9,
-        paddingBottom: 9,
+        paddingHorizontal: 16,
+        paddingVertical: 9,
       },
       mediumText: {
         fontSize: 15,
       },
       large: {
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingHorizontal: 16,
+        paddingVertical: 10,
         borderRadius: 2,
       },
       largeText: {

@@ -39,10 +39,8 @@ export default class ButtonDummy extends StyledComponent {
         borderWidth: 1,
         borderColor: 'transparent',
         borderStyle: "solid",
-        paddingTop: 9,
-        paddingBottom: 9,
-        paddingLeft: 16,
-        paddingRight: 16,
+        paddingVertical: 9,
+        paddingHorizontal: 16,
         borderRadius: 2,
         cursor: "pointer"
       },
