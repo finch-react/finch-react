@@ -57,7 +57,7 @@ export default class App extends StyledComponent {
           <Button color="primary" flex="2">flex 2</Button>
           <Button color="success" flex="3">flex 3</Button>
           <Button color="info" flex="4">flex 4</Button>
-          <Button color="warning" flex="1">flex 1</Button>
+          <Button color="warning" flex="1" style={{flex:3}}>flex 3</Button>
           <Button color="danger" flex="1">flex 1</Button>
         </View>
       </View>

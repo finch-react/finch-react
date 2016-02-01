@@ -63,6 +63,10 @@ export default class Style {
     this.buildStyles();
   }
 
+  transform(element, props, extraProps, isMain) {
+      extraProps.style = {...this.style(element, props, isMain), ...extraProps.style, ...element.props.style};
+  }
+
   style(element, props, isMain) {
     if (!element.props.element && !isMain) {
       return;

@@ -121,7 +121,7 @@ export default class ButtonDummy extends StyledComponent {
   render() {
     return (
       <View
-        props="onClick, onPress, onTouchStart, onTouchEnd, onMouseDown, onMouseUp, onMouseOut, onMouseOver, onMouseOut">
+        props="onClick, onPress, onTouchStart, onTouchEnd, onMouseDown, onMouseUp, onMouseOut, onMouseOver, onMouseOut, style">
         <Text element="buttonText">{this.props.children}</Text>
       </View>
     );

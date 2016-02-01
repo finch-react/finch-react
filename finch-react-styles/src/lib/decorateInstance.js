@@ -1,7 +1,5 @@
 import Theme from './Theme';
 import reactTransform from './reactTransform';
-import {Platform} from 'react-native';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import warning from 'fbjs/lib/warning';
 import _ from 'lodash';
 
@@ -13,17 +11,6 @@ export default function decorateInstance(component) {
     let style = theme.style(component);
     let result = reactTransform(render.call(component), (element, isMain)=> {
       let extraProps = {element:undefined, attach:undefined};
-      if (Platform.OS === 'web') {
-        //if (!canUseDOM && this.context.onServerStyle) {
-        //  this.context.onServerStyle(style);
-        //}
-        extraProps.className = style.className(element, component.props, isMain);
-      } else {
-        extraProps.style = style.style(element, component.props, isMain);
-      }
-      if (element.props.className) {
-        extraProps.className += ' ' + element.props.className;
-      }
       if(element.props.props) {
         let props = element.props.props;
         if (_.isString(props)) {
@@ -34,6 +21,7 @@ export default function decorateInstance(component) {
           extraProps[name] = component.props[name];
         }
       }
+      style.transform(element, component.props, extraProps, isMain);
       if (element.props.element && element.props.attach) {
         let attach = element.props.attach;
         if (_.isString(attach)) {

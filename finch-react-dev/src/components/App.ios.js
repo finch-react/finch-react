@@ -96,7 +96,7 @@ class ButtonsView extends StyledComponent {
           <Button color="success" flex="3">3</Button>
           <Button color="info" flex="4">4</Button>
           <Button color="warning" flex="1">1</Button>
-          <Button color="danger" flex="1">1</Button>
+          <Button color="danger" flex="1" >1</Button>
         </View>
       </View>
     )
