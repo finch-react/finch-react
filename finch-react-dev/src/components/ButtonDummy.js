@@ -48,6 +48,7 @@ export default class ButtonDummy extends StyledComponent {
         textAlign: "center",
         fontWeight: "normal",
         fontSize: 15,
+        fontFamily: "PT Sans"
       }
     },
     ...ButtonDummy.COLORS.map(color=>(

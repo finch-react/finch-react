@@ -29,7 +29,7 @@ module.exports = {
     alias: {
       'react-native': path.resolve(__dirname, "../../finch-react-web/src/index.js"),
       'finch-react-styles': path.resolve(__dirname, "../../finch-react-styles/src/index.js"),
-      'ReactNativeART': 'react-art',
+      'ReactNativeART': 'react-art'
     },
     extensions: ['', '.js', '.jsx'],
   },
@@ -70,6 +70,14 @@ module.exports = {
         loader: 'json',
       },
       {
+        test: /\.css$/,
+        loader: 'style/useable!css?minimize&modules&localIdentName=[name]_[local]_[hash:base64:5]'
+      },
+      {
+        test: /\.(png|jpg|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url?name=[path][name].[ext]&limit=4096'
+      },
+      {
         test: /\.jsx?$/,
         loaders: isProd ?
           [
@@ -97,7 +105,7 @@ module.exports = {
           /node_modules/,
           /output/
         ]
-      },
+      }
     ]
   }
 };

@@ -3,6 +3,8 @@ import ReactDOMServer from 'react-dom/server';
 import WithContext from '../components/WithContext';
 import path from 'path';
 import express from 'express';
+import normalize from 'normalize.css';
+import uuid from 'uuid';
 
 const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 100;
 const server = global.server = express();
@@ -20,11 +22,13 @@ export default function ServerAppRunner(RootComponent, initialProps, rootTag) {
     try {
       let statusCode = 200;
       let styles = {
-
+        normalize: normalize
       };
       let context = {
         onServerStyle(id, style) {
-          console.log(id, style);
+          if (!id) {
+            id = uuid.v1();
+          }
           styles[id] = style;
         }
       };

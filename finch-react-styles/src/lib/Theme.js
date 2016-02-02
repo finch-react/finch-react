@@ -11,7 +11,6 @@ let themes = {};
 let templates = {};
 
 function style(component) {
-  console.log("theme.style ");
   if (component.__theme !== this) {
     component.__theme = this;
     component.__style =  new Style(this, component.constructor.styles, component);
@@ -47,7 +46,6 @@ export default class Theme {
   }
 
   static build(name = DEFAULT_NAME) {
-    console.log("Theme.build(" + name + ")");
     let themeProps = {};
 
     let theme = themeFunction.bind(themeProps);
@@ -93,7 +91,6 @@ export default class Theme {
     }
     let theme = themes[name];
     if (theme) {
-      console.log("Theme.rebuild not implemented")
       if (theme._timeout) {
         clearTimeout(theme._timeout);
       }

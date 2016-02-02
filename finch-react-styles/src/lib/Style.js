@@ -9,7 +9,8 @@ export default class Style {
   static stylesToWeb = {
     flex: (value)=>({
       flex: value,
-      display: 'flex'
+      display: 'flex',
+      wordBreak: 'break-all'
     }),
     shadowOpacity: (value, rule) => ({
       boxShadow: `${(rule.shadowOffset) ? rule.shadowOffset.width : 0}px ${(rule.shadowOffset) ? rule.shadowOffset.height : -3}px ${rule.shadowRadius || 10}px ${rule.shadowColor || 'rgba(0,0,0,' + value + ')'}`

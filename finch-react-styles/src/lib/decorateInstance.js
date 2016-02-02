@@ -6,7 +6,6 @@ import _ from 'lodash';
 export default function decorateInstance(component) {
   let render = component.render;
   component.render = function () {
-    console.log("component render " + component.constructor.name)
     let theme = component.context.theme || Theme.get();
     let style = theme.style(component);
     let result = reactTransform(render.call(component), (element, isMain)=> {

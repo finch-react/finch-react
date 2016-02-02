@@ -59,6 +59,10 @@ module.exports = {
         loader: 'json-loader'
       },
       {
+        test: /\.css$/,
+        loader: 'css-loader?minimize&modules&localIdentName=[name]__[local]___[hash:base64:5]'
+      },
+      {
         test: /\.jsx?$/,
         loaders: ['react-hot', 'babel-loader?' + JSON.stringify({
           cacheDirectory: true,
