@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 export default function appRunner(RootComponent, initialProps, rootTag) {
-  console.log("Render");
   let element = document.getElementById("app");
   if (!element) {
     element = document.createElement("div");
@@ -14,4 +13,16 @@ export default function appRunner(RootComponent, initialProps, rootTag) {
   if (element) {
     element.parentNode.removeChild(element);
   }
+
+  let style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = `.view {
+  position:relative;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+}`;
+  document.getElementsByTagName('head')[0].appendChild(style);
+
 }
+

@@ -7,42 +7,14 @@ import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
 const DEFAULT_NAME = 'default';
 
-let id = 0;
 let themes = {};
 let templates = {};
 
 function style(component) {
   console.log("theme.style ");
   if (component.__theme !== this) {
-    console.log("theme Create style " + component.__style)
-    if (component.__theme) {
-      //component.__theme.unmount();
-    }
     component.__theme = this;
-    if (component.__style) {
-      component.__style.unuse();
-    }
-    if (!component.constructor._id) {
-      component.constructor._id = ++id;
-    }
-
-    let style = null;
-    if (Platform.OS === "web" && !canUseDOM) {
-      style = new Style(this, component.constructor.styles, component);
-    } else {
-      if (!this.componentStyles[component.constructor._id]) {
-        style = this.componentStyles[component.constructor._id] = new Style(this, component.constructor.styles, component);
-      } else {
-        style = this.componentStyles[component.constructor._id]
-      }
-    }
-    style.render = () => {
-      console.log("theme.style render");
-      style.render = ()=> {
-      };
-      style.use(component.context);
-    };
-    component.__style = style;
+    component.__style =  new Style(this, component.constructor.styles, component);
   }
   return component.__style;
 }

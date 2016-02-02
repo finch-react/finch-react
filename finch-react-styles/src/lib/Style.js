@@ -2,19 +2,6 @@ import invariant from 'fbjs/lib/invariant';
 import _ from 'lodash';
 import {Platform} from 'react-native';
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-
-let styleId = -1;
-
-let normalize = `
-  .view {
-    position:relative;
-    box-sizing:border-box;
-    display:flex;
-    flex-direction:column;
-   }
-`;
-
 
 export default class Style {
   cssRefsCounter = 0;
@@ -54,8 +41,6 @@ export default class Style {
     display: (value) => null,
   };
 
-  _locals = {};
-
   constructor(theme, styles, component) {
     this._theme = theme;
 
@@ -81,7 +66,6 @@ export default class Style {
     }
 
     this._styles = s;
-    this._id = ++styleId;
     this.buildStyles();
   }
 
@@ -107,89 +91,9 @@ export default class Style {
     return result;
   }
 
-  className(element, props, isMain) {
-    if (!element.props.element && !isMain) {
-      return '';
-    }
-    let elementName = isMain ? "main" : element.props.element;
-    let result = [];
-    let local = this._locals[elementName];
-    if (local) {
-      for (let i = 0; i < local.length; i++) {
-        if (!this.validateProps(local[i], props)) {
-          continue;
-        }
-        result.push(local[i].className);
-      }
-    }
-    var s = _.trim(result.join(' '));
-    return s;
-  }
-
-  static appendStyle(content, id, onServerStyle) {
-    if (!content || !id) {
-      return;
-    }
-    if (canUseDOM) {
-      let style = document.createElement('style');
-      id && style.setAttribute('data-css-id', id);
-      style.type = 'text/css';
-      style.innerHTML = content;
-      document.getElementsByTagName('head')[0].appendChild(style);
-    } else {
-      if (onServerStyle) {
-        onServerStyle(id, content);
-      }
-    }
-  }
-
-  use(context) {
-    console.log("Style.use")
-    if (Platform.OS === 'web') {
-      //TODO грабли
-      if (canUseDOM) {
-        if (!document.querySelectorAll("style[data-css-id='normalize']")[0]) {
-          Style.appendStyle(normalize, "normalize", context.onServerStyle);
-        }
-      } else {
-        Style.appendStyle(normalize, "normalize", context.onServerStyle);
-      }
-      // end грабли
-      let styles = this._css;
-      let id = `s${this._id}`;
-      this.cssRefsCounter++;
-      if (this.cssRefsCounter === 1) {
-        Style.appendStyle(styles, id, context.onServerStyle);
-      }
-      if (!canUseDOM) {
-        this.unuse();
-      }
-    }
-
-    return this;
-  }
-
-  unuse() {
-    console.log("style.unuse")
-    if (Platform.OS === 'web' && canUseDOM) {
-      let id = `s${this._id}`;
-      this.cssRefsCounter--;
-      if (this.cssRefsCounter === 0) {
-        let style = document.querySelectorAll(`style[data-css-id=\'${id}']`);
-        style[0].parentNode.removeChild(style[0]);
-      }
-    }
-    return this;
-  }
-
-  buildClassName(id, name) {
-    return ['c', this._id.toString(32), id.toString(32), name].join('_');
-  }
-
   buildStyles() {
     let locals = {};
     let styles = this._styles;
-    let css = [];
     for (let i = 0; i < styles.length; i++) {
       let style = styles[i];
       for (let name in style) {
@@ -197,16 +101,6 @@ export default class Style {
         if (name.startsWith("$")) {
           continue;
         }
-        if (!locals[name]) {
-          locals[name] = [];
-        }
-        let local = {
-          className: this.buildClassName(i, name)
-        };
-        if (style.$props) {
-          local.$props = style.$props;
-        }
-        locals[name].push(local);
         if (Platform.OS === 'web') {
           let cssRule = {};
           for (let prop in rule) {
@@ -218,7 +112,6 @@ export default class Style {
             }
           }
           style[name] = cssRule;
-          css.push(`.${local.className} {${CSSPropertyOperations.createMarkupForStyles(cssRule)}}\n`);
         } else {
           let mobileRule = {};
           Object.keys(rule).map((name)=>{
@@ -235,10 +128,6 @@ export default class Style {
           style[name] = mobileRule;
         }
       }
-    }
-    this._locals = locals;
-    if (Platform.OS === 'web') {
-      this._css = css.join('');
     }
   }
 
@@ -258,9 +147,5 @@ export default class Style {
       }
     }
     return true;
-  }
-
-  toString() {
-    return this._css;
   }
 }

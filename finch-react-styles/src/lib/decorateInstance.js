@@ -48,7 +48,6 @@ export default function decorateInstance(component) {
       }
       return extraProps;
     });
-    style.render();
     return result;
   };
 

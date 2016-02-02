@@ -5,9 +5,9 @@ import React, {
   Text
 } from 'react-native';
 import FinchReactStyles from 'finch-react-styles';
-let {StyledComponent} = FinchReactStyles;
-
 import ButtonDummy from './ButtonDummy'
+
+let {StyledComponent} = FinchReactStyles;
 
 export default class Button extends StyledComponent {
   static propTypes = {
