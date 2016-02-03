@@ -21,14 +21,14 @@
     "normalize.css": "^3.0.3",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
-    "react-native": "^0.17.0",
+    "react-native": "^0.18.0",
     "react-native-cli": "^0.1.10",
     "react-web": "^0.2.1"
   },
   "devDependencies": {
     "babel-loader": "6.2.1",
     "css-loader": "^0.23.1",
-    "fbjs": "0.3.1",
+    "fbjs": "^0.6.1",
     "haste-resolver-webpack-plugin": "0.1.2",
     "node-libs-browser": "^1.0.0",
     "react-hot-loader": "1.2.7",
