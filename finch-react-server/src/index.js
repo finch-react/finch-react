@@ -8,6 +8,7 @@ import appRunner from './lib/appRunner';
 export default {
   ...React,
   View,
+  ScrollView: View,
   Text,
   Platform,
   AppRegistry: AppRegistry.withAppRunner(appRunner)

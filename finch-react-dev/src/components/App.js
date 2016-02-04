@@ -1,9 +1,11 @@
 import React, {
   Component,
   View,
+  ScrollView,
   Text
 } from 'react-native';
 import Button from './Button'
+import Post from './Post';
 import FinchReactStyles from 'finch-react-styles';
 let {StyledComponent, SwitchTheme} = FinchReactStyles;
 
@@ -14,14 +16,24 @@ export default class App extends StyledComponent {
 
   static styles = T =>[
     {
-      main: {},
+      main: {
+        flexDirection: 'column'
+      },
       button: {
 
       },
       buttonWrapper: {
         flexDirection: "row",
         justifyContent: "flex-start",
-        alignItems: "flex-start"
+        alignItems: "flex-start",
+      },
+      post: {
+        flex: 1,
+        padding: 10,
+        borderWidth: 0,
+        borderBottomWidth: 1,
+        borderColor: 'grey',
+        borderStyle: 'solid',
       }
     },
   ];
@@ -31,7 +43,7 @@ export default class App extends StyledComponent {
   };
 
   render() {
-    return (
+    let a = (
       <View>
         <Text>Color</Text>
         <View element="buttonWrapper">
@@ -59,6 +71,13 @@ export default class App extends StyledComponent {
           <Button color="danger" flex="1" >flex 1</Button>
         </View>
       </View>
+    );
+    return (
+      <ScrollView>
+        <Post element="post" />
+        <Post element="post" />
+        <Post element="post" />
+      </ScrollView>
     );
   }
 }

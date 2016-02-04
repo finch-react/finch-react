@@ -5,5 +5,6 @@ import AppRegistry from './lib/AppRegistry';
 export default {
     ...React,
     View,
+    ScrollView: View,
     AppRegistry
 }

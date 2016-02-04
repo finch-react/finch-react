@@ -24,14 +24,14 @@ var config = {
 module.exports = {
   ip: IP,
   port: PORT,
-  devtool: false,
+  devtool: 'eval',
   resolve: {
     alias: {
       'react-native': path.resolve(__dirname, "../../finch-react-web/src/index.js"),
       'finch-react-styles': path.resolve(__dirname, "../../finch-react-styles/src/index.js"),
       'ReactNativeART': 'react-art'
     },
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.web.js', '.js', '.jsx'],
   },
   entry: isProd ?
     [
@@ -50,7 +50,7 @@ module.exports = {
   plugins: [
     new HasteResolverPlugin({
       platform: 'web',
-      nodeModules: ['react-web']
+      nodeModules: ['react-web'],
     }),
     new webpack.DefinePlugin({
       'process.env': {
