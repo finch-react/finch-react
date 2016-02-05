@@ -120,6 +120,5 @@ if (isProd) {
       regExp: /\.js$|\.html$/
     })
   );
-
 }
 
