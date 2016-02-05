@@ -4,8 +4,8 @@ import React, {
   View,
   Text
 } from 'react-native';
-import FinchReactStyles from 'finch-react-styles';
-let {StyledComponent} = FinchReactStyles;
+import FinchReactCore from 'finch-react-core';
+let {StyledComponent} = FinchReactCore;
 
 export default class ButtonDummy extends StyledComponent {
   static COLORS = ["default", "primary", "success", "info", "warning", "danger"];

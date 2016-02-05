@@ -1,7 +1,7 @@
 import React from 'react-native';
 let { PropTypes, Text } = React;
-import FinchReactStyles from 'finch-react-styles';
-let { StyledComponent } = FinchReactStyles;
+import FinchReactCore from 'finch-react-core';
+let { StyledComponent } = FinchReactCore;
 
 export default class Link extends StyledComponent {
   static propTypes = {

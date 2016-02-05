@@ -7,8 +7,8 @@ import React, {
   Dimensions,
   Platform
 } from 'react-native';
-import FinchReactStyles from 'finch-react-styles';
-let { StyledComponent } = FinchReactStyles;
+import FinchReactCore from 'finch-react-core';
+let { StyledComponent } = FinchReactCore;
 import Button from './Button'
 import Link from './Link';
 

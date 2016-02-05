@@ -6,8 +6,8 @@ import React, {
 } from 'react-native';
 import Button from './Button'
 import Post from './Post';
-import FinchReactStyles from 'finch-react-styles';
-let {StyledComponent, SwitchTheme} = FinchReactStyles;
+import FinchReactCore from 'finch-react-core';
+let {StyledComponent, SwitchTheme} = FinchReactCore;
 
 export default class App extends StyledComponent {
   static defaultProps = {
