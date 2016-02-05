@@ -7,8 +7,8 @@ import React, {
 import App from './components/App';
 import './themes';
 
-AppRegistry.registerComponent('ReactNativeWebExample', () => App);
+AppRegistry.registerComponent('FinchReactDev', () => App);
 
 if (Platform.OS == 'web') {
-  AppRegistry.runApplication('ReactNativeWebExample', {});
+  AppRegistry.runApplication('FinchReactDev', {});
 }
