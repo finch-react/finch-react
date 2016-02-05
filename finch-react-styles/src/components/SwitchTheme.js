@@ -1,6 +1,4 @@
-import React, {
-  Component,
-} from 'react-native';
+import React, { Component } from 'react';
 import Theme from '../lib/Theme';
 
 export default class SwitchTheme extends Component {

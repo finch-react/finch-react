@@ -31,7 +31,7 @@ export default class Post extends StyledComponent {
           </Text>
         </View>
         <View element="imagePlaceholder">
-          <Image element="image" resizeMode='contain' source={{uri:'https://static39.cmtt.ru/club/0e/d0/63/10d1d953f7a872.jpg', width:imgWidth, height:imgHeight}} style={{width:imgWidth, height:imgHeight}} />
+          <Image element="image" source={{uri:'https://static39.cmtt.ru/club/0e/d0/63/10d1d953f7a872.jpg', width:imgWidth, height:imgHeight}} />
         </View>
         <View element="meta">
           <View element="buttons">

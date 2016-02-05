@@ -57,17 +57,27 @@ export default function ServerAppRunner(RootComponent, initialProps, rootTag) {
 }
 
 function htmlHeader({css, body}) {
-  return `<!doctype html><html className="no-js" lang="">
-<head><style id="server-style">${css}</style></head>
-<body>
-<script>
-var script = document.createElement("script");
-script.src = '/public/bundle.js';
-document.body.appendChild(script);
-</script>
-<div id="app">${body}`;
+  return `
+    <!doctype html><html className="no-js" lang="">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+      <style id="server-style">${css}</style>
+    </head>
+    <body>
+      <script>
+        var script = document.createElement("script");
+        script.src = '/public/bundle.js';
+        document.body.appendChild(script);
+      </script>
+      <div id="app">${body}
+  `;
 }
 
 function htmlFooter() {
-  return '\</div></html>';
+  return `
+        </div>
+      </body>
+    </html>
+  `;
 }

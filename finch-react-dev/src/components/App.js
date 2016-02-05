@@ -14,29 +14,25 @@ export default class App extends StyledComponent {
     open: true
   };
 
-  static styles = T =>[
-    {
-      main: {
-        flexDirection: 'column'
-      },
-      button: {
-
-      },
-      buttonWrapper: {
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-      },
-      post: {
-        flex: 1,
-        padding: 10,
-        borderWidth: 0,
-        borderBottomWidth: 1,
-        borderColor: 'grey',
-        borderStyle: 'solid',
-      }
+  static styles = {
+    main: {
+      flexDirection: 'column'
     },
-  ];
+    button: {},
+    buttonWrapper: {
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+    },
+    post: {
+      flex: 1,
+      padding: 10,
+      borderWidth: 0,
+      borderBottomWidth: 1,
+      borderColor: 'grey',
+      borderStyle: 'solid',
+    }
+  };
 
   state = {
     isActive: false
@@ -67,16 +63,16 @@ export default class App extends StyledComponent {
           <Button color="primary" flex="2">flex 2</Button>
           <Button color="success" flex="3">flex 3</Button>
           <Button color="info" flex="4">flex 4</Button>
-          <Button color="warning" flex="1" >flex 1</Button>
-          <Button color="danger" flex="1" >flex 1</Button>
+          <Button color="warning" flex="1">flex 1</Button>
+          <Button color="danger" flex="1">flex 1</Button>
         </View>
       </View>
     );
     return (
       <ScrollView>
-        <Post element="post" />
-        <Post element="post" />
-        <Post element="post" />
+        <Post element="post"/>
+        <Post element="post"/>
+        <Post element="post"/>
       </ScrollView>
     );
   }

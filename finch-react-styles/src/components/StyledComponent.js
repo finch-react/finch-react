@@ -1,7 +1,5 @@
-import React, {
-  Component
-} from 'react-native';
 import decorateInstance from '../lib/decorateInstance';
+import React, { Component } from 'react';
 
 export default class StyledComponent extends Component {
   static contextTypes = {

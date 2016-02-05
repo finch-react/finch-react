@@ -1,5 +1,5 @@
-import React from 'react-native';
 import warning from 'fbjs/lib/warning';
+import React from 'react';
 
 export default function reactTransform(element, callback, isMain=true) {
   warning(!(isMain && element.props.element && "main" !== element.props.element),

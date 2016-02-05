@@ -1,46 +1,8 @@
+import transformStyles from './transformStyles';
 import invariant from 'fbjs/lib/invariant';
 import _ from 'lodash';
-import {Platform} from 'react-native';
-import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 
 export default class Style {
-  cssRefsCounter = 0;
-
-  static stylesToWeb = {
-    flex: (value)=>({
-      flex: value,
-      display: 'flex',
-    }),
-    shadowOpacity: (value, rule) => ({
-      boxShadow: `${(rule.shadowOffset) ? rule.shadowOffset.width : 0}px ${(rule.shadowOffset) ? rule.shadowOffset.height : -3}px ${rule.shadowRadius || 10}px ${rule.shadowColor || 'rgba(0,0,0,' + value + ')'}`
-    }),
-    shadowOffset: () => null,
-    shadowRadius: () => null,
-    shadowColor: () => null,
-    paddingVertical: (value) => ({
-      paddingTop: value,
-      paddingBottom: value
-    }),
-    paddingHorizontal: (value) => ({
-      paddingLeft: value,
-      paddingRight: value
-    }),
-    marginVertical: (value) => ({
-      marginTop: value,
-      marginBottom: value
-    }),
-    marginHorizontal: (value) => ({
-      marginLeft: value,
-      marginRight: value
-    }),
-
-  };
-
-  static stylesToMobile = {
-    cursor: (value) => null,
-    display: (value) => null,
-  };
-
   constructor(theme, styles, component) {
     this._theme = theme;
 
@@ -103,32 +65,23 @@ export default class Style {
         if (name.startsWith("$")) {
           continue;
         }
-        if (Platform.OS === 'web') {
-          let cssRule = {};
-          for (let prop in rule) {
-            let styleToWeb = Style.stylesToWeb[prop];
-            if (styleToWeb) {
-              Object.assign(cssRule, styleToWeb(rule[prop], rule));
-            } else {
-              cssRule[prop] = rule[prop];
-            }
+        let cssRule = {};
+        Object.keys(rule).forEach((name)=> {
+          let result = rule[name];
+          if (transformStyles[name]) {
+            result = transformStyles[name](result, rule);
           }
-          style[name] = cssRule;
-        } else {
-          let mobileRule = {};
-          Object.keys(rule).map((name)=>{
-            let result = rule[name];
-            if (Style.stylesToMobile[name]) {
-              result = Style.stylesToMobile[name](result, rule);
-            }
-            if (result) {
-              let r = {};
+          if (result !== null) {
+            let r = {};
+            if (_.isPlainObject(result)) {
+              r = result;
+            } else {
               r[name] = result;
-              Object.assign(mobileRule, r);
             }
-          });
-          style[name] = mobileRule;
-        }
+            Object.assign(cssRule, r);
+          }
+        });
+        style[name] = cssRule;
       }
     }
   }

@@ -1,6 +1,6 @@
-import Theme from './Theme';
 import reactTransform from './reactTransform';
 import warning from 'fbjs/lib/warning';
+import Theme from './Theme';
 import _ from 'lodash';
 
 export default function decorateInstance(component) {

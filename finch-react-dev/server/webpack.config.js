@@ -32,7 +32,7 @@ module.exports = {
       'finch-react-styles': path.resolve(__dirname, "../../finch-react-styles/src/index.js"),
       'ReactNativeART': 'react-art'
     },
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.web.js', '.js', '.jsx'],
   },
   entry: [
     config.paths.index

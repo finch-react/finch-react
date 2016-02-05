@@ -1,9 +1,7 @@
-import invariant from 'fbjs/lib/invariant';
-import _ from 'lodash';
-import Style from './Style';
-import {Platform} from 'react-native';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-
+import invariant from 'fbjs/lib/invariant';
+import Style from './Style';
+import _ from 'lodash';
 
 const DEFAULT_NAME = 'default';
 

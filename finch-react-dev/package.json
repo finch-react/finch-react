@@ -16,7 +16,8 @@
     "babel-preset-stage-0": "^6.3.13",
     "compression-webpack-plugin": "^0.2.0",
     "finch-react-styles": "../finch-react-styles",
-    "json-loader": "0.5.2",
+    "finch-react-web": "../finch-react-web",
+    "json-loader": "^0.5.2",
     "lodash": "^4.0.0",
     "normalize.css": "^3.0.3",
     "react": "^0.14.6",
@@ -26,16 +27,16 @@
     "react-web": "^0.2.1"
   },
   "devDependencies": {
-    "babel-loader": "6.2.1",
+    "babel-loader": "^6.2.1",
     "css-loader": "^0.23.1",
     "fbjs": "^0.6.1",
-    "haste-resolver-webpack-plugin": "0.1.2",
+    "haste-resolver-webpack-plugin": "^0.1.2",
     "node-libs-browser": "^1.0.0",
-    "react-hot-loader": "1.2.7",
+    "react-hot-loader": "^1.2.7",
     "style-loader": "^0.13.0",
     "underscore": "^1.8.3",
-    "webpack": "1.9.10",
-    "webpack-dev-server": "1.9.0",
-    "webpack-html-plugin": "0.1.1"
+    "webpack": "^1.9.10",
+    "webpack-dev-server": "^1.9.0",
+    "webpack-html-plugin": "^0.1.1"
   }
 }
