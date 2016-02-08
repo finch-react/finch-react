@@ -1,17 +1,12 @@
 {
   "name": "finch-react-core",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
   "main": "./src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/finch-react/finch-react-core.git"
   },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/finch-react/finch-react-core/issues"
-  },
+  "bugs": "https://github.com/finch-react/finch-react-core/issues",
   "homepage": "https://github.com/finch-react/finch-react-core",
   "dependencies": {
     "fbjs": "^0.6.1",
