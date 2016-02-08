@@ -1,17 +1,13 @@
 {
   "name": "finch-react-server",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
   "main": "./src/index.js",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/finch-react/finch-react-server.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/finch-react/finch-react-server/issues"
-  },
+  "bugs": "https://github.com/finch-react/finch-react-server/issues",
   "homepage": "https://github.com/finch-react/finch-react-server#readme",
   "dependencies": {
     "express": "4.13.3",

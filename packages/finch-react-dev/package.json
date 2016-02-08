@@ -1,6 +1,7 @@
 {
-  "name": "react-native-web-dev",
-  "version": "0.0.1",
+  "name": "finch-react-dev",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
     "start": "react-native start",
     "web-dev": "node web/start-dev-server",
@@ -10,8 +11,9 @@
     "server-bundle": "NODE_ENV=production webpack --config server/webpack.config.js --colors"
   },
   "dependencies": {
-    "finch-react-core": "../finch-react-core",
-    "finch-react-web": "../finch-react-web",
+    "finch-react-core": "*",
+    "finch-react-web": "*",
+    "finch-react-server": "*",
     "lodash": "^4.0.0",
     "normalize.css": "^3.0.3",
     "react": "^0.14.6",
