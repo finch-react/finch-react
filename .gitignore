@@ -1,5 +1,6 @@
 # OSX
 #
+*~
 .DS_Store
 
 # Xcode
@@ -26,6 +27,7 @@ project.xcworkspace
 .idea
 .gradle
 local.properties
+build
 
 # node.js
 #
