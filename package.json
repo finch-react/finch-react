@@ -13,6 +13,7 @@
   "homepage": "https://github.com/finch-react/finch-react",
   "scripts": {
     "install": "sh install.sh",
+    "clear": "sh clear.sh",
     "start": "cd packages/finch-react-dev && npm run web-dev && cd -"
   }
 }
