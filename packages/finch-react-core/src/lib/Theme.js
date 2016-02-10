@@ -29,7 +29,6 @@ function themeFunction(name, def) {
 
 function unmount(component) {
   if (component.__style) {
-    component.__style.unuse();
     delete component.__theme.componentStyles[component.constructor._id];
   }
 }
