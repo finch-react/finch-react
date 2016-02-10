@@ -27,8 +27,8 @@ module.exports = {
   devtool: 'eval',
   resolve: {
     alias: {
-      'react-native': path.resolve(__dirname, "../../finch-react-web/src/index.js"),
-      'finch-react-core': path.resolve(__dirname, "../../finch-react-core/src/index.js"),
+      'react-native': path.resolve(__dirname, "../../../finch-react-web/src/index.js"),
+      'finch-react-core': path.resolve(__dirname, "../../../finch-react-core/src/index.js"),
       'ReactNativeART': 'react-art'
     },
     extensions: ['', '.web.js', '.js', '.jsx'],
@@ -44,7 +44,7 @@ module.exports = {
       config.paths.index,
     ],
   output: {
-    path: path.join(__dirname, 'output'),
+    path: path.join(__dirname, '../../output/web'),
     filename: 'bundle.js'
   },
   plugins: [
@@ -98,8 +98,8 @@ module.exports = {
           ],
         include: [
           config.paths.src,
-          path.resolve(__dirname, "../../finch-react-core/src/"),
-          path.resolve(__dirname, "../../finch-react-web/src/")
+          path.resolve(__dirname, "../../../finch-react-core/src/"),
+          path.resolve(__dirname, "../../../finch-react-web/src/")
         ],
         exclude: [
           /node_modules/,

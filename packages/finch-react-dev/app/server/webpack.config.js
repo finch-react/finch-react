@@ -27,9 +27,9 @@ module.exports = {
   target: 'node',
   resolve: {
     alias: {
-      'react-native': path.resolve(__dirname, "../../finch-react-server/src/index.js"),
-      'finch-react-web': path.resolve(__dirname, "../../finch-react-web/src/index.js"),
-      'finch-react-core': path.resolve(__dirname, "../../finch-react-core/src/index.js"),
+      'react-native': path.resolve(__dirname, "../../../finch-react-server/src/index.js"),
+      'finch-react-web': path.resolve(__dirname, "../../../finch-react-web/src/index.js"),
+      'finch-react-core': path.resolve(__dirname, "../../../finch-react-core/src/index.js"),
       'ReactNativeART': 'react-art'
     },
     extensions: ['', '.web.js', '.js', '.jsx'],
@@ -38,7 +38,7 @@ module.exports = {
     config.paths.index
   ],
   output: {
-    path: path.join(__dirname, 'output'),
+    path: path.join(__dirname, '../../output/server'),
     filename: 'bundle.js',
     libraryTarget: 'commonjs2'
   },
@@ -71,9 +71,9 @@ module.exports = {
         })],
         include: [
           config.paths.src,
-          path.resolve(__dirname, "../../finch-react-core/src/"),
-          path.resolve(__dirname, "../../finch-react-web/src/"),
-          path.resolve(__dirname, "../../finch-react-server/src/")
+          path.resolve(__dirname, "../../../finch-react-core/src/"),
+          path.resolve(__dirname, "../../../finch-react-web/src/"),
+          path.resolve(__dirname, "../../../finch-react-server/src/")
         ],
         exclude: [
           /node_modules/,
