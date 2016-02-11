@@ -6,9 +6,11 @@ import React, {
 } from 'react-native';
 import App from './components/App';
 import './themes';
-
-AppRegistry.registerComponent('FinchReactDev', () => App);
+import routes from './routes';
 
 if (Platform.OS == 'web') {
-  AppRegistry.runApplication('FinchReactDev', {});
+  AppRegistry.registerComponent('FinchReactDev', () => {});
+  AppRegistry.runApplication('FinchReactDev', {initialProps:{routes}});
+} else {
+  AppRegistry.registerComponent('FinchReactDev', () => App);
 }

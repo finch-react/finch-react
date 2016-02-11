@@ -1,8 +1,9 @@
-import {
+import React, {
+  Component,
   PropTypes,
 } from 'react';
 
-export default class {
+export default class extends Component {
   static childContextTypes = {
     model: PropTypes.any,
     onServerStyle: PropTypes.func

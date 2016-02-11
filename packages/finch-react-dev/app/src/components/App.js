@@ -38,36 +38,22 @@ export default class App extends StyledComponent {
     isActive: false
   };
 
+  componentWillMount() {
+    if (typeof window !== 'undefined') {
+      if (window.hydrated_model) {
+        window.hydrated_model.forEach((model)=>{
+          console.log("Hydrate " + JSON.stringify(model));
+          this.setState(model);
+        });
+        window.hydrate = (model) => {
+          console.log("Hydrate " + JSON.stringify(model));
+          this.setState(model);
+        }
+      }
+    }
+  }
+
   render() {
-    let a = (
-      <View>
-        <Text>Color</Text>
-        <View element="buttonWrapper">
-          <Button>default</Button>
-          <Button color="primary">primary</Button>
-          <Button color="success">success</Button>
-          <Button color="info">info</Button>
-          <Button color="warning">warning</Button>
-          <Button color="danger">danger</Button>
-        </View>
-        <Text>Size</Text>
-        <View element="buttonWrapper">
-          <Button size="tiny">tiny</Button>
-          <Button size="small">small</Button>
-          <Button>medium</Button>
-          <Button size="large">large</Button>
-        </View>
-        <Text>Flex layout</Text>
-        <View element="buttonWrapper">
-          <Button flex="1">flex 1</Button>
-          <Button color="primary" flex="2">flex 2</Button>
-          <Button color="success" flex="3">flex 3</Button>
-          <Button color="info" flex="4">flex 4</Button>
-          <Button color="warning" flex="1">flex 1</Button>
-          <Button color="danger" flex="1">flex 1</Button>
-        </View>
-      </View>
-    );
     return (
       <ScrollView>
         <Post element="post"/>
