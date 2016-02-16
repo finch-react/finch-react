@@ -3,6 +3,8 @@ import React, {
   PropTypes,
   Platform
 } from 'react-native';
+import FinchReactCore from 'finch-react-core';
+let { StyledComponent } = FinchReactCore;
 
 export default class extends Component {
   static propTypes = {
