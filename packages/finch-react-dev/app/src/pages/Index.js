@@ -4,7 +4,7 @@ import React, {
   Platform,
   View,
   Text,
-  LinkingIOS,
+  Linking,
   TouchableHighlight
 } from 'react-native';
 import Page from '../lib/Page';
@@ -35,6 +35,6 @@ export default class extends Page {
   }
 
   _onPressButton() {
-    LinkingIOS.openURL('finch:///awesomePage')
+    Linking.openURL('finch:///awesomePage')
   }
 }
