@@ -1,65 +1,87 @@
 import React, {
   Component,
+  Linking,
+  Navigator,
   View,
-  ScrollView,
   Text
 } from 'react-native';
-import Button from './Button'
-import Post from './Post';
-import FinchReactCore from 'finch-react-core';
-let {StyledComponent, SwitchTheme} = FinchReactCore;
+import FinchReactRouting from 'finch-react-routing';
+import eventEmitterFactory from 'event-emitter';
+import routes from '../routes';
 
-export default class App extends StyledComponent {
-  static defaultProps = {
-    open: true
-  };
+let  {routerFactory, delay, modelInitialization} = FinchReactRouting;
+const router = routerFactory(routes);
 
-  static styles = {
-    main: {
-      flexDirection: 'column'
-    },
-    button: {},
-    buttonWrapper: {
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      alignItems: "flex-start",
-    },
-    post: {
-      flex: 1,
-      padding: 10,
-      borderWidth: 0,
-      borderBottomWidth: 1,
-      borderColor: 'grey',
-      borderStyle: 'solid',
-    }
-  };
-
-  state = {
-    isActive: false
-  };
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
 
   componentWillMount() {
-    if (typeof window !== 'undefined') {
-      if (window.hydrated_model) {
-        window.hydrated_model.forEach((model)=>{
-          console.log("Hydrate " + JSON.stringify(model));
-          this.setState(model);
-        });
-        window.hydrate = (model) => {
-          console.log("Hydrate " + JSON.stringify(model));
-          this.setState(model);
+    Linking.addEventListener('url', this._handleUrlListener = this._handleUrl.bind(this));
+  }
+
+  componentWillUnmount() {
+    Linking.removeEventListener('url', this._handleUrlListener);
+  }
+
+  async _handleUrl(event) {
+    let url = event.url || 'finch:///';
+    let path = '/' + url.split('/').splice(3).filter(path=>path).join('/');
+    let routes = this.refs.navigator.getCurrentRoutes();
+
+    let replace;
+    if (routes[routes.length - 1] && routes[routes.length - 1].path === path) {
+      replace = true;
+    }
+
+    let alreadyInRouteStack;
+    if (!replace) {
+      routes.forEach(route => {
+        if (route.path === path) {
+          alreadyInRouteStack = route;
         }
+      });
+    }
+
+    if (alreadyInRouteStack) {
+      this.refs.navigator.popToRoute(alreadyInRouteStack);
+    } else {
+      let routedComponent;
+      let modelEmitter = eventEmitterFactory({});
+      await router.dispatch({path}, (_, RoutedComponent) => {
+        //legacy for babel6 module system
+        RoutedComponent = 'default' in RoutedComponent ? RoutedComponent['default'] : RoutedComponent;
+        routedComponent = <RoutedComponent modelEmitter={modelEmitter} />;
+        if (replace) {
+          this.refs.navigator.replace({routedComponent, path});
+        } else {
+          this.refs.navigator.push({routedComponent, path});
+        }
+      });
+
+      if (routedComponent.type.model) {
+        await modelInitialization(routedComponent.type.model, modelEmitter, {}, 300);
       }
     }
   }
 
   render() {
+    return <Navigator ref="navigator"
+      initialRoute={{path: '/', index: 0}}
+      renderScene={this._renderScene.bind(this)}
+      navigationBar={<View><Text>Finch</Text></View>}
+    />
+  }
+
+  _renderScene(route, navigator) {
     return (
-      <ScrollView>
-        <Post element="post"/>
-        <Post element="post"/>
-        <Post element="post"/>
-      </ScrollView>
+      route.routedComponent ? <View>{route.routedComponent}</View> : <View><Text>Loading...</Text></View>
     );
+  }
+
+  componentDidMount() {
+    Linking.getInitialURL().then(url=>!url && Linking.openURL('finch:///'));
   }
 }

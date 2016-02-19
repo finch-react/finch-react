@@ -1,18 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react-native';
 
 export default class extends Component {
   render() {
-    return (<div>{this.props.state.statusCode}: {this.props.state.path}</div>);
+    return (<View>{this.props.state.statusCode}: {this.props.state.path}</View>);
   }
 }
-
-//var FetchStream = require("fetch").FetchStream;
-//var fetch = new FetchStream("http://localhost:5000", {
-//  headers: {
-//    'Accept': 'application/json'
-//  }
-//});
-//fetch.on("data", function(chunk){
-//  console.log("!!!!!!!!!!!!");
-//  console.log(chunk.toString('utf-8'));
-//});

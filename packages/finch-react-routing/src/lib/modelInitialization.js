@@ -19,7 +19,7 @@ export default async function (model, modelEmitter, params, PAGE_INIT_TIMEOUT) {
       promise.then(result => {
         emitModel[promise._key] = result;
         clearTimeout(timer);
-        console.log('emit model', promise_.key, emitModel);
+        console.log('emit model', promise.key, emitModel);
         timer = setTimeout(modelEmitter.emit.bind(modelEmitter, 'model', emitModel), 0);
       });
     } else {
