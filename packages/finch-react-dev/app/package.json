@@ -19,6 +19,7 @@
     "compression-webpack-plugin": "^0.2.0",
     "css-loader": "^0.23.1",
     "event-emitter": "^0.3.4",
+    "express": "4.13.3",
     "fbjs": "^0.6.1",
     "fetch": "^1.0.0",
     "fetch-promise": "^1.0.1",
@@ -38,6 +39,7 @@
     "react-native-cli": "^0.1.10",
     "react-web": "^0.2.1",
     "style-loader": "^0.13.0",
+    "uuid": "^2.0.1",
     "webpack": "^1.9.10",
     "webpack-dev-server": "^1.9.0",
     "webpack-html-plugin": "^0.1.1"

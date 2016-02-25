@@ -1,14 +1,12 @@
 import React, {
   Component,
-  PropTypes,
-  Platform
+  PropTypes
 } from 'react-native';
-import FinchReactCore from 'finch-react-core';
-let { StyledComponent } = FinchReactCore;
 
 export default class extends Component {
   static propTypes = {
-    modelEmitter: PropTypes.any
+    modelEmitter: PropTypes.any,
+    initialModel: PropTypes.any
   };
 
   static childContextTypes = {
@@ -20,12 +18,15 @@ export default class extends Component {
     super();
     if (this.constructor.model) {
       this.state = {};
-      Object.keys(this.constructor.model).forEach(key => this.state[key] = void(0));
+      Object.keys(this.constructor.model).forEach(key => this.state[key] = this.constructor.model[key]._value );
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.modelEmitter.on('model', (model)=>{
+      if ('_model' in model) {
+        model = model['_model'];
+      }
       this.setState(model);
     });
   }

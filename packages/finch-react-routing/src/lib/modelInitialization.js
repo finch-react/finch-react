@@ -4,13 +4,23 @@ import proxy from './modelProxy';
 export default async function (model, modelEmitter, params, PAGE_INIT_TIMEOUT) {
   let timer;
   let emitModel = {};
+
+  if (typeof model === 'function') {
+    model = {'_model': model}
+  }
   let modelProxy = proxy(model, params);
 
   let modelPromises = Object.keys(modelProxy).map(key => {
     let promiseFunc = modelProxy[key];
     let promise = promiseFunc(params);
     promise._key = key;
-    promise.then(value => promise._value = value);
+    promise.then(value => {
+      promise._value = value;
+      Object.defineProperty(model[key], '_value', {
+        enumerable: false,
+        value: value
+      });
+    });
     return promise;
   });
 
@@ -19,7 +29,6 @@ export default async function (model, modelEmitter, params, PAGE_INIT_TIMEOUT) {
       promise.then(result => {
         emitModel[promise._key] = result;
         clearTimeout(timer);
-        console.log('emit model', promise.key, emitModel);
         timer = setTimeout(modelEmitter.emit.bind(modelEmitter, 'model', emitModel), 0);
       });
     } else {

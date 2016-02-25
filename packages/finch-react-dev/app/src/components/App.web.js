@@ -1,65 +1,54 @@
-import React, {
-  Component,
-  View,
-  ScrollView,
-  Text
-} from 'react-native';
-import Button from './Button'
-import Post from './Post';
-import FinchReactCore from 'finch-react-core';
-let {StyledComponent, SwitchTheme} = FinchReactCore;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import normalize from 'normalize.css';
+import fonts from '../fonts/PTSansWeb/PTS55F_stylesheet.css';
+import {WithContext, routerFactory, delay, Location, modelInitialization} from 'finch-react-routing';
+import eventEmitterFactory from 'event-emitter';
+import routes from '../routes';
 
-export default class App extends StyledComponent {
-  static defaultProps = {
-    open: true
-  };
+const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 0;
 
-  static styles = {
-    main: {
-      flexDirection: 'column'
-    },
-    button: {},
-    buttonWrapper: {
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      alignItems: "flex-start",
-    },
-    post: {
-      flex: 1,
-      padding: 10,
-      borderWidth: 0,
-      borderBottomWidth: 1,
-      borderColor: 'grey',
-      borderStyle: 'solid',
-    }
-  };
+export default function ClientAppRunner() {
+  const router = routerFactory(routes);
 
-  state = {
-    isActive: false
-  };
+  let currentLocation = null;
+  let currentState = null;
 
-  componentWillMount() {
-    if (typeof window !== 'undefined') {
-      if (window.hydrated_model) {
-        window.hydrated_model.forEach((model)=>{
-          console.log("Hydrate " + JSON.stringify(model));
-          this.setState(model);
-        });
-        window.hydrate = (model) => {
-          console.log("Hydrate " + JSON.stringify(model));
-          this.setState(model);
-        }
-      }
-    }
+  // Re-render the app when window.location changes
+  const unlisten = Location.listen(location => {
+    currentLocation = location;
+    currentState = Object.assign({}, location.state, {
+      path: location.pathname,
+      query: location.query,
+      state: location.state,
+    });
+    render(currentState, router);
+  });
+}
+
+async function render(state, router) {
+  let element = document.getElementById("app");
+  if (!element) {
+    element = document.createElement("div");
+    document.body.appendChild(element);
   }
 
-  render() {
-    return (
-      <ScrollView>
-        <Post element="post"/>
-        <Post element="post"/>
-        <Post element="post"/>
-      </ScrollView>
-    );
+  let routedComponent;
+  let modelEmitter = eventEmitterFactory({});
+  await router.dispatch(state, (_, RoutedComponent) => {
+    routedComponent = <RoutedComponent modelEmitter={modelEmitter} {...Object.assign({state}, state.params)} />;
+  });
+
+  if (routedComponent.type.model) {
+    await modelInitialization(routedComponent.type.model, modelEmitter, state.params, PAGE_INIT_TIMEOUT);
   }
+
+  ReactDOM.render(routedComponent, element);
+
+  let serverstyle = document.getElementById("server-style");
+  if (serverstyle) {
+    serverstyle.parentNode.removeChild(serverstyle);
+  }
+  normalize.use();
+  fonts.use();
 }

@@ -23,7 +23,7 @@ var config = {
 module.exports = {
   ip: IP,
   port: PORT,
-  devtool: false,
+  devtool: 'cheap-eval',
   target: 'node',
   resolve: {
     alias: {
@@ -33,7 +33,7 @@ module.exports = {
       'finch-react-routing': path.resolve(__dirname, "../../../finch-react-routing/src/index.js"),
       'ReactNativeART': 'react-art'
     },
-    extensions: ['', '.web.js', '.js', '.jsx'],
+    extensions: ['', '.server.js', '.web.js', '.js', '.jsx'],
   },
   entry: [
     config.paths.index
@@ -65,7 +65,7 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loaders: ['react-hot', 'babel-loader?' + JSON.stringify({
+        loaders: ['babel-loader?' + JSON.stringify({
           cacheDirectory: true,
           presets: ['es2015', 'stage-0', 'react'],
           plugins: ['add-module-exports']

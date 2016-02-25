@@ -1,4 +1,7 @@
-import React, {Component} from 'react-native';
+import React, {
+  Component,
+  View
+} from 'react-native';
 
 export default class extends Component {
   render() {
