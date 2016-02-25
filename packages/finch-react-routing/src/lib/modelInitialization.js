@@ -1,5 +1,6 @@
 import delay from './delay';
 import proxy from './modelProxy';
+import toPromise from './toPromise';
 import _ from 'lodash';
 
 export default async function (model, modelEmitter, params, PAGE_INIT_TIMEOUT) {
@@ -9,18 +10,14 @@ export default async function (model, modelEmitter, params, PAGE_INIT_TIMEOUT) {
   if (typeof model === 'function') {
     model = {'_model': model}
   }
-  let modelProxy = proxy(model, params);
 
+  let modelProxy = proxy(model, params);
   let modelPromises = Object.keys(modelProxy).map(key => {
     let promiseFunc = modelProxy[key];
-    let promise = promiseFunc(params);
-    if (typeof promise.then !== 'function') {
-      promise = deepPromise(promise, params);
-    }
+    let promise = toPromise(promiseFunc(params), params);
     promise._key = key;
     promise.then(value => {
-      promise._value = value;
-      Object.defineProperty(model[key], '_value', {
+      Object.defineProperty(Object(model[key]), '_value', {
         enumerable: false,
         value: value
       });
