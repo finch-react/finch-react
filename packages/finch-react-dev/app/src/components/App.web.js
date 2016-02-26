@@ -30,6 +30,7 @@ async function render(state, router) {
   let element = document.getElementById("app");
   if (!element) {
     element = document.createElement("div");
+    element.setAttribute("id", "app");
     document.body.appendChild(element);
   }
 
@@ -40,9 +41,9 @@ async function render(state, router) {
   });
 
   if (routedComponent.type.model) {
-    await modelInitialization(routedComponent.type.model, modelEmitter, state.params, PAGE_INIT_TIMEOUT);
+    await modelInitialization(routedComponent.type.model, modelEmitter, state.query, PAGE_INIT_TIMEOUT);
   }
-
+  
   ReactDOM.render(routedComponent, element);
 
   let serverstyle = document.getElementById("server-style");

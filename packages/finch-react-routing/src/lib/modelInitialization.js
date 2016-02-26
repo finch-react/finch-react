@@ -1,7 +1,6 @@
 import delay from './delay';
 import proxy from './modelProxy';
 import toPromise from './toPromise';
-import _ from 'lodash';
 
 export default async function (model, modelEmitter, params, PAGE_INIT_TIMEOUT) {
   let timer;
@@ -19,6 +18,7 @@ export default async function (model, modelEmitter, params, PAGE_INIT_TIMEOUT) {
     promise.then(value => {
       Object.defineProperty(Object(model[key]), '_value', {
         enumerable: false,
+        writable: true,
         value: value
       });
     });
@@ -45,35 +45,3 @@ export default async function (model, modelEmitter, params, PAGE_INIT_TIMEOUT) {
 
   Promise.all(modelPromises).then(values => modelEmitter.emit('end', emitModel));
 };
-
-function deepPromise(obj, params) {
-  return new Promise((resolve, reject) => {
-    if (_.isPlainObject(obj)) {
-      let promises = objectToPromises(obj, params);
-      Promise.all(Object.values(promises)).then((values)=>{
-        let result = {};
-        Object.keys(promises).map((key, i) => {
-          result[key] = values[i];
-        })
-        resolve(result);
-      });
-    } else {
-      resolve(obj);
-    }
-  });
-}
-
-function objectToPromises(obj, params) {
-  let promises = {};
-  Object.keys(obj).map(key => {
-    let value = obj[key];
-    if (typeof value === 'function') {
-      value = value(params);
-    }
-    if (typeof value.then !== 'function') {
-      value = (value => new Promise(resolve => resolve(value)))(value);
-    }
-    promises[key] = value;
-  });
-  return promises;
-}

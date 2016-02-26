@@ -5,11 +5,7 @@ export default function(promises, params) {
     let promiseFunc = promises[key];
     promisesProxy[key] = (params) => {
       if (!invoked) {
-        if (typeof promiseFunc === 'function') {
-          invoked = promiseFunc.call(promisesProxy, params);
-        } else {
-          invoked = promiseFunc;
-        }
+        invoked = promiseFunc.call(promisesProxy, params);
       }
       return invoked;
     }

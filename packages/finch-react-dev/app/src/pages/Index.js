@@ -3,62 +3,78 @@ import React, {
   PropTypes,
   Platform,
   View,
+  ScrollView,
   Text,
   Linking
 } from 'react-native';
+import fetch from 'isomorphic-fetch';
 import Page from '../lib/Page';
-import FinchReactRouting from 'finch-react-routing';
-let {delay} = FinchReactRouting;
+import FinchReactCore from 'finch-react-core';
+let { StyledComponent } = FinchReactCore;
+import Link from '../components/Link';
 
-export default class extends Page {
-
-  // Вариант модели, возвращающий один объект с полями
-  // static async model() {
-  //   await delay(1000);
-  //   return {
-  //     foo: 2
-  //   }
-  // }
-
-  // Вариант модели, разбитой на несколько полей
-  static model = {
-    async foo(p) {
-      await delay(1000);
-      return 1;
-    },
-    bar: 2,
-    baz: (params) => ({
-      async foo() {
-        return 3;
+class RedditItem extends StyledComponent {
+  static propTypes = {
+    id: PropTypes.string,
+    title: PropTypes.string
+  }
+  static styles(T) {
+    return {
+      main: {
+        padding: 10,
+        borderWidth: 1,
+        borderColor: 'black',
+        borderStyle: 'solid'
       },
-      bar: new class {
-        foo = delay(3000, 'new class')
+      text: {
+        color: 'red'
       }
-    }),
-    baz2: [
-      delay(2000, 'item 1'),
-      delay(1000, 'item 2'),
-      delay(3000, 'item 3'),
-    ]
-  };
+    }
+  }
+  render() {
+    return (
+      <View>
+        <Text element="text">{this.props.title}</Text>
+      </View>
+    )
+  }
+}
 
-  // Ещё вариант модели
-  // static model = ({...params}) => ({
-  //   async foo() {
-  //     await delay(1000);
-  //     return 2;
-  //   },
-  //   bar: 1
-  // })
-
+class RedditList extends StyledComponent {
+  static propTypes = {
+    title: PropTypes.string,
+    items: PropTypes.any
+  }
 
   render() {
-    console.log(this.state);
     return (
-      <View style={{paddingTop: 20}}>
-        <Text>Beginning...</Text>
-        {this.state.foo && <Text>{this.state.foo}</Text>}
+      <View>
+        {this.props.items.map(item => <RedditItem key={item.data.id} {...item.data} />)}
       </View>
+    )
+  }
+}
+
+export default class extends Page {
+  static model(params) {
+    const lists = {
+      'new': 'https://www.reddit.com/new.json?limit=5',
+      'hot': 'https://www.reddit.com/hot.json?limit=5',
+      'top': 'https://www.reddit.com/top.json?limit=5'
+    }
+    return fetch(lists[params.list || 'top']).then(response => response.json())
+  };
+
+  render() {
+    return (
+      <ScrollView style={{paddingTop: 20}}>
+      <View>
+        <Link href='/?list=new'>Новое</Link>
+        <Link href='/?list=hot'>Горячее</Link>
+        <Link href='/?list=top'>Лучшее</Link>
+      </View>
+      { this.state.data && <RedditList items={this.state.data.children} /> }
+      </ScrollView>
     );
   }
 }

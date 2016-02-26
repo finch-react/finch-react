@@ -2,6 +2,7 @@ import React, {
   Component,
   PropTypes
 } from 'react-native';
+import allOff from 'event-emitter/all-off';
 
 export default class extends Component {
   static propTypes = {
@@ -23,12 +24,33 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    this.props.modelEmitter.on('model', (model)=>{
-      if ('_model' in model) {
-        model = model['_model'];
+    this._listenModelEmitter(this.props.modelEmitter);
+  }
+
+  componentDidUpdate(prevProps) {
+    this._listenModelEmitter(this.props.modelEmitter, prevProps.modelEmitter)
+  }
+
+  _listenModelEmitter(modelEmitter, prevModelEmitter) {
+    let subscribe = false;
+
+    if (prevModelEmitter) {
+      if (prevModelEmitter !== modelEmitter) {
+        allOff(prevModelEmitter);
+        subscribe = true;
       }
-      this.setState(model);
-    });
+    } else {
+      subscribe = true;
+    }
+
+    if (subscribe) {
+      modelEmitter.on('model', (model)=>{
+        if ('_model' in model) {
+          model = model['_model'];
+        }
+        this.setState(model);
+      });
+    }
   }
 
   getChildContext() {
