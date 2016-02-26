@@ -8,6 +8,7 @@ import Dimensions from './lib/Dimensions';
 export default {
   ...React,
   View,
+  ScrollView: View,
   Text,
   Image,
   Platform,

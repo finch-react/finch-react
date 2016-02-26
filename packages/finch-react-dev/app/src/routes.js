@@ -1,6 +1,5 @@
 export default {
-  '/': require('./pages/Index'),
+  '/:list?': require('./pages/Index'),
   'error': require('./pages/Error'),
-
-  '/awesomePage': require('./pages/Awesome'),
+  '/comments/:id/:sort?': require('./pages/Post'),
 }

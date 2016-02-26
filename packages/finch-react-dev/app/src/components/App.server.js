@@ -39,9 +39,11 @@ export default function ServerAppRunner() {
         }
       };
 
+      let routedState;
       let routedComponent;
       let modelEmitter = eventEmitterFactory({});
       await router.dispatch({path: req.path, context}, (state, RoutedComponent) => {
+        routedState = state;
         routedComponent = <RoutedComponent modelEmitter={modelEmitter} context={context} {...Object.assign({state}, state.params)} />;
       });
       if (routedComponent == null) {
@@ -49,7 +51,7 @@ export default function ServerAppRunner() {
       }
 
       if (routedComponent.type.model) {
-        await modelInitialization(routedComponent.type.model, modelEmitter, req.params, PAGE_INIT_TIMEOUT);
+        await modelInitialization(routedComponent.type.model, modelEmitter, routedState.params, PAGE_INIT_TIMEOUT);
       }
 
       if (req.accepts('html')) {
@@ -60,15 +62,15 @@ export default function ServerAppRunner() {
             .join(''),
           body: ReactDOMServer.renderToStaticMarkup(routedComponent)
         }));
-        res.write("<script type='text/javascript'>");
-        modelEmitter.on('model', model => {
-          res.write(`hydrate(${JSON.stringify(model)});`);
-        });
-        modelEmitter.on('end', model => {
-          allOff(modelEmitter);
-          res.write(`hydrate(${JSON.stringify(model)});`);
-          res.end("</script>" + htmlFooter());
-        });
+        // res.write("<script type='text/javascript'>");
+        // modelEmitter.on('model', model => {
+        //   res.write(`hydrate(${JSON.stringify(model)});`);
+        // });
+        // modelEmitter.on('end', model => {
+        //   allOff(modelEmitter);
+        //   res.write(`hydrate(${JSON.stringify(model)});`);
+        //   res.end("</script>" + htmlFooter());
+        // });
       } else if (req.accepts('application/jsonstream')) {
         modelEmitter.on('model', model => {
           res.write(JSON.stringify(model));

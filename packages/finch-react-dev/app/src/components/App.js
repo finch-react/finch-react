@@ -48,10 +48,12 @@ export default class App extends Component {
     if (alreadyInRouteStack) {
       this.refs.navigator.popToRoute(alreadyInRouteStack);
     } else {
+      let routedState;
       let routedComponent;
       let modelEmitter = eventEmitterFactory({});
-      await router.dispatch({path}, (_, RoutedComponent) => {
+      await router.dispatch({path}, (state, RoutedComponent) => {
         //legacy for babel6 module system
+        routedState = state;
         RoutedComponent = 'default' in RoutedComponent ? RoutedComponent['default'] : RoutedComponent;
         routedComponent = <RoutedComponent modelEmitter={modelEmitter} />;
         if (replace) {
@@ -62,7 +64,7 @@ export default class App extends Component {
       });
 
       if (routedComponent.type.model) {
-        await modelInitialization(routedComponent.type.model, modelEmitter, {}, 300);
+        await modelInitialization(routedComponent.type.model, modelEmitter, routedState.params, 300);
       }
     }
   }
