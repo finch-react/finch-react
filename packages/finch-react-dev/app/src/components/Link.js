@@ -15,7 +15,6 @@ if (!Linking) {
       });
     })
   };
-
 }
 
 export default class Link extends WebLink {
@@ -28,7 +27,7 @@ export default class Link extends WebLink {
   }
 
   onPress() {
-    this.props.href && Linking.openURL(this.props.href).catch(err => console.error('An error occurred', err));
+    this.props.href && Linking.openURL('finch://' + this.props.href).catch(err => console.error('An error occurred', err));
     console.log(`iOS Link pressed ${this.props.href}`);
   }
 }

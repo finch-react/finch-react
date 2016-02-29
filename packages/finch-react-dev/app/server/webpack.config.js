@@ -23,16 +23,17 @@ var config = {
 module.exports = {
   ip: IP,
   port: PORT,
-  devtool: false,
+  devtool: 'cheap-eval',
   target: 'node',
   resolve: {
     alias: {
       'react-native': path.resolve(__dirname, "../../../finch-react-server/src/index.js"),
       'finch-react-web': path.resolve(__dirname, "../../../finch-react-web/src/index.js"),
       'finch-react-core': path.resolve(__dirname, "../../../finch-react-core/src/index.js"),
+      'finch-react-routing': path.resolve(__dirname, "../../../finch-react-routing/src/index.js"),
       'ReactNativeART': 'react-art'
     },
-    extensions: ['', '.web.js', '.js', '.jsx'],
+    extensions: ['', '.server.js', '.web.js', '.js', '.jsx'],
   },
   entry: [
     config.paths.index
@@ -64,7 +65,7 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loaders: ['react-hot', 'babel-loader?' + JSON.stringify({
+        loaders: ['babel-loader?' + JSON.stringify({
           cacheDirectory: true,
           presets: ['es2015', 'stage-0', 'react'],
           plugins: ['add-module-exports']
@@ -73,7 +74,8 @@ module.exports = {
           config.paths.src,
           path.resolve(__dirname, "../../../finch-react-core/src/"),
           path.resolve(__dirname, "../../../finch-react-web/src/"),
-          path.resolve(__dirname, "../../../finch-react-server/src/")
+          path.resolve(__dirname, "../../../finch-react-server/src/"),
+          path.resolve(__dirname, "../../../finch-react-routing/src/")
         ],
         exclude: [
           /node_modules/,

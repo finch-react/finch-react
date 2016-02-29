@@ -4,8 +4,6 @@ import Text from './components/Text';
 import Image from './components/Image';
 import Platform from './lib/Platform';
 import Dimensions from './lib/Dimensions';
-import AppRegistry from './lib/AppRegistry';
-import appRunner from './lib/appRunner';
 
 export default {
   ...React,
@@ -14,6 +12,5 @@ export default {
   Text,
   Image,
   Platform,
-  Dimensions,
-  AppRegistry: AppRegistry.withAppRunner(appRunner)
+  Dimensions
 }

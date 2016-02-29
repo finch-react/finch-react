@@ -1,79 +1,89 @@
 import React, {
   Component,
+  Linking,
+  Navigator,
   View,
-  ScrollView,
   Text
 } from 'react-native';
-import Button from './Button'
-import Post from './Post';
-import FinchReactCore from 'finch-react-core';
-let {StyledComponent, SwitchTheme} = FinchReactCore;
+import FinchReactRouting from 'finch-react-routing';
+import eventEmitterFactory from 'event-emitter';
+import routes from '../routes';
 
-export default class App extends StyledComponent {
-  static defaultProps = {
-    open: true
-  };
+let  {routerFactory, delay, modelInitialization} = FinchReactRouting;
+const router = routerFactory(routes);
 
-  static styles = {
-    main: {
-      flexDirection: 'column'
-    },
-    button: {},
-    buttonWrapper: {
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      alignItems: "flex-start",
-    },
-    post: {
-      flex: 1,
-      padding: 10,
-      borderWidth: 0,
-      borderBottomWidth: 1,
-      borderColor: 'grey',
-      borderStyle: 'solid',
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+
+  componentWillMount() {
+    Linking.addEventListener('url', this._handleUrlListener = this._handleUrl.bind(this));
+  }
+
+  componentWillUnmount() {
+    Linking.removeEventListener('url', this._handleUrlListener);
+  }
+
+  async _handleUrl(event) {
+    let url = event.url || 'finch:///';
+    let path = '/' + url.split('/').splice(3).filter(path=>path).join('/');
+    let routes = this.refs.navigator.getCurrentRoutes();
+
+    let replace;
+    if (routes[routes.length - 1] && routes[routes.length - 1].path === path) {
+      replace = true;
     }
-  };
 
-  state = {
-    isActive: false
-  };
+    let alreadyInRouteStack;
+    if (!replace) {
+      routes.forEach(route => {
+        if (route.path === path) {
+          alreadyInRouteStack = route;
+        }
+      });
+    }
+
+    if (alreadyInRouteStack) {
+      this.refs.navigator.popToRoute(alreadyInRouteStack);
+    } else {
+      let routedState;
+      let routedComponent;
+      let modelEmitter = eventEmitterFactory({});
+      await router.dispatch({path}, (state, RoutedComponent) => {
+        //legacy for babel6 module system
+        routedState = state;
+        RoutedComponent = 'default' in RoutedComponent ? RoutedComponent['default'] : RoutedComponent;
+        routedComponent = <RoutedComponent modelEmitter={modelEmitter} />;
+        if (replace) {
+          this.refs.navigator.replace({routedComponent, path});
+        } else {
+          this.refs.navigator.push({routedComponent, path});
+        }
+      });
+
+      if (routedComponent.type.model) {
+        await modelInitialization(routedComponent.type.model, modelEmitter, routedState.params, 300);
+      }
+    }
+  }
 
   render() {
-    let a = (
-      <View>
-        <Text>Color</Text>
-        <View element="buttonWrapper">
-          <Button>default</Button>
-          <Button color="primary">primary</Button>
-          <Button color="success">success</Button>
-          <Button color="info">info</Button>
-          <Button color="warning">warning</Button>
-          <Button color="danger">danger</Button>
-        </View>
-        <Text>Size</Text>
-        <View element="buttonWrapper">
-          <Button size="tiny">tiny</Button>
-          <Button size="small">small</Button>
-          <Button>medium</Button>
-          <Button size="large">large</Button>
-        </View>
-        <Text>Flex layout</Text>
-        <View element="buttonWrapper">
-          <Button flex="1">flex 1</Button>
-          <Button color="primary" flex="2">flex 2</Button>
-          <Button color="success" flex="3">flex 3</Button>
-          <Button color="info" flex="4">flex 4</Button>
-          <Button color="warning" flex="1">flex 1</Button>
-          <Button color="danger" flex="1">flex 1</Button>
-        </View>
-      </View>
-    );
+    return <Navigator ref="navigator"
+      initialRoute={{path: '/', index: 0}}
+      renderScene={this._renderScene.bind(this)}
+      navigationBar={<View><Text>Finch</Text></View>}
+    />
+  }
+
+  _renderScene(route, navigator) {
     return (
-      <ScrollView>
-        <Post element="post"/>
-        <Post element="post"/>
-        <Post element="post"/>
-      </ScrollView>
+      route.routedComponent ? <View>{route.routedComponent}</View> : <View><Text>Loading...</Text></View>
     );
+  }
+
+  componentDidMount() {
+    Linking.getInitialURL().then(url=>!url && Linking.openURL('finch:///'));
   }
 }

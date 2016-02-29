@@ -7,8 +7,9 @@ import React, {
 import App from './components/App';
 import './themes';
 
-AppRegistry.registerComponent('FinchReactDev', () => App);
-
-if (Platform.OS == 'web') {
-  AppRegistry.runApplication('FinchReactDev', {});
+if ('web' === Platform.OS ) {
+  App();
+} else {
+  AppRegistry.registerComponent('FinchReactDev', () => App);
 }
+
