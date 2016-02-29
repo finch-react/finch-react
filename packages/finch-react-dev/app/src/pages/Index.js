@@ -13,6 +13,7 @@ import FinchReactCore from 'finch-react-core';
 let { StyledComponent } = FinchReactCore;
 import Link from '../components/Link';
 import RedditList from '../components/RedditList';
+import Post from './Post';
 
 export default class extends Page {
   static model(params) {

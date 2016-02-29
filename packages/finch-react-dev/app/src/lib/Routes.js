@@ -1,13 +1,12 @@
-let data = {};
-
 export default class Routes {
   constructor(routes) {
 
     Object.keys(routes).forEach(url => {
-      let page = routes[url];
-      let clazz = require('../pages/' + page);
+      let clazz = routes[url];
 
-      data[page] = { url, page };
+      Object.defineProperty(clazz, '_url', {
+        value: url
+      });
 
       Object.defineProperty(this, url, {
         enumerable: true,
@@ -17,9 +16,8 @@ export default class Routes {
     });
   }
 
-  ref(page, params) {
-    let route = data[page];
-    let split = route.url.split('/');
+  ref(clazz, params) {
+    let split = clazz._url.split('/');
     let url = [];
     for (let i = 0; i < split.length; i++) {
       let chunk = split[i];
@@ -30,7 +28,7 @@ export default class Routes {
       let paramName = chunk.replace(':', '').replace('?', '');
       let param = params[paramName];
       if (typeof param === 'undefined' && chunk.indexOf('?') !== chunk.length - 1) {
-        console.error("Missing required url-parameter '" + paramName + "' for page '" + page + "'.\nUrl-expression is '" + route.url + "' and given params are " + JSON.stringify(params));
+        console.error("Missing required url-parameter '" + paramName + "'.\nUrl-expression is '" + clazz._url + "' and given params are " + JSON.stringify(params));
         return null;
       } else if (typeof param !== 'undefined') {
         url.push(param);

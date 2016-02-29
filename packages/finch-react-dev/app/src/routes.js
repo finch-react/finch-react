@@ -1,7 +1,7 @@
 import Routes from './lib/Routes';
 
 export default new Routes({
-  '/:list?': 'Index',
-  'error': 'Error',
-  '/comments/:id/:sort?': 'Post',
+  'error': require('./pages/Error'),
+  '/:list?': require('./pages/Index'),
+  '/comments/:id/:sort?': require('./pages/Post'),
 });

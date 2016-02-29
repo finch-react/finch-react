@@ -7,6 +7,7 @@ import React, {
 import FinchReactCore from 'finch-react-core';
 let { StyledComponent } = FinchReactCore;
 import Link from '../components/Link';
+import Post from '../pages/Post';
 import routes from '../routes';
 
 export default class RedditItem extends StyledComponent {
@@ -47,7 +48,7 @@ export default class RedditItem extends StyledComponent {
     let date =  new Date(this.props.created_utc * 1000);
     return (
       <View>
-        <Link element="title" href={routes.ref('Post', {id: this.props.id})}>{this.props.title}</Link>
+        <Link element="title" href={routes.ref(Post, {id: this.props.id})}>{this.props.title}</Link>
         <View element="meta">
           <Text element="meta__item">
             { ((this.props.author).length > MAX_AUTHOR_LIMIT) ? (((this.props.author).substring(0, MAX_AUTHOR_LIMIT - 3)) + '...') : this.props.author }
