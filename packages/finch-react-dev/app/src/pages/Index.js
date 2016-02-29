@@ -14,7 +14,6 @@ let { StyledComponent } = FinchReactCore;
 import Link from '../components/Link';
 import RedditList from '../components/RedditList';
 
-
 export default class extends Page {
   static model(params) {
     let list = params.list || 'top';
