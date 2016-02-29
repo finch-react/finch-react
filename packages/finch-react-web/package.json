@@ -19,7 +19,6 @@
     "event-emitter": "^0.3.4",
     "fbjs": "^0.6.1",
     "file-loader": "^0.8.5",
-    "finch-react-routing": "*",
     "lodash": "^4.0.0",
     "normalize.css": "^3.0.3",
     "react": "^0.14.6",
