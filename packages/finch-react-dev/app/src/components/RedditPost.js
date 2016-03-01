@@ -9,8 +9,20 @@ export default class RedditPost extends StyledComponent {
   render() {
     return (
       <View>
-        <Text>{this.props.title}</Text>
+        <Text element="title">{this.props.title}</Text>
       </View>
     )
   }
+  static styles = T => [
+    {
+      main: {
+      },
+      title: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#939ca6',
+      }
+    }
+  ];
+
 }

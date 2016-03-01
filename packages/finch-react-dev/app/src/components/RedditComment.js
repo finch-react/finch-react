@@ -4,12 +4,35 @@ import React, {
 } from 'react-native';
 import FinchReactCore from 'finch-react-core';
 let { StyledComponent } = FinchReactCore;
+import time from '../lib/timeFromUTC';
 
 export default class RedditComment extends StyledComponent {
   static styles(T) {
     return {
       main: {
-        padding: 10
+        padding: 10,
+        flex: 1,
+      },
+      author: {
+        fontSize: 13,
+        fontWeight: 'bold',
+        color: '#4f6173',
+      },
+      time: {
+        marginLeft: 10,
+        fontSize: 12,
+        color: '#a5acb3',
+        whiteSpace: 'nowrap',
+      },
+      comment: {
+        color: '#000',
+        fontSize: 14,
+      },
+      meta: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginBottom: 5,
       }
     }
   }
@@ -17,7 +40,16 @@ export default class RedditComment extends StyledComponent {
   render() {
     return (
       <View>
-        <Text>{this.props.author} write in {new Date(this.props.created_utc*1000).toString()}: {this.props.body}</Text>
+        {
+          this.props.body &&
+          <View>
+            <View element="meta">
+              <Text element="author">{this.props.author}</Text>
+              <Text element="time">{time(this.props.created_utc)}</Text>
+            </View>
+            <Text element="comment">{this.props.body}</Text>
+          </View>
+        }
       </View>
     )
   }

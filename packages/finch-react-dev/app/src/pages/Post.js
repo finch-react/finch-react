@@ -25,11 +25,12 @@ export default class extends Page {
     let post = this.state[0] && this.state[0].data.children[0];
     let comments = this.state[1] && this.state[1].data.children;
     return (
-      <ScrollView>
+      <ScrollView style={{padding: 15}}>
         {post && <RedditPost {...post.data} />}
-        <Text>Comments</Text>
+        <Text style={{color: '#717171', marginTop: 10, fontWeight: 'bold'}}>Comments</Text>
         {comments && <RedditCommentsList comments={comments} />}
       </ScrollView>
     );
-  }
+  };
+
 }
