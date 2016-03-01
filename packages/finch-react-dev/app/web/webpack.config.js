@@ -45,6 +45,7 @@ module.exports = {
       config.paths.index,
     ],
   output: {
+    publicPath: "/",
     path: path.join(__dirname, '../../output/web'),
     filename: 'bundle.js'
   },
