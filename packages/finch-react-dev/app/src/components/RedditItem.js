@@ -44,9 +44,7 @@ export default class RedditItem extends StyledComponent {
   ];
 
   render() {
-    //const DATE = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
     const MAX_AUTHOR_LIMIT = 15;
-    //let date = new Date(this.props.created_utc * 1000);
     return (
       <View>
         <Link element="title" href={routes.ref(Post, {id: this.props.id})}>{this.props.title}</Link>

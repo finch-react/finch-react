@@ -5,7 +5,7 @@ import React, {
   View,
   ScrollView,
   Text,
-  Linking
+  Linking,
 } from 'react-native';
 import fetch from '../lib/fetch';
 import Page from '../lib/Page';
@@ -27,7 +27,6 @@ export default class extends Page {
     return (
       <ScrollView style={{padding: 15}}>
         {post && <RedditPost {...post.data} />}
-        <Text style={{color: '#717171', marginTop: 10, fontWeight: 'bold'}}>Comments</Text>
         {comments && <RedditCommentsList comments={comments} />}
       </ScrollView>
     );
