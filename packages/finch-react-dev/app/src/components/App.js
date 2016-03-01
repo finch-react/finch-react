@@ -52,8 +52,8 @@ export default class App extends Component {
       let routedComponent;
       let modelEmitter = eventEmitterFactory({});
       await router.dispatch({path}, (state, RoutedComponent) => {
-        //legacy for babel6 module system
         routedState = state;
+        //legacy for babel6 module system
         RoutedComponent = 'default' in RoutedComponent ? RoutedComponent['default'] : RoutedComponent;
         routedComponent = <RoutedComponent modelEmitter={modelEmitter} />;
         if (replace) {

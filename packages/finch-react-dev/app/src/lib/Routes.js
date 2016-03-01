@@ -4,6 +4,8 @@ export default class Routes {
     Object.keys(routes).forEach(url => {
       let clazz = routes[url];
 
+      //legacy for babel6 module system
+      clazz = 'default' in clazz ? clazz['default'] : clazz;
       Object.defineProperty(clazz, '_url', {
         value: url
       });
