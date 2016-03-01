@@ -6,7 +6,7 @@ import uuid from 'uuid';
 import {routerFactory, delay, Location, modelInitialization} from 'finch-react-routing';
 import eventEmitterFactory from 'event-emitter';
 import allOff from 'event-emitter/all-off';
-import routes from '../routes';
+import router from '../router';
 
 const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 300;
 const server = global.server = express();
@@ -22,8 +22,6 @@ server.use('/public', express.static(webBundle));
 server.use('/favicon.ico', express.static(webBundle));
 
 export default function ServerAppRunner() {
-  const router = routerFactory(routes);
-
   server.get('*', async (req, res, next) => {
     try {
       let statusCode = 200;

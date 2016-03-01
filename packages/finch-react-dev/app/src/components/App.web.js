@@ -4,13 +4,11 @@ import normalize from 'normalize.css';
 import fonts from '../fonts/PTSansWeb/PTS55F_stylesheet.css';
 import {WithContext, routerFactory, delay, Location, modelInitialization} from 'finch-react-routing';
 import eventEmitterFactory from 'event-emitter';
-import routes from '../routes';
+import router from '../router';
 
 const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 0;
 
 export default function ClientAppRunner() {
-  const router = routerFactory(routes);
-
   let currentLocation = null;
   let currentState = null;
 

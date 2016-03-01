@@ -7,10 +7,9 @@ import React, {
 } from 'react-native';
 import FinchReactRouting from 'finch-react-routing';
 import eventEmitterFactory from 'event-emitter';
-import routes from '../routes';
+import router from '../router';
 
-let  {routerFactory, delay, modelInitialization} = FinchReactRouting;
-const router = routerFactory(routes);
+let  {modelInitialization} = FinchReactRouting;
 
 export default class App extends Component {
   constructor() {
