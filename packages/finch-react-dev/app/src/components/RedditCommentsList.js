@@ -22,5 +22,5 @@ export default class RedditCommentsList extends StyledComponent {
       marginTop: 10,
       fontWeight: 'bold'
     }
-  }
+  };
 }

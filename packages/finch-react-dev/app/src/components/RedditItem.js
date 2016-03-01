@@ -22,7 +22,9 @@ export default class RedditItem extends StyledComponent {
       main: {
         padding: 15,
         borderBottomWidth: 1,
+        borderColor: 'transparent',
         borderBottomColor: '#fafafa',
+        borderStyle: 'solid',
         flex: 1,
       },
       title: {

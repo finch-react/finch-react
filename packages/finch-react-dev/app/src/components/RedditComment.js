@@ -22,7 +22,6 @@ export default class RedditComment extends StyledComponent {
         marginLeft: 10,
         fontSize: 12,
         color: '#a5acb3',
-        whiteSpace: 'nowrap',
       },
       comment: {
         color: '#000',
