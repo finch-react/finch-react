@@ -70,15 +70,15 @@ export default class App extends Component {
 
   render() {
     return <Navigator ref="navigator"
+      style={{flex: 1}}
       initialRoute={{path: '/', index: 0}}
       renderScene={this._renderScene.bind(this)}
-      navigationBar={<View><Text>Finch</Text></View>}
     />
   }
 
   _renderScene(route, navigator) {
     return (
-      route.routedComponent ? <View>{route.routedComponent}</View> : <View><Text>Loading...</Text></View>
+      route.routedComponent ? <View style={{flex: 1}}>{route.routedComponent}</View> : <View style={{flex: 1}}><Text>Loading...</Text></View>
     );
   }
 

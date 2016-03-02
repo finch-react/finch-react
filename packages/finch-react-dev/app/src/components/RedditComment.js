@@ -10,8 +10,13 @@ export default class RedditComment extends StyledComponent {
   static styles(T) {
     return {
       main: {
-        padding: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 20,
         flex: 1,
+        borderBottomWidth: 1,
+        borderColor: 'transparent',
+        borderBottomColor: '#fafafa',
+        borderStyle: 'solid',
       },
       author: {
         fontSize: 13,

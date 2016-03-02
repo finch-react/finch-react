@@ -25,7 +25,7 @@ export default class extends Page {
     let post = this.state[0] && this.state[0].data.children[0];
     let comments = this.state[1] && this.state[1].data.children;
     return (
-      <ScrollView style={{padding: 15}}>
+      <ScrollView style={{padding: 15, paddingTop: 20}}>
         {post && <RedditPost {...post.data} />}
         {comments && <RedditCommentsList comments={comments} />}
       </ScrollView>

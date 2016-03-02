@@ -41,6 +41,12 @@ export default class RedditItem extends StyledComponent {
         color: '#b8b8b6',
         fontSize: 13,
         marginRight: 10
+      },
+      meta__author: {
+        fontSize: 13,
+        fontWeight: 'bold',
+        color: '#4f6173',
+        marginRight: 10
       }
     }
   ];
@@ -51,7 +57,7 @@ export default class RedditItem extends StyledComponent {
       <View>
         <Link element="title" href={router.ref(Post, {id: this.props.id})}>{this.props.title}</Link>
         <View element="meta">
-          <Text element="meta__item">
+          <Text element="meta__author">
             { ((this.props.author).length > MAX_AUTHOR_LIMIT) ? (((this.props.author).substring(0, MAX_AUTHOR_LIMIT - 3)) + '...') : this.props.author }
           </Text>
           <Text element="meta__item">{time(this.props.created_utc)}</Text>

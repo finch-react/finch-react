@@ -4,15 +4,14 @@ import React, {
   Platform,
   View,
   ScrollView,
-  Text,
-  Linking
+  Text
 } from 'react-native';
 import fetch from '../lib/fetch';
 import Page from '../lib/Page';
 import FinchReactCore from 'finch-react-core';
 let { StyledComponent } = FinchReactCore;
-import Link from '../components/Link';
 import RedditList from '../components/RedditList';
+import TabBar from '../components/TabBar';
 import Post from './Post';
 
 export default class extends Page {
@@ -28,14 +27,12 @@ export default class extends Page {
 
   render() {
     return (
-      <ScrollView style={{paddingTop: 20}}>
-        <View>
-          <Link href='/top'>Лучшее</Link>
-          <Link href='/hot'>Горячее</Link>
-          <Link href='/new'>Новое</Link>
-        </View>
-        { this.state.data && <RedditList items={this.state.data.children} /> }
-      </ScrollView>
+      <View style={{flex: 1, paddingTop: 5}}>
+        <ScrollView style={{flex: 1}}>
+          { this.state.data && <RedditList items={this.state.data.children} /> }
+        </ScrollView>
+        <TabBar />
+      </View>
     );
   }
 }
