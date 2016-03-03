@@ -1,5 +1,5 @@
 {
-  "name": "finch-react-dev",
+  "name": "FinchReactDev",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -39,7 +39,7 @@
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-hot-loader": "^1.2.7",
-    "react-native": "^0.20.0",
+    "react-native": "^0.21.0",
     "react-native-cli": "^0.1.10",
     "react-web": "^0.2.1",
     "style-loader": "^0.13.0",
