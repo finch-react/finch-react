@@ -10,6 +10,8 @@ import fetch from '../lib/fetch';
 import Page from '../lib/Page';
 import RedditList from '../components/RedditList';
 import TabBar from '../components/TabBar';
+import FinchReactRouting from 'finch-react-routing';
+let { delay } = FinchReactRouting;
 
 export default class extends Page {
   static model(params) {
@@ -23,6 +25,7 @@ export default class extends Page {
   };
 
   render() {
+    console.log('Render', this.state.model);
     return (
       <View style={{flex: 1, paddingTop: 5}}>
         <ScrollView style={{flex: 1}}>

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-native start",
     "web-dev": "node web/start-dev-server",
-    "web-bundle": "NODE_ENV=development webpack --config web/webpack.config.js --colors",
+    "web-bundle": "NODE_ENV=production webpack --config web/webpack.config.js --colors",
     "server": "npm run web-bundle && npm run server-bundle && WEB_BUNDLE='../output/web/' node ../output/server/bundle.js",
     "server-only": "npm run server-bundle && WEB_BUNDLE='../output/web/' node ../output/server/bundle.js",
     "server-bundle": "NODE_ENV=production webpack --config server/webpack.config.js --colors"
