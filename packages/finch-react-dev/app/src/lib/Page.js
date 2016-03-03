@@ -48,7 +48,7 @@ export default class extends Component {
         if ('_model' in model) {
           model = model['_model'];
         }
-        this.setState(model);
+        this.setState({model});
       });
     }
   }

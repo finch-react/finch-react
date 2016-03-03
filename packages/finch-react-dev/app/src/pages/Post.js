@@ -9,11 +9,8 @@ import React, {
 } from 'react-native';
 import fetch from '../lib/fetch';
 import Page from '../lib/Page';
-import FinchReactCore from 'finch-react-core';
 import RedditCommentsList from '../components/RedditCommentsList';
 import RedditPost from '../components/RedditPost';
-let { StyledComponent } = FinchReactCore;
-import Link from '../components/Link';
 
 export default class extends Page {
   static model(params) {
@@ -22,8 +19,8 @@ export default class extends Page {
   };
 
   render() {
-    let post = this.state[0] && this.state[0].data.children[0];
-    let comments = this.state[1] && this.state[1].data.children;
+    let post = this.state.model && this.state.model[0] && this.state.model[0].data.children[0];
+    let comments = this.state.model && this.state.model[1] && this.state.model[1].data.children;
     return (
       <ScrollView style={{padding: 15, paddingTop: 20}}>
         {post && <RedditPost {...post.data} />}

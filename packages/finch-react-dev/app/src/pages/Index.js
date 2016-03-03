@@ -8,11 +8,8 @@ import React, {
 } from 'react-native';
 import fetch from '../lib/fetch';
 import Page from '../lib/Page';
-import FinchReactCore from 'finch-react-core';
-let { StyledComponent } = FinchReactCore;
 import RedditList from '../components/RedditList';
 import TabBar from '../components/TabBar';
-import Post from './Post';
 
 export default class extends Page {
   static model(params) {
@@ -29,7 +26,7 @@ export default class extends Page {
     return (
       <View style={{flex: 1, paddingTop: 5}}>
         <ScrollView style={{flex: 1}}>
-          { this.state.data && <RedditList items={this.state.data.children} /> }
+          { this.state.model && this.state.model.data && <RedditList items={this.state.model.data.children} /> }
         </ScrollView>
         <TabBar />
       </View>

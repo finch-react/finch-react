@@ -37,8 +37,8 @@ export default async function (model, modelEmitter, params, PAGE_INIT_TIMEOUT) {
     }
   });
 
-  await Promise.race([delay(PAGE_INIT_TIMEOUT), Promise.all(modelPromises)]).then(value => {
-    if (value) {
+  await Promise.race([delay(PAGE_INIT_TIMEOUT), Promise.all(modelPromises)]).then(values => {
+    if (values) {
       modelEmitter.emit('model', emitModel);
     }
   });

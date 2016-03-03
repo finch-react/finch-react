@@ -60,15 +60,16 @@ export default function ServerAppRunner() {
             .join(''),
           body: ReactDOMServer.renderToStaticMarkup(routedComponent)
         }));
-        // res.write("<script type='text/javascript'>");
-        // modelEmitter.on('model', model => {
-        //   res.write(`hydrate(${JSON.stringify(model)});`);
-        // });
-        // modelEmitter.on('end', model => {
-        //   allOff(modelEmitter);
-        //   res.write(`hydrate(${JSON.stringify(model)});`);
-        //   res.end("</script>" + htmlFooter());
-        // });
+        res.write("<div id='hydrate' style='display:none'>");
+        modelEmitter.on('model', model => {
+          res.write(JSON.stringify(model) + '\n\t');
+        });
+        modelEmitter.on('end', model => {
+          allOff(modelEmitter);
+          res.write(JSON.stringify(model));
+          res.end("</div>" + htmlFooter());
+        });
+        // res.end(htmlFooter());
       } else if (req.accepts('application/jsonstream')) {
         modelEmitter.on('model', model => {
           res.write(JSON.stringify(model));
@@ -106,11 +107,6 @@ function htmlHeader({css, body}) {
         var script = document.createElement("script");
         script.src = '/public/bundle.js';
         document.body.appendChild(script);
-
-        var hydrated_model = [];
-        function hydrate(model) {
-          hydrated_model.push(model);
-        }
       </script>
       <div id="app">${body}</div>
   `;
