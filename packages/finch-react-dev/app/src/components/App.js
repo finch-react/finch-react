@@ -1,5 +1,6 @@
 import React, {
   Component,
+  Platform,
   Linking,
   Navigator,
   View,
@@ -69,11 +70,16 @@ export default class App extends Component {
   }
 
   render() {
-    return <Navigator ref="navigator"
-      style={{flex: 1}}
-      initialRoute={{path: '/', index: 0}}
-      renderScene={this._renderScene.bind(this)}
-    />
+    return <View style={{flex: 1}}>
+      {
+        Platform.OS == 'ios' && <View style={{position: 'absolute', top: 0, left: 0, right: 0, height: 20, backgroundColor: 'rgba(0, 0, 0, 0.2)'}}></View>
+      }
+      <Navigator ref="navigator"
+        style={{flex: 1}}
+        initialRoute={{path: '/', index: 0}}
+        renderScene={this._renderScene.bind(this)}
+      />
+    </View>
   }
 
   _renderScene(route, navigator) {
