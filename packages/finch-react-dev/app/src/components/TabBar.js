@@ -25,7 +25,6 @@ export default class TabBar extends StyledComponent {
 
   static styles = {
     main: {
-      flex: 1,
       flexDirection: 'row',
       backgroundColor: '#ebe9e9',
     },
