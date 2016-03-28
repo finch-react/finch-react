@@ -69,11 +69,17 @@ export default class App extends Component {
               'Accept': 'application/json'
             }
           })
-            .then(response => response.json())
-            .then(json => {
-              modelEmitter.emit('model', json);
-              modelEmitter.emit('end');
-            });
+          .then(
+            response => response.json(),
+            error => {
+              console.error(error);
+              console.log("Can not fetch model, maybe server is not started?");
+            }
+          )
+          .then(json => {
+            modelEmitter.emit('model', json);
+            modelEmitter.emit('end');
+          });
         }
         // await modelInitialization(routedComponent.type.model, modelEmitter, routedState.params, 300);
       }
