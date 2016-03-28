@@ -25,11 +25,11 @@ module.exports = {
   ip: IP,
   port: PORT,
   devtool: 'eval',
+  target: 'web',
   resolve: {
     alias: {
       'react-native': path.resolve(__dirname, "../../../finch-react-web/src/index.js"),
       'finch-react-core': path.resolve(__dirname, "../../../finch-react-core/src/index.js"),
-      'finch-react-routing': path.resolve(__dirname, "../../../finch-react-routing/src/index.js"),
       'ReactNativeART': 'react-art'
     },
     extensions: ['', '.web.js', '.js', '.jsx'],
@@ -72,7 +72,7 @@ module.exports = {
     loaders: [
       {
         test: /\.json$/,
-        loader: 'json',
+        loader: 'json-loader',
       },
       {
         test: /\.css$/,
@@ -104,8 +104,7 @@ module.exports = {
         include: [
           config.paths.src,
           path.resolve(__dirname, "../../../finch-react-core/src/"),
-          path.resolve(__dirname, "../../../finch-react-web/src/"),
-          path.resolve(__dirname, "../../../finch-react-routing/src/")
+          path.resolve(__dirname, "../../../finch-react-web/src/")
         ],
         exclude: [
           /node_modules/,

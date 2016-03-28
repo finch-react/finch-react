@@ -5,11 +5,10 @@ import React, {
   View,
   Text
 } from 'react-native';
-import FinchReactRouting from 'finch-react-routing';
 import eventEmitterFactory from 'event-emitter';
 import router from '../router';
 
-let  {modelInitialization} = FinchReactRouting;
+const __SERVER__ = 'http://localhost:5000';
 
 export default class App extends Component {
   constructor() {
@@ -63,7 +62,19 @@ export default class App extends Component {
       });
 
       if (routedComponent.type.model) {
-        await modelInitialization(routedComponent.type.model, modelEmitter, routedState.params, 300);
+        if (__SERVER__) {
+          fetch(__SERVER__ + path, {
+            headers: {
+              'Accept': 'application/json'
+            }
+          })
+            .then(response => response.json())
+            .then(json => {
+              modelEmitter.emit('model', json);
+              modelEmitter.emit('end');
+            });
+        }
+        // await modelInitialization(routedComponent.type.model, modelEmitter, routedState.params, 300);
       }
     }
   }

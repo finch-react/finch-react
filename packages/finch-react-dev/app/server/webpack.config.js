@@ -30,7 +30,6 @@ module.exports = {
       'react-native': path.resolve(__dirname, "../../../finch-react-server/src/index.js"),
       'finch-react-web': path.resolve(__dirname, "../../../finch-react-web/src/index.js"),
       'finch-react-core': path.resolve(__dirname, "../../../finch-react-core/src/index.js"),
-      'finch-react-routing': path.resolve(__dirname, "../../../finch-react-routing/src/index.js"),
       'ReactNativeART': 'react-art'
     },
     extensions: ['', '.server.js', '.web.js', '.js', '.jsx'],
@@ -74,8 +73,7 @@ module.exports = {
           config.paths.src,
           path.resolve(__dirname, "../../../finch-react-core/src/"),
           path.resolve(__dirname, "../../../finch-react-web/src/"),
-          path.resolve(__dirname, "../../../finch-react-server/src/"),
-          path.resolve(__dirname, "../../../finch-react-routing/src/")
+          path.resolve(__dirname, "../../../finch-react-server/src/")
         ],
         exclude: [
           /node_modules/,

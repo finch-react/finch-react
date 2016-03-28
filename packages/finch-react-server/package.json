@@ -1,6 +1,6 @@
 {
   "name": "finch-react-server",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "main": "./src/index.js",
   "license": "MIT",
   "repository": {
@@ -16,16 +16,13 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "css-loader": "^0.23.1",
-    "event-emitter": "^0.3.4",
-    "express": "4.13.3",
-    "fbjs": "^0.6.1",
     "json-loader": "^0.5.2",
-    "lodash": "^4.0.0",
-    "normalize.css": "^3.0.3",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-hot-loader": "^1.2.7",
-    "uuid": "^2.0.1",
     "webpack": "^1.9.10"
+  },
+  "peerDependencies": {
+    "fbjs": "*"
   }
 }

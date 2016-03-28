@@ -1,6 +1,5 @@
-import delay from './delay';
+import { delay, toPromise } from 'finch-react-core'
 import proxy from './modelProxy';
-import toPromise from './toPromise';
 import { Readable } from 'stream';
 
 export default async function (model, params, PAGE_INIT_TIMEOUT) {

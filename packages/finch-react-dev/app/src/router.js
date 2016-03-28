@@ -1,5 +1,4 @@
-import FinchReactRouting from 'finch-react-routing';
-let { routerFactory } = FinchReactRouting;
+import { routerFactory } from 'finch-react-core';
 
 export default routerFactory({
   'error': require('./pages/Error'),

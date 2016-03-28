@@ -3,11 +3,10 @@ import React, {
   PropTypes
 } from 'react-native';
 import allOff from 'event-emitter/all-off';
-import pullHydrate from './pullHydrate';
-import localCache from './localCache';
 
 export default class extends Component {
   static propTypes = {
+    stream: PropTypes.any,
     modelEmitter: PropTypes.any,
     initialModel: PropTypes.any
   };
@@ -22,15 +21,16 @@ export default class extends Component {
     if (this.constructor.model) {
       this.state = {};
       Object.keys(this.constructor.model).forEach(key => this.state[key] = this.constructor.model[key]._value );
-      let cached = localCache.check();
-      if (cached) {
-        this.state = cached;
-      }
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.modelEmitter && this.props.modelEmitter._model) {
+      this._setModel(transformModel(this.props.modelEmitter._model));
     }
   }
 
   componentDidMount() {
-    pullHydrate(this._setModel.bind(this));
     this._listenModelEmitter(this.props.modelEmitter);
   }
 
@@ -51,16 +51,12 @@ export default class extends Component {
     }
 
     if (subscribe) {
-      modelEmitter.on('model', model => {
-        pullHydrate.hydrateEnd = true;
-        this._setModel(model);
-      });
+      modelEmitter.on('model', this._setModel.bind(this));
     }
   }
 
   _setModel(m) {
     let model = {'model': transformModel(m)};
-    localCache.store(model);
     this.setState(model);
   }
 

@@ -3,10 +3,12 @@ import path from 'path';
 import express from 'express';
 import normalize from 'normalize.css';
 import uuid from 'uuid';
-import {routerFactory, delay, Location, modelInitialization} from 'finch-react-routing';
+import { routerFactory, delay, Location } from 'finch-react-core';
+import modelInitialization from '../lib/modelInitialization';
 import eventEmitterFactory from 'event-emitter';
 import allOff from 'event-emitter/all-off';
 import router from '../router';
+import cache from '../lib/cache';
 
 const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 300;
 const server = global.server = express();
@@ -40,6 +42,7 @@ export default function ServerAppRunner() {
       let routedState;
       let routedComponent;
       let modelEmitter = eventEmitterFactory({});
+      modelEmitter._model = {};
       await router.dispatch({path: req.path, context}, (state, RoutedComponent) => {
         routedState = state;
         routedComponent = <RoutedComponent modelEmitter={modelEmitter} context={context} {...Object.assign({state}, state.params)} />;
@@ -49,42 +52,18 @@ export default function ServerAppRunner() {
       }
 
       if (routedComponent.type.model) {
-        await modelInitialization(routedComponent.type.model, modelEmitter, routedState.params, PAGE_INIT_TIMEOUT);
+        let cachedModel = (await cache.getItem(req.path));
+        if (cachedModel) {
+          modelEmitter._model = {...modelEmitter._model, ...cachedModel};
+          modelEmitter.emit('model', cachedModel);
+        }
+
+        let modelStream = (await modelInitialization(routedComponent.type.model, routedState.params, PAGE_INIT_TIMEOUT));
+        modelStream.on('data', modelEmitter.emit.bind(modelEmitter, 'model'));
+        modelStream.on('end',  modelEmitter.emit.bind(modelEmitter, 'end'));
       }
 
-      if (req.accepts('html')) {
-        res.status(statusCode);
-        res.write(htmlHeader({
-          css: Object.keys(styles)
-            .map(name=>styles[name].toString())
-            .join(''),
-          body: ReactDOMServer.renderToStaticMarkup(routedComponent)
-        }));
-        res.write("<div id='hydrate' style='display:none'>");
-        modelEmitter.on('model', model => {
-          res.write(JSON.stringify(model) + '\n\t');
-        });
-        modelEmitter.on('end', model => {
-          allOff(modelEmitter);
-          model['end'] = true;
-          res.write(JSON.stringify(model));
-          res.end("</div>" + htmlFooter());
-        });
-        // res.end(htmlFooter());
-      } else if (req.accepts('application/jsonstream')) {
-        modelEmitter.on('model', model => {
-          res.write(JSON.stringify(model));
-        });
-        modelEmitter.on('end', model => {
-          allOff(modelEmitter);
-          res.end();
-        });
-      } else if (req.accepts('application/json')) {
-        modelEmitter.on('end', model => {
-          allOff(modelEmitter);
-          res.end(JSON.stringify(model));
-        });
-      }
+      writeModel(req, res, statusCode, styles, routedComponent, modelEmitter);
     } catch (err) {
       console.log(err);
       next(err);
@@ -94,6 +73,61 @@ export default function ServerAppRunner() {
     console.log('The server is running at http://localhost:' + server.get('port'));
   });
 }
+
+function writeModel(req, res, statusCode, styles, routedComponent, modelEmitter) {
+  res.status(statusCode);
+  let resultModel = {};
+  let onModel;
+  let onEnd;
+
+  if (req.accepts('html')) {
+    res.write(htmlHeader({
+      css: Object.keys(styles)
+        .map(name=>styles[name].toString())
+        .join(''),
+      body: ReactDOMServer.renderToStaticMarkup(routedComponent)
+    }));
+    res.write("<div id='hydrate' style='display:none'>");
+    onModel = model => {
+      res.write(JSON.stringify(model) + '\n\t');
+    };
+    onEnd = _ => {
+      allOff(modelEmitter);
+      resultModel['end'] = true;
+      res.write(JSON.stringify(resultModel) + '\n\t');
+      res.end("</div>" + htmlFooter());
+    };
+  } else if (req.accepts('application/jsonstream')) {
+    console.log('application/jsonstream');
+    onModel = model => {
+      console.log('model');
+      res.write(JSON.stringify(model));
+    };
+    onEnd = _ => {
+      allOff(modelEmitter);
+      console.log('end');
+      res.end();
+    };
+  } else if (req.accepts('application/json')) {
+    console.log('application/json');
+    onModel = model => {
+      resultModel = {...resultModel, ...model};
+    };
+    onEnd = _ => {
+      allOff(modelEmitter);
+      res.end(JSON.stringify(resultModel));
+    };
+  }
+
+  modelEmitter.on('model', model => {
+    resultModel = {...resultModel, ...model};
+    onModel(model);
+  });
+  modelEmitter.on('end', _ => {
+    onEnd();
+    cache.setItem(req.path, resultModel);
+  });
+};
 
 function htmlHeader({css, body}) {
   return `
