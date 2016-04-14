@@ -17,6 +17,6 @@ export default class View extends Component {
   }
 
   componentWillMount() {
-    this.context.onServerStyle("view", css);
+    this.context.onServerStyle && this.context.onServerStyle("view", css);
   }
 }
