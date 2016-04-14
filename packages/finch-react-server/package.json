@@ -1,6 +1,6 @@
 {
   "name": "finch-react-server",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "main": "./src/index.js",
   "license": "MIT",
   "repository": {
