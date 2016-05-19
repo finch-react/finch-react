@@ -35,6 +35,10 @@ function addRoutes(path, routes, computedRoutes, callback) {
 }
 
 function ref(clazz, params) {
+  if (!clazz._url) {
+    console.error("Page " + clazz.name + " is not registered in router");
+    return null;
+  }
   let split = clazz._url.split('/');
   let url = [];
   for (let i = 0; i < split.length; i++) {
