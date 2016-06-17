@@ -4,23 +4,23 @@ import React, {
   PropTypes,
 } from 'react';
 
-export default function (routes) {
+export default function (routes, contextRoot) {
   let computedRoutes = {};
 
   let router = new Router((on) => {
-    addRoutes('/', routes, computedRoutes, on);
+    addRoutes('/', routes, computedRoutes, contextRoot, on);
   });
   router.computedRoutes = injectUrl(computedRoutes);
   router.ref = ref;
   return router;
 }
 
-function addRoutes(path, routes, computedRoutes, callback) {
+function addRoutes(path, routes, computedRoutes, contextRoot, callback) {
   if (!routes) {
     return;
   }
   for (let key of Object.keys(routes)) {
-    let pagePath = '/' + (path + '/' + key).split('/').filter(path=>path).join('/');
+    let pagePath = (contextRoot ? `${contextRoot}/` : '/') + (path + '/' + key).split('/').filter(path=>path).join('/');
     if (path == '/' && key == 'error') {
       pagePath = key;
     }
@@ -30,7 +30,7 @@ function addRoutes(path, routes, computedRoutes, callback) {
     callback(pagePath, async (state, next)=> {
       return Component;
     });
-    addRoutes(pagePath, Component.pages, computedRoutes, callback);
+    addRoutes(pagePath, Component.pages, computedRoutes, contextRoot, callback);
   }
 }
 
