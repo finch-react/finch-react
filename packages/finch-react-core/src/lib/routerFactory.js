@@ -8,19 +8,19 @@ export default function (routes, contextRoot) {
   let computedRoutes = {};
 
   let router = new Router((on) => {
-    addRoutes('/', routes, computedRoutes, contextRoot, on);
+    addRoutes(contextRoot ? `${contextRoot}/` : '/', routes, computedRoutes, on);
   });
   router.computedRoutes = injectUrl(computedRoutes);
   router.ref = ref;
   return router;
 }
 
-function addRoutes(path, routes, computedRoutes, contextRoot, callback) {
+function addRoutes(path, routes, computedRoutes, callback) {
   if (!routes) {
     return;
   }
   for (let key of Object.keys(routes)) {
-    let pagePath = (contextRoot ? `${contextRoot}/` : '/') + (path + '/' + key).split('/').filter(path=>path).join('/');
+    let pagePath = '/' + (path + '/' + key).split('/').filter(path=>path).join('/');
     if (path == '/' && key == 'error') {
       pagePath = key;
     }
@@ -30,7 +30,7 @@ function addRoutes(path, routes, computedRoutes, contextRoot, callback) {
     callback(pagePath, async (state, next)=> {
       return Component;
     });
-    addRoutes(pagePath, Component.pages, computedRoutes, contextRoot, callback);
+    addRoutes(pagePath, Component.pages, computedRoutes, callback);
   }
 }
 
