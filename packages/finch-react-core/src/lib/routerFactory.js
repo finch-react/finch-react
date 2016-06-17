@@ -21,7 +21,7 @@ function addRoutes(path, routes, computedRoutes, callback) {
   }
   for (let key of Object.keys(routes)) {
     let pagePath = '/' + (path + '/' + key).split('/').filter(path=>path).join('/');
-    if (path == '/' && key == 'error') {
+    if (key === 'error') {
       pagePath = key;
     }
     let Component = routes[key];
