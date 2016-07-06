@@ -4,35 +4,141 @@ import React, {
   PropTypes,
 } from 'react';
 
-export default function (routes, contextRoot) {
-  let computedRoutes = {};
+export default function (routes, menuRoutes, contextRoot) {
+  // Если передали два аргумента и второй строка, то не строим меню
+  if (typeof menuRoutes === 'string') {
+    contextRoot = menuRoutes;
+    menuRoutes = null;
+  }
+  // Если нет contextRoot, то делаем его пустой строкой, чтобы не проверять при конкатенации
+  if (!contextRoot) {
+    contextRoot = '';
+  }
+
+  let registeredRoutes = {};
+  let navigation = [];
+  let computedRoutesTree = [];
 
   let router = new Router((on) => {
-    addRoutes(contextRoot ? `${contextRoot}/` : '/', routes, computedRoutes, on);
+    addRoutes(`${contextRoot}/`, routes, registeredRoutes, on);
+    addMenuRoutes(`${contextRoot}/`, menuRoutes, registeredRoutes, navigation, on);
+    injectUrl(registeredRoutes);
   });
-  router.computedRoutes = injectUrl(computedRoutes);
+
+  Object.defineProperty(router, 'computedRoutes', {
+    get: function () {
+      console.log("Somebody wants to read router.computedRoutes");
+      return registeredRoutes;
+    }
+  });
+
+  Object.defineProperty(router, 'navigation', {
+    get: function () {
+      console.log("Somebody wants to read router.navigation");
+      return navigation;
+    }
+  });
+
+  router.computedRoutesTree = computedRoutesTree;
   router.ref = ref;
   return router;
 }
 
-function addRoutes(path, routes, computedRoutes, callback) {
+function addRoutes(path, routes, registeredRoutes, callback, parent) {
   if (!routes) {
     return;
   }
-  for (let key of Object.keys(routes)) {
-    let pagePath = '/' + (path + '/' + key).split('/').filter(path=>path).join('/');
+  Object.keys(routes).map((key)=>{
+    let pagePath;
     if (key === 'error') {
       pagePath = key;
+    } else {
+      pagePath = '/' + (path + '/' + key).split('/').filter(path=>path).join('/');
     }
     let Component = routes[key];
-    computedRoutes[pagePath] = Component;
-    console.log('Register page ' + pagePath);
-    callback(pagePath, async (state, next)=> {
+    Component = getComponentClazz(Component);
+    registeredRoutes[pagePath] = Component;
+    if (parent) {
+      Object.defineProperty(Component, '_parent', {
+        value: parent
+      });
+    }
+    // if (key !== 'error') {
+    //   computedRoutesTree.push(Component);
+    //   let c = getComponentClazz(Component);
+    //   if (!Component._key) {
+    //     Object.defineProperty(c, "_key", {
+    //       value: key
+    //     });
+    //   }
+    //   Object.defineProperties(c, {
+    //     "_parent": {
+    //       value: parent
+    //     },
+    //     "_children": {
+    //       value: childrenRoutes
+    //     }
+    //   })
+    // }
+    callback(pagePath, async (state, next) => {
       return Component;
     });
-    addRoutes(pagePath, Component.pages, computedRoutes, callback);
-  }
+    console.log('Register route ' + pagePath);
+    if (Component.pages) {
+      addRoutes(pagePath, Component.pages, registeredRoutes, callback, Component);
+    }
+    if (Component.menu) {
+      let navigation = [];
+      Object.defineProperty(Component, '_menu', {
+        value: navigation
+      });
+      addMenuRoutes(pagePath, Component.menu, registeredRoutes, navigation, callback, Component);
+    }
+  });
 }
+
+function addMenuRoutes(path, menuRoutes, registeredRoutes, navigation, callback, parent) {
+  if (!menuRoutes) {
+    return;
+  }
+  menuRoutes.map((route)=>{
+    let { url, component, title } = route;
+    let Component = getComponentClazz(component);
+    if (!Component) {
+      navigation.push({
+        url,
+        title
+      });
+      return;
+    }
+    let pagePath = '/' + (path + '/' + url).split('/').filter(path=>path).join('/');
+    registeredRoutes[pagePath] = Component;
+    callback(pagePath, async (state, next) => {
+      return Component;
+    });
+    navigation.push({
+      component,
+      title
+    });
+    if (parent) {
+      Object.defineProperty(Component, '_parent', {
+        value: parent
+      });
+    }
+    console.log('Register menu item ' + pagePath + ' as ' + (title || url));
+    if (Component.pages) {
+      addRoutes(pagePath, Component.pages, registeredRoutes, callback, Component);
+    }
+    if (Component.menu) {
+      let subMenu = [];
+      Object.defineProperty(Component, '_menu', {
+        value: subMenu
+      });
+      addMenuRoutes(pagePath, Component.menu, registeredRoutes, subMenu, callback, Component);
+    }
+  });
+}
+
 
 function ref(clazz, params) {
   if (!clazz._url) {
@@ -65,11 +171,14 @@ function injectUrl(routes) {
   Object.keys(routes).forEach(url => {
     let clazz = routes[url];
 
-    //legacy for babel6 module system
-    clazz = 'default' in clazz ? clazz['default'] : clazz;
-    Object.defineProperty(clazz, '_url', {
+    Object.defineProperty(getComponentClazz(clazz), '_url', {
       value: url
     });
   });
   return routes;
+}
+
+function getComponentClazz(component) {
+  //legacy for babel6 module system
+  return (component && 'default' in component) ? component['default'] : component;
 }
