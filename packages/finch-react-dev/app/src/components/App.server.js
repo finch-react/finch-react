@@ -31,11 +31,12 @@ export default function ServerAppRunner() {
         normalize: normalize
       };
       let context = {
-        onServerStyle(id, style) {
-          if (!id) {
-            id = uuid.v1();
+        onServerStyle(style) {
+          if (!style.id) {
+            style.id = uuid.v1();
           }
-          styles[id] = style;
+          styles[style.id] = style;
+          
         }
       };
 
@@ -81,11 +82,12 @@ function writeModel(req, res, statusCode, styles, routedComponent, modelEmitter)
   let onEnd;
 
   if (req.accepts('html')) {
+    let body = ReactDOMServer.renderToStaticMarkup(routedComponent);
     res.write(htmlHeader({
       css: Object.keys(styles)
         .map(name=>styles[name].toString())
         .join(''),
-      body: ReactDOMServer.renderToStaticMarkup(routedComponent)
+      body: body
     }));
     res.write("<div id='hydrate' style='display:none'>");
     onModel = model => {
