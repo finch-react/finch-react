@@ -8,12 +8,6 @@ export default class Link extends StyledComponent {
     href: PropTypes.string
   };
 
-  static styles = {
-    main: {
-      color: 'blue'
-    }
-  };
-
   render() {
     return (
       <a href={this.props.href} onClick={this.onPress.bind(this)}>

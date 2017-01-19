@@ -1,4 +1,5 @@
 import StyledComponent from './components/StyledComponent';
+import StyledComponentNew from './components/StyledComponentNew';
 import SwitchTheme from './components/SwitchTheme';
 import Style from './lib/Style';
 import Theme from './lib/Theme';
@@ -9,6 +10,7 @@ import toPromise from './lib/toPromise';
 
 export default {
   StyledComponent,
+  StyledComponentNew,
   SwitchTheme,
   Style,
   Theme,

@@ -1,0 +1,30 @@
+.main {
+  padding: 15px;
+  border: 1px solid transparent;
+  border-bottom: 1px #fafafa;
+  flex: 1;
+}
+.title {
+  color: #939ca6;
+  font-size: 16px;
+  font-weight: bold;
+}
+.title > a {
+  color: #939ca6;
+}
+.meta {
+  flex: 1;
+  flex-direction: row;
+  margin-top: 5px;
+}
+.metaItem {
+  color: #b8b8b6;
+  font-size: 13px;
+  margin-right: 10px;
+}
+.metaAuthor {
+  font-size: 13px;
+  font-weight: bold;
+  color: #4f6173;
+  margin-right: 10px
+}
