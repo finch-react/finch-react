@@ -36,7 +36,7 @@ export default function ServerAppRunner() {
             style.id = uuid.v1();
           }
           styles[style.id] = style;
-          
+
         }
       };
 
@@ -141,9 +141,11 @@ function htmlHeader({css, body}) {
     </head>
     <body>
       <script>
-        var script = document.createElement("script");
-        script.src = '/public/bundle.js';
-        document.body.appendChild(script);
+        if(document.location.search.substr(1) !== "server=true"){
+          var script = document.createElement("script");
+          script.src = '/public/bundle.js';
+          document.body.appendChild(script);
+        }
       </script>
       <div id="app">${body}</div>
   `;
