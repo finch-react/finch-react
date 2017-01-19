@@ -10,7 +10,7 @@ export default class Link extends StyledComponent {
 
   render() {
     return (
-      <a href={this.props.href} onClick={this.onPress.bind(this)}>
+      <a href={`${this.props.href}?nojs`} onClick={this.onPress.bind(this)}>
         {this.props.children}
       </a>
     );

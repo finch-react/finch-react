@@ -141,7 +141,7 @@ function htmlHeader({css, body}) {
     </head>
     <body>
       <script>
-        if(document.location.search.substr(1) !== "server=true"){
+        if(!document.location.search.includes("nojs")){
           var script = document.createElement("script");
           script.src = '/public/bundle.js';
           document.body.appendChild(script);
