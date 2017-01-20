@@ -1,7 +1,4 @@
-import React, {
-  Component,
-  PropTypes
-} from 'react-native';
+import React, {Component, PropTypes} from 'react';
 import allOff from 'event-emitter/all-off';
 
 export default class extends Component {

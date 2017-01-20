@@ -1,15 +1,5 @@
 import 'babel-polyfill';
-import React, {
-  Component,
-  AppRegistry,
-  Platform
-} from 'react-native';
+import React, {Component} from 'react';
 import App from './components/App';
-import './themes';
 
-if ('web' === Platform.OS ) {
-  App();
-} else {
-  AppRegistry.registerComponent('FinchReactDev', () => App);
-}
-
+App();

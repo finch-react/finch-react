@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react-native';
+import React, {Component, PropTypes} from 'react';
 import fetch from '../lib/fetch';
 import Page from '../lib/Page';
 import RedditCommentsList from '../components/RedditCommentsList';
@@ -14,11 +14,11 @@ export default class extends Page {
   };
 
   render() {
-    const {main} = this.styles.locals
+    // const {main} = this.styles.locals;
     let post = this.state.model && this.state.model[0] && this.state.model[0].data.children[0];
     let comments = this.state.model && this.state.model[1] && this.state.model[1].data.children;
     return (
-      <div className={main}>
+      <div>
         {post && <RedditPost {...post.data} />}
         {comments && <RedditCommentsList comments={comments} />}
       </div>

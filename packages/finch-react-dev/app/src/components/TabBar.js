@@ -1,8 +1,5 @@
-import React, {
-  PropTypes,
-} from 'react-native';
-import FinchReactCore from 'finch-react-core';
-let { StyledComponentNew } = FinchReactCore;
+import React, {PropTypes} from 'react';
+import { StyledComponentNew } from 'finch-react-core';
 import Link from '../components/Link';
 
 export default class TabBar extends StyledComponentNew {

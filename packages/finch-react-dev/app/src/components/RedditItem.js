@@ -1,11 +1,5 @@
-import React, {
-  PropTypes,
-  View,
-  Text,
-  Image
-} from 'react-native';
-import FinchReactCore from 'finch-react-core';
-let { StyledComponent, StyledComponentNew } = FinchReactCore;
+import {PropTypes} from 'react';
+import { StyledComponent, StyledComponentNew } from 'finch-react-core';
 import Link from '../components/Link';
 import Post from '../pages/Post';
 import router from '../router';

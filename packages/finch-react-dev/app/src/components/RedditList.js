@@ -1,6 +1,5 @@
-import React, {PropTypes} from 'react-native';
-import FinchReactCore from 'finch-react-core';
-let { StyledComponentNew } = FinchReactCore;
+import {PropTypes} from 'react';
+import { StyledComponentNew } from 'finch-react-core';
 import RedditItem from '../components/RedditItem';
 
 export default class RedditList extends StyledComponentNew {

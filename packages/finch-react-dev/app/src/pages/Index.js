@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react-native';
+import React, {Component, PropTypes} from 'react';
 import fetch from '../lib/fetch';
 import Page from '../lib/Page';
 import RedditList from '../components/RedditList';
@@ -19,10 +19,10 @@ export default class extends Page {
   };
   render() {
     console.log('Render', this.state.model);
-    const {container, main} = this.styles.locals;
+    // const {container, main} = this.styles.locals;
     return (
-      <div className={container}>
-        <div className={main}>
+      <div>
+        <div>
           { this.state.model && this.state.model.data && <RedditList items={this.state.model.data.children} /> }
         </div>
         <TabBar/>

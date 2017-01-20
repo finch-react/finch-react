@@ -1,5 +1,3 @@
-import React, {
-} from 'react-native';
 import RedditComment from './RedditComment';
 import FinchReactCore from 'finch-react-core';
 let { StyledComponentNew } = FinchReactCore;

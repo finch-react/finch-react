@@ -1,6 +1,5 @@
-import React from 'react-native';
-import FinchReactCore from 'finch-react-core';
-let { StyledComponentNew } = FinchReactCore;
+import React from 'react';
+import { StyledComponentNew } from 'finch-react-core';
 
 export default class RedditPost extends StyledComponentNew {
   styles = require('./RedditPost.css');

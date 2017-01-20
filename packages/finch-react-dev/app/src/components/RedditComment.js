@@ -1,9 +1,4 @@
-import React, {
-  View,
-  Text,
-} from 'react-native';
-import FinchReactCore from 'finch-react-core';
-let { StyledComponentNew } = FinchReactCore;
+import { StyledComponentNew } from 'finch-react-core';
 import timeLib from '../lib/timeFromUTC';
 
 export default class RedditComment extends StyledComponentNew {

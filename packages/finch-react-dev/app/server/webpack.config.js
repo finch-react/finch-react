@@ -27,10 +27,7 @@ module.exports = {
   target: 'node',
   resolve: {
     alias: {
-      'react-native': path.resolve(__dirname, "../../../finch-react-server/src/index.js"),
-      'finch-react-web': path.resolve(__dirname, "../../../finch-react-web/src/index.js"),
       'finch-react-core': path.resolve(__dirname, "../../../finch-react-core/src/index.js"),
-      'ReactNativeART': 'react-art'
     },
     extensions: ['', '.server.js', '.web.js', '.js', '.jsx'],
   },
@@ -71,9 +68,7 @@ module.exports = {
         })],
         include: [
           config.paths.src,
-          path.resolve(__dirname, "../../../finch-react-core/src/"),
-          path.resolve(__dirname, "../../../finch-react-web/src/"),
-          path.resolve(__dirname, "../../../finch-react-server/src/")
+          path.resolve(__dirname, "../../../finch-react-core/src/")
         ],
         exclude: [
           /node_modules/,
