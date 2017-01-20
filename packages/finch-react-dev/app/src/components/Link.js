@@ -1,5 +1,4 @@
-import React from 'react-native';
-let { PropTypes } = React;
+import React, {PropTypes} from 'react-native';
 import FinchReactCore from 'finch-react-core';
 let { StyledComponentNew, Location } = FinchReactCore;
 

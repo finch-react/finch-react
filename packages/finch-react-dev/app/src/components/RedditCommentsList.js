@@ -1,26 +1,20 @@
 import React, {
-  View,
-  Text,
 } from 'react-native';
 import RedditComment from './RedditComment';
 import FinchReactCore from 'finch-react-core';
-let { StyledComponent } = FinchReactCore;
+let { StyledComponentNew } = FinchReactCore;
 
-export default class RedditCommentsList extends StyledComponent {
+export default class RedditCommentsList extends StyledComponentNew {
+
+  styles = require('./RedditCommentList.css');
+
   render() {
+    const { title } = this.styles.locals;
     return (
-      <View>
-        <Text element="title">Comments</Text>
+      <div>
+        <span className={title}>Comments</span>
         {this.props.comments.map(comment => <RedditComment key={comment.data.id} {...comment.data} />)}
-      </View>
+      </div>
     )
   }
-
-  static styles = {
-    title: {
-      color: '#717171',
-      marginTop: 10,
-      fontWeight: 'bold'
-    }
-  };
 }

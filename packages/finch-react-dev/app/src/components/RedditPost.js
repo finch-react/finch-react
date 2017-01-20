@@ -1,28 +1,16 @@
-import React, {
-  View,
-  Text,
-} from 'react-native';
+import React from 'react-native';
 import FinchReactCore from 'finch-react-core';
-let { StyledComponent } = FinchReactCore;
+let { StyledComponentNew } = FinchReactCore;
 
-export default class RedditPost extends StyledComponent {
+export default class RedditPost extends StyledComponentNew {
+  styles = require('./RedditPost.css');
+
   render() {
+    const {title} = this.styles.locals;
     return (
-      <View>
-        <Text element="title">{this.props.title}</Text>
-      </View>
+      <div>
+        <span className={title}>{this.props.title}</span>
+      </div>
     )
   }
-  static styles = T => [
-    {
-      main: {
-      },
-      title: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#939ca6',
-      }
-    }
-  ];
-
 }
