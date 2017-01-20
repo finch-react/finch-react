@@ -8,14 +8,13 @@ export default class StyledComponentNew extends Component {
 
   componentWillMount() {
     if (this.context.onServerStyle) {
-      this.context.onServerStyle(this.styles)
+      this.styles && this.context.onServerStyle(this.styles)
     } else {
       this.styles && this.styles.use();
     }
   }
 
   componentWillUnmount() {
-
     this.styles && this.styles.unuse();
   }
 }
