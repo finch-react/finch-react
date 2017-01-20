@@ -1,17 +1,13 @@
-import React, {
-  Component,
-  PropTypes,
-  Platform,
-  View,
-  ScrollView,
-  Text
-} from 'react-native';
+import React, {Component, PropTypes} from 'react-native';
 import fetch from '../lib/fetch';
 import Page from '../lib/Page';
 import RedditList from '../components/RedditList';
 import TabBar from '../components/TabBar';
 
 export default class extends Page {
+
+  styles = require('./index.css');
+
   static model(params) {
     let list = params.list || 'top';
     const lists = {
@@ -21,16 +17,16 @@ export default class extends Page {
     };
     return fetch(lists[list]).then(response => response.json())
   };
-
   render() {
     console.log('Render', this.state.model);
+    const {container, main} = this.styles.locals;
     return (
-      <View style={{flex: 1, flexDirection: 'column', alignItems: 'stretch', paddingTop: 5, backgroundColor: 'white'}}>
-        <ScrollView style={{flex: 9}}>
+      <div className={container}>
+        <div className={main}>
           { this.state.model && this.state.model.data && <RedditList items={this.state.model.data.children} /> }
-        </ScrollView>
-        <TabBar style={{flex: 1}} />
-      </View>
+        </div>
+        <TabBar/>
+      </div>
     );
   }
 }

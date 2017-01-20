@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react-native';
-import FinchReactCore from 'finch-react-core';
-let { StyledComponentNew, Location } = FinchReactCore;
+import { StyledComponentNew, Location } from 'finch-react-core';
 
 export default class Link extends StyledComponentNew {
 
