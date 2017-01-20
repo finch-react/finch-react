@@ -1,33 +1,24 @@
 import React from 'react-native';
-let { Text, Linking, LinkingIOS } = React;
-import WebLink from './Link.web';
+let { PropTypes } = React;
+import FinchReactCore from 'finch-react-core';
+let { StyledComponent, Location } = FinchReactCore;
 
-if (!Linking) {
-  Linking = {
-    ...LinkingIOS,
-    openURL: (url)=>new Promise((resolve, reject)=> {
-      LinkingIOS.canOpenURL(url, (supported)=>{
-        if (supported) {
-          LinkingIOS.openURL(url);
-        } else {
-          reject();
-        }
-      });
-    })
+export default class Link extends StyledComponent {
+  static propTypes = {
+    href: PropTypes.string
   };
-}
 
-export default class Link extends WebLink {
   render() {
     return (
-      <Text {...this.props} onPress={this.onPress.bind(this)}>
+      <a href={`${this.props.href}?nojs`} onClick={this.onPress.bind(this)}>
         {this.props.children}
-      </Text>
+      </a>
     );
   }
 
-  onPress() {
-    this.props.href && Linking.openURL('finch://' + this.props.href).catch(err => console.error('An error occurred', err));
-    console.log(`iOS Link pressed ${this.props.href}`);
+  onPress(e) {
+    e.preventDefault();
+    Location.push(this.props.href);
+    console.log(`Web Link pressed ${this.props.href}`);
   }
 }
