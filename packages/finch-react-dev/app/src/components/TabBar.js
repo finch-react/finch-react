@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import {PropTypes} from 'react';
 import { StyledComponentNew } from 'finch-react-core';
 import Link from '../components/Link';
 

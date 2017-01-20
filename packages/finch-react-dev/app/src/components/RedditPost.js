@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyledComponentNew } from 'finch-react-core';
 
 export default class RedditPost extends StyledComponentNew {
