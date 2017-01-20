@@ -3,58 +3,28 @@ import React, {
   Text,
 } from 'react-native';
 import FinchReactCore from 'finch-react-core';
-let { StyledComponent } = FinchReactCore;
-import time from '../lib/timeFromUTC';
+let { StyledComponentNew } = FinchReactCore;
+import timeLib from '../lib/timeFromUTC';
 
-export default class RedditComment extends StyledComponent {
-  static styles(T) {
-    return {
-      main: {
-        paddingHorizontal: 10,
-        paddingVertical: 20,
-        flex: 1,
-        borderBottomWidth: 1,
-        borderColor: 'transparent',
-        borderBottomColor: '#fafafa',
-        borderStyle: 'solid',
-      },
-      author: {
-        fontSize: 13,
-        fontWeight: 'bold',
-        color: '#4f6173',
-      },
-      time: {
-        marginLeft: 10,
-        fontSize: 12,
-        color: '#a5acb3',
-      },
-      comment: {
-        color: '#000',
-        fontSize: 14,
-      },
-      meta: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        marginBottom: 5,
-      }
-    }
-  }
+export default class RedditComment extends StyledComponentNew {
+
+  styles = require('./RedditComment.css');
 
   render() {
+    const { main, meta, author, time, comment } = this.styles.locals;
     return (
-      <View>
+      <div className={main}>
         {
           this.props.body &&
-          <View>
-            <View element="meta">
-              <Text element="author">{this.props.author}</Text>
-              <Text element="time">{time(this.props.created_utc)}</Text>
-            </View>
-            <Text element="comment">{this.props.body}</Text>
-          </View>
+          <div>
+            <div className={meta}>
+              <span className={author}>{this.props.author}</span>
+              <span className={time}>{timeLib(this.props.created_utc)}</span>
+            </div>
+            <span className={comment}>{this.props.body}</span>
+          </div>
         }
-      </View>
+      </div>
     )
   }
 }
