@@ -1,13 +1,13 @@
-import { delay, toPromise } from 'finch-react-core'
+import {delay, toPromise} from 'finch-react-core'
 import proxy from './modelProxy';
-import { Readable } from 'stream';
+import {Readable} from 'stream';
 
 export default async function (model, params, PAGE_INIT_TIMEOUT) {
-  let timer;
   let emitModel = {};
 
-  let stream = Readable({ objectMode: true });
-      stream._read = function(){};
+  let stream = Readable({objectMode: true});
+  stream._read = function () {
+  };
 
   if (typeof model === 'function') {
     model = {'_model': model}
@@ -34,6 +34,7 @@ export default async function (model, params, PAGE_INIT_TIMEOUT) {
       promise.then(result => {
         emitModel[promise._key] = result;
         stream.push(emitModel);
+
       });
     } else {
       emitModel[promise._key] = promise._value;
@@ -44,17 +45,12 @@ export default async function (model, params, PAGE_INIT_TIMEOUT) {
     stream.push(emitModel);
   }
 
-  await Promise.race([delay(PAGE_INIT_TIMEOUT), Promise.all(modelPromises)]).then(values => {
-    if (values) {
+  await Promise
+    .all(modelPromises)
+    .then(values => {
       stream.push(emitModel);
       stream.push(null);
-    } else {
-      Promise.all(modelPromises).then(values => {
-        stream.push(emitModel);
-        stream.push(null);
-      });
-    }
-  });
+    });
 
   return stream;
 };

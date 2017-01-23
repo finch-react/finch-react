@@ -57,9 +57,10 @@ module.exports = {
         'NODE_ENV': JSON.stringify(isProd ? PROD : DEV),
       }
     }),
-    isProd ? new webpack.ProvidePlugin({
+    new webpack.ProvidePlugin({
       React: "react"
-    }) : new webpack.HotModuleReplacementPlugin(),
+    }),
+    !isProd ? new webpack.HotModuleReplacementPlugin() : new webpack.optimize.DedupePlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlPlugin(),
     new webpack.ProvidePlugin({

@@ -21,6 +21,7 @@ export default class RedditItem extends StyledComponentNew {
       <div className={main}>
         <div className={title}>
           <Link href={router.ref(Post, {id: this.props.id})}>{this.props.title}</Link>
+          {/*<Link name="Post" id={this.props.id}>{this.props.title}</Link>*/}
         </div>
         <div className={meta}>
           <span className={metaAuthor}>
