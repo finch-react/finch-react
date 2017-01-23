@@ -1,8 +1,7 @@
 import RedditComment from './RedditComment';
-import FinchReactCore from 'finch-react-core';
-let { StyledComponentNew } = FinchReactCore;
+import { StyledComponent } from 'finch-react-core';
 
-export default class RedditCommentsList extends StyledComponentNew {
+export default class RedditCommentsList extends StyledComponent {
 
   styles = require('./RedditCommentList.css');
 

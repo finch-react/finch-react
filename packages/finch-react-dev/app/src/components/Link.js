@@ -1,7 +1,7 @@
-import React, {PropTypes} from 'react';
-import { StyledComponentNew, Location } from 'finch-react-core';
+import {PropTypes} from 'react';
+import { StyledComponent, Location } from 'finch-react-core';
 
-export default class Link extends StyledComponentNew {
+export default class Link extends StyledComponent {
 
   styles = require('./Link.css');
 

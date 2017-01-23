@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import normalize from 'normalize.css';
 import fonts from '../fonts/PTSansWeb/PTS55F_stylesheet.css';
-import { routerFactory, delay, Location } from 'finch-react-core';
+import { routerFactory, Location } from 'finch-react-core';
 import router from '../router';
 
 const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 0;

@@ -3,7 +3,7 @@ import path from 'path';
 import express from 'express';
 import normalize from 'normalize.css';
 import uuid from 'uuid';
-import {routerFactory, delay, Location} from 'finch-react-core';
+import {routerFactory, Location} from 'finch-react-core';
 import router from '../router';
 
 const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 300;

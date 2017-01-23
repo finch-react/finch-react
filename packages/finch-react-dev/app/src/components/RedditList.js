@@ -1,8 +1,8 @@
 import {PropTypes} from 'react';
-import { StyledComponentNew } from 'finch-react-core';
+import { StyledComponent } from 'finch-react-core';
 import RedditItem from '../components/RedditItem';
 
-export default class RedditList extends StyledComponentNew {
+export default class RedditList extends StyledComponent {
   static propTypes = {
     title: PropTypes.string,
     items: PropTypes.any

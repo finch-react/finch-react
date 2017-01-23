@@ -1,7 +1,7 @@
-import { StyledComponentNew } from 'finch-react-core';
+import { StyledComponent } from 'finch-react-core';
 import timeLib from '../lib/timeFromUTC';
 
-export default class RedditComment extends StyledComponentNew {
+export default class RedditComment extends StyledComponent {
 
   styles = require('./RedditComment.css');
 

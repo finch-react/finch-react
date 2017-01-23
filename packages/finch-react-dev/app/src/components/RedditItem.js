@@ -1,11 +1,11 @@
 import {PropTypes} from 'react';
-import { StyledComponent, StyledComponentNew } from 'finch-react-core';
+import { StyledComponent } from 'finch-react-core';
 import Link from '../components/Link';
 import Post from '../pages/Post';
 import router from '../router';
 import time from '../lib/timeFromUTC';
 
-export default class RedditItem extends StyledComponentNew {
+export default class RedditItem extends StyledComponent {
 
   styles = require('./RedditItem.css');
 

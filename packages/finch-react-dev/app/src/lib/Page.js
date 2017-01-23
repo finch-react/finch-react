@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import allOff from 'event-emitter/all-off';
 
 export default class extends Component {
   static propTypes = {
@@ -13,7 +12,7 @@ export default class extends Component {
     onServerStyle: PropTypes.func
   };
 
-  state = {}
+  state = {};
 
   componentWillMount() {
     if (this.props.modelPromise) {

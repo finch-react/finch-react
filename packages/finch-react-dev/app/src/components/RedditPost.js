@@ -1,6 +1,6 @@
-import { StyledComponentNew } from 'finch-react-core';
+import { StyledComponent } from 'finch-react-core';
 
-export default class RedditPost extends StyledComponentNew {
+export default class RedditPost extends StyledComponent {
   styles = require('./RedditPost.css');
 
   render() {

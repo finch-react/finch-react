@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import {Component, PropTypes} from 'react';
 import fetch from '../lib/fetch';
 import Page from '../lib/Page';
 import RedditCommentsList from '../components/RedditCommentsList';
