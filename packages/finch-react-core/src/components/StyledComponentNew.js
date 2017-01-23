@@ -1,9 +1,9 @@
-import React, {Component} from "react";
+import {PropTypes, Component} from "react";
 
 export default class StyledComponentNew extends Component {
 
   static contextTypes = {
-    onServerStyle: React.PropTypes.func
+    onServerStyle: PropTypes.func
   };
 
   componentWillMount() {
