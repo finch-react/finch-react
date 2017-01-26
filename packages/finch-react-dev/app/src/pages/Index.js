@@ -6,8 +6,6 @@ import TabBar from '../components/TabBar';
 
 export default class extends Page {
 
-  styles = require('./index.css');
-
   static model(params) {
     let list = params.list || 'top';
     const lists = {
@@ -25,7 +23,7 @@ export default class extends Page {
   };
 
   render() {
-    console.log('Render', this.props.request.params.list);
+    console.log('Render', this.props.request.params);
     // const {container, main} = this.styles.locals;
     return (
       <div>

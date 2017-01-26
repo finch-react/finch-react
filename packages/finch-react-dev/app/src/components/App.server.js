@@ -6,7 +6,6 @@ import uuid from 'uuid';
 import {routerFactory, Location} from 'finch-react-core';
 import router from '../router';
 
-const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 300;
 const server = global.server = express();
 const webBundle = path.resolve(process.env.WEB_BUNDLE);
 
@@ -32,13 +31,15 @@ export default function ServerAppRunner() {
             style.id = uuid.v1();
           }
           styles[style.id] = style;
-
         }
       };
 
       let routedComponent = null;
       let modelPromise = null;
-      await router.dispatch({path: req.path, context}, (state, RoutedComponent) => {
+      let RoutedComponent = null;
+      await router.dispatch({path: req.path, context}, (state, Component) => {
+        RoutedComponent = require(`../pages/${Component.type}.js`);
+        Object.assign(RoutedComponent, Component);
         modelPromise = RoutedComponent.model(state.params);
         routedComponent = (
           <RoutedComponent modelPromise={modelPromise} context={context} request={state} />

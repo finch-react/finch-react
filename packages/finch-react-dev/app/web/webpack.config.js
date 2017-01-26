@@ -5,11 +5,13 @@ var webpack = require('webpack');
 var HtmlPlugin = require('webpack-html-plugin');
 var HasteResolverPlugin = require('haste-resolver-webpack-plugin');
 var CompressionPlugin = require('compression-webpack-plugin');
+var fs = require('fs');
 
 var IP = '0.0.0.0';
 var PORT = 3000;
 var NODE_ENV = process.env.NODE_ENV;
 var ROOT_PATH = path.resolve(__dirname, '..');
+var PAGES_PATH = path.resolve(__dirname, '../src/pages');
 var PROD = 'production';
 var DEV = 'development';
 var isProd = NODE_ENV === 'production';
@@ -20,6 +22,7 @@ var config = {
     index: path.join(ROOT_PATH, 'src/index'),
   },
 };
+var pages = collectEntry(PAGES_PATH, config.paths.index);
 
 module.exports = {
   ip: IP,
@@ -33,9 +36,7 @@ module.exports = {
     extensions: ['', '.web.js', '.js', '.jsx'],
   },
   entry: isProd ?
-    [
-      config.paths.index
-    ]
+    [config.paths.index]
     :
     [
       'webpack-dev-server/client?http://' + IP + ':' + PORT,
@@ -43,9 +44,10 @@ module.exports = {
       config.paths.index,
     ],
   output: {
-    publicPath: "/",
+    publicPath: isProd ? "/public/" : "/",
     path: path.join(__dirname, '../../output/web'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    libraryTarget: "jsonp"
   },
   plugins: [
     new HasteResolverPlugin({
@@ -58,14 +60,12 @@ module.exports = {
       }
     }),
     new webpack.ProvidePlugin({
-      React: "react"
+      React: "react",
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
     !isProd ? new webpack.HotModuleReplacementPlugin() : new webpack.optimize.DedupePlugin(),
     new webpack.NoErrorsPlugin(),
-    new HtmlPlugin(),
-    new webpack.ProvidePlugin({
-      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-    })
+    new HtmlPlugin()
   ],
   module: {
     loaders: [
@@ -125,3 +125,15 @@ if (isProd) {
   );
 }
 
+function collectEntry(path, root) {
+  let pages = {};
+  let files = fs.readdirSync(path);
+  files.map(file => {
+    let fileArray = file.split(".");
+    if (fileArray[1] === "js") {
+      pages[fileArray[0]] = `${path}/${file}`
+    }
+  });
+  pages['app'] = root;
+  return pages
+}

@@ -1,7 +1,7 @@
 import {PropTypes} from 'react';
 import { StyledComponent } from 'finch-react-core';
 import Link from '../components/Link';
-import Post from '../pages/Post';
+// import Post from '../pages/Post';
 import router from '../router';
 import time from '../lib/timeFromUTC';
 
@@ -20,8 +20,7 @@ export default class RedditItem extends StyledComponent {
     return (
       <div className={main}>
         <div className={title}>
-          <Link href={router.ref(Post, {id: this.props.id})}>{this.props.title}</Link>
-          {/*<Link name="Post" id={this.props.id}>{this.props.title}</Link>*/}
+          <Link name="Post" id={this.props.id}>{this.props.title}</Link>
         </div>
         <div className={meta}>
           <span className={metaAuthor}>

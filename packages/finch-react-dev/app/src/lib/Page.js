@@ -29,7 +29,7 @@ export default class extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.modelPromise && this.props.modelPromise != prevProps.modelPromise) {
-      this.setState({model:{}})
+      this.setState({model:{}});
       this.props.modelPromise
         .then(model =>
           this.setState({model})

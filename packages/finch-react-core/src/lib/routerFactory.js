@@ -55,31 +55,13 @@ function addRoutes(path, routes, registeredRoutes, callback, parent) {
     } else {
       pagePath = '/' + (path + '/' + key).split('/').filter(path=>path).join('/');
     }
-    let Component = routes[key];
-    Component = getComponentClazz(Component);
+    let Component = {type: routes[key]};
     registeredRoutes[pagePath] = Component;
     if (parent) {
       Object.defineProperty(Component, '_parent', {
         value: parent
       });
     }
-    // if (key !== 'error') {
-    //   computedRoutesTree.push(Component);
-    //   let c = getComponentClazz(Component);
-    //   if (!Component._key) {
-    //     Object.defineProperty(c, "_key", {
-    //       value: key
-    //     });
-    //   }
-    //   Object.defineProperties(c, {
-    //     "_parent": {
-    //       value: parent
-    //     },
-    //     "_children": {
-    //       value: childrenRoutes
-    //     }
-    //   })
-    // }
     callback(pagePath, async (state, next) => {
       return Component;
     });
@@ -103,7 +85,7 @@ function addMenuRoutes(path, menuRoutes, registeredRoutes, navigation, callback,
   }
   menuRoutes.map((route)=>{
     let { url, component, title } = route;
-    let Component = getComponentClazz(component);
+    // let Component = getComponentClazz(component);
     if (!Component) {
       navigation.push({
         url,
@@ -139,46 +121,42 @@ function addMenuRoutes(path, menuRoutes, registeredRoutes, navigation, callback,
   });
 }
 
+function ref(name, params) {
+  const routes = params.routes;
+  const mask = Object.keys(routes).filter(key => {
+    return routes[key].type == name
+  })[0];
+  if(mask){
+    let split = mask.split('/');
+    let url = [];
+    for (let i = 0; i < split.length; i++) {
+      let chunk = split[i];
+      if (chunk.indexOf(':') !== 0) {
+        url.push(chunk);
+        continue;
+      }
+      let paramName = chunk.replace(':', '').replace('?', '');
+      let param = params[paramName];
+      if (typeof param === 'undefined' && chunk.indexOf('?') !== chunk.length - 1) {
+        console.error("Missing required url-parameter '" + paramName + "'.\nUrl-expression is '" + mask + "' and given params are " + JSON.stringify(params));
+        return null;
+      } else if (typeof param !== 'undefined') {
+        url.push(param);
+      } else {
+        break;
+      }
+    }
+    return url.join('/');
+  }
 
-function ref(clazz, params) {
-  if (!clazz._url) {
-    console.error("Page " + clazz.name + " is not registered in router");
-    return null;
-  }
-  let split = clazz._url.split('/');
-  let url = [];
-  for (let i = 0; i < split.length; i++) {
-    let chunk = split[i];
-    if (chunk.indexOf(':') !== 0) {
-      url.push(chunk);
-      continue;
-    }
-    let paramName = chunk.replace(':', '').replace('?', '');
-    let param = params[paramName];
-    if (typeof param === 'undefined' && chunk.indexOf('?') !== chunk.length - 1) {
-      console.error("Missing required url-parameter '" + paramName + "'.\nUrl-expression is '" + clazz._url + "' and given params are " + JSON.stringify(params));
-      return null;
-    } else if (typeof param !== 'undefined') {
-      url.push(param);
-    } else {
-      break;
-    }
-  }
-  return url.join('/');
 }
 
 function injectUrl(routes) {
   Object.keys(routes).forEach(url => {
-    let clazz = routes[url];
-
-    Object.defineProperty(getComponentClazz(clazz), '_url', {
-      value: url
+    Object.defineProperty(routes[url], '_url', {
+      value: url,
+      enumerable: true
     });
   });
   return routes;
-}
-
-function getComponentClazz(component) {
-  //legacy for babel6 module system
-  return (component && 'default' in component) ? component['default'] : component;
 }

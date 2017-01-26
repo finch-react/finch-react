@@ -1,5 +1,6 @@
 import {PropTypes} from 'react';
 import { StyledComponent, Location } from 'finch-react-core';
+import router from '../router';
 
 export default class Link extends StyledComponent {
 
@@ -9,15 +10,17 @@ export default class Link extends StyledComponent {
     href: PropTypes.string
   };
 
-  onPress = (e) => {
+  onPress = (e, path) => {
     e.preventDefault();
-    Location.push(this.props.href);
-    console.log(`Web Link pressed ${this.props.href}`);
+    Location.push(path);
+    console.log(`Web Link pressed ${path}`);
   };
 
   render() {
+    const {name, ...other} = this.props;
+    const path = router.ref(name, {...other, routes: router.computedRoutes});
     return (
-      <a href={`${this.props.href}?nojs`} onClick={this.onPress}>
+      <a href={path} onClick={(e) => this.onPress(e, path)}>
         {this.props.children}
       </a>
     );

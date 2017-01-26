@@ -15,9 +15,9 @@ export default class TabBar extends StyledComponent {
     const {main} = this.styles.locals;
     return (
       <div className={main}>
-        <Link element="link" href='/top'>Лучшее</Link>
-        <Link element="link" href='/hot'>Горячее</Link>
-        <Link element="link" href='/new'>Новое</Link>
+        <Link name="Index" list='top'>Лучшее</Link>
+        <Link name="Index" list='hot'>Горячее</Link>
+        <Link name="Index" list='new'>Новое</Link>
       </div>
     )
   }
