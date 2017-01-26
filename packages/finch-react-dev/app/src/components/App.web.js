@@ -4,6 +4,7 @@ import normalize from 'normalize.css';
 import fonts from '../fonts/PTSansWeb/PTS55F_stylesheet.css';
 import {routerFactory, Location} from 'finch-react-core';
 import router from '../router';
+import Preloader from './Preloader'
 
 const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 0;
 const __SERVER__ = 'http://localhost:5000';
@@ -46,23 +47,23 @@ async function render(state, router) {
   let routedComponent;
   let modelPromise = null;
 
-  await router.dispatch(state, (state, Component) => {
-    require(`bundle-loader?lazy!../pages/${Component.type}.js`)(RoutedComponent => {
+  await router.dispatch(state, async (state, Component) => {
+    require(`bundle-loader?lazy!../pages/${Component.type}.js`)( async (RoutedComponent) => {
       modelPromise = RoutedComponent.model(state.params);
       routedComponent = <RoutedComponent modelPromise={modelPromise} request={state}/>;
-      ReactDOM.render(routedComponent, element);
+      let serverstyle = document.getElementById("server-style");
+      if (serverstyle) {
+        if (modelPromise) {
+          await modelPromise;
+        }
+        serverstyle.parentNode.removeChild(serverstyle);
+      } else {
+        window.scrollTo(0, 0)
+      }
+      ReactDOM.render(routedComponent ? routedComponent : <Preloader />, element);
+
     });
   });
 
-  let serverstyle = document.getElementById("server-style");
-  console.log(1);
-  if (serverstyle) {
-    console.log(2);
-    if (modelPromise) {
-      await modelPromise;
-    }
-    serverstyle.parentNode.removeChild(serverstyle);
-  } else {
-    window.scrollTo(0, 0)
-  }
+
 }

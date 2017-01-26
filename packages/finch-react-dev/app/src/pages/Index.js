@@ -3,6 +3,7 @@ import fetch from '../lib/fetch';
 import Page from '../lib/Page';
 import RedditList from '../components/RedditList';
 import TabBar from '../components/TabBar';
+import Preloader from '../components/Preloader';
 
 export default class extends Page {
 
@@ -24,11 +25,10 @@ export default class extends Page {
 
   render() {
     console.log('Render', this.props.request.params);
-    // const {container, main} = this.styles.locals;
     return (
       <div>
         <div>
-          { this.state.model && this.state.model.data && <RedditList items={this.state.model.data.children}/> }
+          { this.state.model && this.state.model.data ? <RedditList items={this.state.model.data.children}/> : <Preloader/>}
         </div>
         <TabBar/>
       </div>

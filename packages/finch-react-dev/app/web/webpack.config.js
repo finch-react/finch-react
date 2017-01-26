@@ -57,6 +57,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(isProd ? PROD : DEV),
+        'TIMESTAMP': JSON.stringify(Date.now()),
       }
     }),
     new webpack.ProvidePlugin({

@@ -1,0 +1,44 @@
+.main {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.preloader {
+  width: 175px;
+  height: 175px;
+  border-radius: 50%;
+  margin: 11em;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  background:rgb(0,0,0);
+}
+.preloader,
+.preloader:before,
+.preloader:after {
+  animation: 1.15s infinite ease-in-out;
+}
+.preloader:before,
+.preloader:after {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.preloader {
+  animation-name: preloader;
+}
+
+
+@keyframes preloader {
+  from { transform: scale(0); opacity: 1; }
+  to	 { transform: scale(1); opacity: 0; }
+}
