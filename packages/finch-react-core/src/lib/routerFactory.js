@@ -4,6 +4,7 @@ import React, {
   PropTypes,
 } from 'react';
 
+
 export default function (routes, menuRoutes, contextRoot) {
   // Если передали два аргумента и второй строка, то не строим меню
   if (typeof menuRoutes === 'string') {
@@ -22,7 +23,6 @@ export default function (routes, menuRoutes, contextRoot) {
   let router = new Router((on) => {
     addRoutes(`${contextRoot}/`, routes, registeredRoutes, on);
     addMenuRoutes(`${contextRoot}/`, menuRoutes, registeredRoutes, navigation, on);
-    injectUrl(registeredRoutes);
   });
 
   Object.defineProperty(router, 'computedRoutes', {
@@ -42,12 +42,14 @@ export default function (routes, menuRoutes, contextRoot) {
   router.computedRoutesTree = computedRoutesTree;
   router.ref = ref;
   return router;
+
 }
 
 function addRoutes(path, routes, registeredRoutes, callback, parent) {
   if (!routes) {
     return;
   }
+
   Object.keys(routes).map((key)=>{
     let pagePath;
     if (key === 'error') {
@@ -85,7 +87,7 @@ function addMenuRoutes(path, menuRoutes, registeredRoutes, navigation, callback,
   }
   menuRoutes.map((route)=>{
     let { url, component, title } = route;
-    // let Component = getComponentClazz(component);
+    let Component = {type: component};
     if (!Component) {
       navigation.push({
         url,
@@ -149,14 +151,4 @@ function ref(name, params) {
     return url.join('/');
   }
 
-}
-
-function injectUrl(routes) {
-  Object.keys(routes).forEach(url => {
-    Object.defineProperty(routes[url], '_url', {
-      value: url,
-      enumerable: true
-    });
-  });
-  return routes;
 }

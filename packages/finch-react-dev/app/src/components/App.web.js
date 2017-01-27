@@ -9,20 +9,12 @@ import Preloader from './Preloader'
 const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 0;
 const __SERVER__ = 'http://localhost:5000';
 
-normalize.use();
-fonts.use();
-
-function requirePromise(path) {
-  return new Promise(resolve =>
-    require.ensure([], (require) => {
-      resolve(require(`../pages/${path}.js`));
-    })
-  );
-}
-
 export default function ClientAppRunner() {
   let currentLocation = null;
   let currentState = null;
+
+  normalize.use();
+  fonts.use();
 
   // Re-render the app when window.location changes
   const unlisten = Location.listen(location => {
@@ -37,6 +29,7 @@ export default function ClientAppRunner() {
 }
 
 async function render(state, router) {
+
   let element = document.getElementById("app");
   if (!element) {
     element = document.createElement("div");
@@ -47,8 +40,8 @@ async function render(state, router) {
   let routedComponent;
   let modelPromise = null;
 
-  await router.dispatch(state, async (state, Component) => {
-    require(`bundle-loader?lazy!../pages/${Component.type}.js`)( async (RoutedComponent) => {
+  await router.dispatch(state, async(state, Component) => {
+    require(`bundle-loader?lazy!../pages/${Component.type}.js`)(async(RoutedComponent) => {
       modelPromise = RoutedComponent.model(state.params);
       routedComponent = <RoutedComponent modelPromise={modelPromise} request={state}/>;
       let serverstyle = document.getElementById("server-style");
@@ -64,6 +57,5 @@ async function render(state, router) {
 
     });
   });
-
 
 }

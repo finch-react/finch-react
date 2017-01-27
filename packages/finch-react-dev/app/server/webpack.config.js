@@ -64,7 +64,10 @@ module.exports = {
         loaders: ['babel-loader?' + JSON.stringify({
           cacheDirectory: true,
           presets: ['es2015', 'stage-0', 'react'],
-          plugins: ['add-module-exports']
+          plugins: [
+            'add-module-exports',
+            'transform-decorators-legacy'
+          ]
         })],
         include: [
           config.paths.src,

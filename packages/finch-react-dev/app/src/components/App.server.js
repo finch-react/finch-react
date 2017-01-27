@@ -6,6 +6,7 @@ import uuid from 'uuid';
 import {routerFactory, Location} from 'finch-react-core';
 import router from '../router';
 
+const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 300;
 const server = global.server = express();
 const webBundle = path.resolve(process.env.WEB_BUNDLE);
 
