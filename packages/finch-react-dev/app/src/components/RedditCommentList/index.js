@@ -1,4 +1,4 @@
-import RedditComment from './RedditComment';
+import RedditComment from '../RedditComment/index';
 import { StyledComponent } from 'finch-react-core';
 
 export default class RedditCommentsList extends StyledComponent {

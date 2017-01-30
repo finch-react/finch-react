@@ -1,9 +1,9 @@
 import {Component, PropTypes} from 'react';
-import fetch from '../lib/fetch';
-import Page from '../lib/Page';
-import RedditList from '../components/RedditList';
-import TabBar from '../components/TabBar';
-import Preloader from '../components/Preloader';
+import fetch from '../../lib/fetch';
+import Page from '../../lib/Page';
+import RedditList from '../../components/RedditList/index';
+import TabBar from '../../components/TabBar/index';
+import Preloader from '../../components/Preloader/index';
 
 export default class extends Page {
 

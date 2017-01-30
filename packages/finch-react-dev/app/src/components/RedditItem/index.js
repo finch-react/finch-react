@@ -1,7 +1,7 @@
 import {PropTypes} from 'react';
 import { StyledComponent } from 'finch-react-core';
-import Link from '../components/Link';
-import time from '../lib/timeFromUTC';
+import Link from '../Link/index';
+import time from '../../lib/timeFromUTC';
 
 export default class RedditItem extends StyledComponent {
 

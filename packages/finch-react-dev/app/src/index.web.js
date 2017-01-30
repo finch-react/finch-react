@@ -39,7 +39,7 @@ async function render(state, router) {
   let modelPromise = null;
 
   await router.dispatch(state, async(state, Component) => {
-    require(`bundle-loader?lazy!./pages/${Component.type}.js`)( async (RoutedComponent) => {
+    require(`bundle-loader?lazy!./pages/${Component.type}/index.js`)( async (RoutedComponent) => {
       modelPromise = RoutedComponent.model(state.params);
       routedComponent = <RoutedComponent modelPromise={modelPromise} request={state}/>;
       let serverstyle = document.getElementById("server-style");

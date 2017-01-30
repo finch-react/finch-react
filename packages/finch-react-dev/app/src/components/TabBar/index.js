@@ -1,6 +1,6 @@
 import {PropTypes} from 'react';
 import { StyledComponent } from 'finch-react-core';
-import Link from '../components/Link';
+import Link from '../Link/index';
 
 export default class TabBar extends StyledComponent {
 

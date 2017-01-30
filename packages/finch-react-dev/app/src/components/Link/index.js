@@ -1,6 +1,6 @@
 import {PropTypes} from 'react';
 import { StyledComponent, Location } from 'finch-react-core';
-import router from '../router';
+import router from '../../router';
 
 export default class Link extends StyledComponent {
 

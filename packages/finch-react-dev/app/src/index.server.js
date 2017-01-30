@@ -40,7 +40,7 @@ server.get('*', async(req, res, next) => {
     let modelPromise = null;
     let RoutedComponent = null;
     await router.dispatch({path: req.path, context}, (state, Component) => {
-      RoutedComponent = require(`./pages/${Component.type}.js`);
+      RoutedComponent = require(`./pages/${Component.type}/index.js`);
       Object.assign(RoutedComponent, Component);
       modelPromise = RoutedComponent.model(state.params);
       routedComponent = (

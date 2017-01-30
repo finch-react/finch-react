@@ -1,5 +1,5 @@
 import { StyledComponent } from 'finch-react-core';
-import timeLib from '../lib/timeFromUTC';
+import timeLib from '../../lib/timeFromUTC';
 
 export default class RedditComment extends StyledComponent {
 

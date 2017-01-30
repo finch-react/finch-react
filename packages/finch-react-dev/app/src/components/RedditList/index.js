@@ -1,6 +1,6 @@
 import {PropTypes} from 'react';
 import { StyledComponent } from 'finch-react-core';
-import RedditItem from '../components/RedditItem';
+import RedditItem from '../RedditItem/index';
 
 export default class RedditList extends StyledComponent {
   static propTypes = {
