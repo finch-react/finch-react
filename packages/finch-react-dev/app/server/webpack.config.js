@@ -16,7 +16,7 @@ var isProd = NODE_ENV === 'production';
 var config = {
   paths: {
     src: path.join(ROOT_PATH, '.'),
-    index: path.join(ROOT_PATH, 'src/index'),
+    index: path.join(ROOT_PATH, 'src/index.server.js'),
   },
 };
 
@@ -32,6 +32,7 @@ module.exports = {
     extensions: ['', '.server.js', '.web.js', '.js', '.jsx'],
   },
   entry: [
+    'babel-polyfill',
     config.paths.index
   ],
   output: {

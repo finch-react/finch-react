@@ -19,10 +19,9 @@ var isProd = NODE_ENV === 'production';
 var config = {
   paths: {
     src: path.join(ROOT_PATH, '.'),
-    index: path.join(ROOT_PATH, 'src/index'),
+    index: path.join(ROOT_PATH, 'src/index.web.js'),
   },
 };
-var pages = collectEntry(PAGES_PATH, config.paths.index);
 
 module.exports = {
   ip: IP,
@@ -36,11 +35,12 @@ module.exports = {
     extensions: ['', '.web.js', '.js', '.jsx'],
   },
   entry: isProd ?
-    [config.paths.index]
+    ['babel-polyfill', config.paths.index]
     :
     [
       'webpack-dev-server/client?http://' + IP + ':' + PORT,
       'webpack/hot/only-dev-server',
+      'babel-polyfill',
       config.paths.index,
     ],
   output: {
@@ -130,17 +130,4 @@ if (isProd) {
       regExp: /\.js$|\.html$/
     })
   );
-}
-
-function collectEntry(path, root) {
-  let pages = {};
-  let files = fs.readdirSync(path);
-  files.map(file => {
-    let fileArray = file.split(".");
-    if (fileArray[1] === "js") {
-      pages[fileArray[0]] = `${path}/${file}`
-    }
-  });
-  pages['app'] = root;
-  return pages
 }

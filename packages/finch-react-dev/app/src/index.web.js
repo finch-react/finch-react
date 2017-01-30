@@ -1,15 +1,14 @@
-import React from 'react';
+import {Component} from 'react';
 import ReactDOM from 'react-dom';
 import normalize from 'normalize.css';
-import fonts from '../fonts/PTSansWeb/PTS55F_stylesheet.css';
+import fonts from './fonts/PTSansWeb/PTS55F_stylesheet.css';
 import {routerFactory, Location} from 'finch-react-core';
-import router from '../router';
-import Preloader from './Preloader'
+import router from './router';
+import Preloader from './components/Preloader'
 
 const PAGE_INIT_TIMEOUT = process.env.PAGE_INIT_TIMEOUT || 0;
 const __SERVER__ = 'http://localhost:5000';
 
-export default function ClientAppRunner() {
   let currentLocation = null;
   let currentState = null;
 
@@ -26,7 +25,6 @@ export default function ClientAppRunner() {
     });
     render(currentState, router);
   });
-}
 
 async function render(state, router) {
 
@@ -41,7 +39,7 @@ async function render(state, router) {
   let modelPromise = null;
 
   await router.dispatch(state, async(state, Component) => {
-    require(`bundle-loader?lazy!../pages/${Component.type}.js`)( async (RoutedComponent) => {
+    require(`bundle-loader?lazy!./pages/${Component.type}.js`)( async (RoutedComponent) => {
       modelPromise = RoutedComponent.model(state.params);
       routedComponent = <RoutedComponent modelPromise={modelPromise} request={state}/>;
       let serverstyle = document.getElementById("server-style");
