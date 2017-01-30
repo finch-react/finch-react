@@ -1,2 +1,3 @@
-Run `npm run install` to install all projects dependencies
-Run `npm run start` to start projects in web
+Run `yarn install` to install all projects dependencies<br/>
+Run `yarn start` to start projects in web<br/>
+Run `yarn start:server` to build server bundle, client bundle and start server
