@@ -9,7 +9,5 @@ try() {
 }
 
 try rm -r packages/finch-react-*/node_modules/finch-react-*
-cd packages/finch-react-core && time npm i --no-progress && cd -
-cd packages/finch-react-web && time npm i --no-progress && cd -
-cd packages/finch-react-server && time npm i --no-progress && cd -
-cd packages/finch-react-dev/app && time npm i --no-progress && cd -
+cd packages/finch-react-core && time yarn && cd -
+cd packages/finch-react-dev/app && time yarn && cd -

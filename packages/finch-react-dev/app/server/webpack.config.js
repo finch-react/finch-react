@@ -26,9 +26,6 @@ module.exports = {
   devtool: 'cheap-eval',
   target: 'node',
   resolve: {
-    alias: {
-      'finch-react-core': path.resolve(__dirname, "../../../finch-react-core/src/index.js"),
-    },
     extensions: ['', '.server.js', '.web.js', '.js', '.jsx'],
   },
   entry: [
