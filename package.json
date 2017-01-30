@@ -14,6 +14,7 @@
   "scripts": {
     "install": "sh install.sh",
     "clear": "sh clear.sh",
-    "start": "cd packages/finch-react-dev/app && yarn web-dev && cd -"
+    "start": "cd packages/finch-react-dev/app && yarn web-dev && cd -",
+    "start:server": "cd packages/finch-react-dev/app && yarn server && cd -"
   }
 }

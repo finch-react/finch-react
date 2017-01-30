@@ -69,10 +69,10 @@ module.exports = {
         })],
         include: [
           config.paths.src,
-          path.resolve(__dirname, "../../../finch-react-core/src/")
+          path.resolve(__dirname, "../node_modules/finch-react-core/src/")
         ],
         exclude: [
-          /node_modules/,
+          /node_modules\/(?!finch\-react)/,
           /output/
         ]
       }]
