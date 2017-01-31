@@ -1,10 +1,49 @@
 import {PropTypes, Component} from "react";
 
+function transformStyles(e, styles, i) {
+  if (!(typeof e == "object")) {
+    return e;
+  }
+  let children = e.props.children;
+  if (!children) {
+    return e;
+  }
+  if (typeof children != "string") {
+    if (children.$$typeof) {
+      children = transformStyles(children, styles);
+    } else {
+      children = children.map((c, i) => transformStyles(c, styles, i))
+    }
+  }
+  return React.cloneElement(e,
+    {
+      key: i,
+      className: e.props.className && e.props.className
+        .split(' ')
+        .map(name => styles.locals[name] ? styles.locals[name] : name)
+        .join(' ')
+    },
+    children
+  );
+}
+
 export default class StyledComponentNew extends Component {
 
   static contextTypes = {
     onServerStyle: PropTypes.func
   };
+
+  constructor() {
+    super();
+    if (!this.styles) {
+      return;
+    }
+    const render = this.render;
+    this.render = () => {
+      return transformStyles(render.apply(this), this.styles);
+    }
+
+  }
 
   componentWillMount() {
     if (this.context.onServerStyle) {
