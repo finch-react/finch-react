@@ -8,7 +8,7 @@ function transformStyles(e, styles, i) {
   if (!children) {
     return e;
   }
-  if (typeof children != "string") {
+  if (typeof children != "string" && typeof children != "number") {
     if (children.$$typeof) {
       children = transformStyles(children, styles);
     } else {
@@ -35,11 +35,11 @@ export default class StyledComponentNew extends Component {
 
   constructor() {
     super();
-    if (!this.styles) {
-      return;
-    }
     const render = this.render;
     this.render = () => {
+      if (!this.styles) {
+        return render.apply(this);
+      }
       return transformStyles(render.apply(this), this.styles);
     }
 
@@ -56,5 +56,6 @@ export default class StyledComponentNew extends Component {
   componentWillUnmount() {
     this.styles && this.styles.unuse();
   }
+
 }
 
