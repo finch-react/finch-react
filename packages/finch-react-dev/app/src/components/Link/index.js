@@ -13,7 +13,6 @@ export default class Link extends StyledComponent {
   onPress = (e, path) => {
     e.preventDefault();
     Location.push(path);
-    console.log(`Web Link pressed ${path}`);
   };
 
   render() {

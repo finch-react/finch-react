@@ -14,18 +14,17 @@ export default class RedditItem extends StyledComponent {
 
   render() {
     const MAX_AUTHOR_LIMIT = 15;
-    const { main, title, meta, metaItem, metaAuthor } = this.styles.locals;
     return (
-      <div className={main}>
-        <div className={title}>
+      <div className="main">
+        <div className="title">
           <Link name="Post" id={this.props.id}>{this.props.title}</Link>
         </div>
-        <div className={meta}>
-          <span className={metaAuthor}>
+        <div className="meta">
+          <span className="metaAuthor">
             { ((this.props.author).length > MAX_AUTHOR_LIMIT) ? (((this.props.author).substring(0, MAX_AUTHOR_LIMIT - 3)) + '...') : this.props.author }
           </span>
-          <span className={metaItem}>{time(this.props.created_utc)}</span>
-          <span className={metaItem}>{this.props.score}</span>
+          <span className="metaItem">{time(this.props.created_utc)}</span>
+          <span className="metaItem">{this.props.score}</span>
         </div>
       </div>
     )

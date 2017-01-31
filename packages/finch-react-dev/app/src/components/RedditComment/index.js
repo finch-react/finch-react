@@ -12,11 +12,11 @@ export default class RedditComment extends StyledComponent {
         {
           this.props.body &&
           <div>
-            <div className={meta}>
-              <span className={author}>{this.props.author}</span>
-              <span className={time}>{timeLib(this.props.created_utc)}</span>
+            <div className="meta">
+              <span className="author">{this.props.author}</span>
+              <span className="time">{timeLib(this.props.created_utc)}</span>
             </div>
-            <span className={comment}>{this.props.body}</span>
+            <span className="comment">{this.props.body}</span>
           </div>
         }
       </div>

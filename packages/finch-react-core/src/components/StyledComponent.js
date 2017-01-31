@@ -1,14 +1,14 @@
 import {PropTypes, Component} from "react";
 
 function transformStyles(e, styles, i) {
+  if(Array.isArray(e)) {
+    return e.map((e, i)=>transformStyles(e, styles, i));
+  }
   if (!(typeof e == "object")) {
     return e;
   }
   let children = e.props.children;
-  if (!children) {
-    return e;
-  }
-  if (typeof children != "string" && typeof children != "number") {
+  if (children && typeof children != "string" && typeof children != "number") {
     if (children.$$typeof) {
       children = transformStyles(children, styles);
     } else {
@@ -27,7 +27,7 @@ function transformStyles(e, styles, i) {
   );
 }
 
-export default class StyledComponentNew extends Component {
+export default class StyledComponent extends Component {
 
   static contextTypes = {
     onServerStyle: PropTypes.func

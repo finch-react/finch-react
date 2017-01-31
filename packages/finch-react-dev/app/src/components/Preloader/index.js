@@ -6,11 +6,10 @@ export default class Preloader extends StyledComponent {
   styles = require('./Preloader.css');
 
   render() {
-    const {main, preloader} = this.styles.locals;
     return (
       <div>
-        <div className={main}>
-          <div className={preloader}></div>
+        <div className="main">
+          <div className="preloader"></div>
         </div>
       </div>
     )

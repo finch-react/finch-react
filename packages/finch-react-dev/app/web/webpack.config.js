@@ -29,6 +29,9 @@ module.exports = {
   devtool: 'eval',
   target: 'web',
   resolve: {
+    alias: {
+      'finch-react-core': path.resolve(__dirname, "../../../finch-react-core/src/index.js")
+    },
     extensions: ['', '.web.js', '.js', '.jsx'],
   },
   entry: isProd ?
@@ -106,10 +109,10 @@ module.exports = {
           ],
         include: [
           config.paths.src,
-          path.resolve(__dirname, "../node_modules/finch-react-core/src/"),
+          path.resolve(__dirname, "../../../finch-react-core/src/"),
         ],
         exclude: [
-          /node_modules\/(?!finch\-react)/,
+          /node_modules/,
           /output/
         ]
       }

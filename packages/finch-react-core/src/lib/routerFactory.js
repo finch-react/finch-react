@@ -27,14 +27,12 @@ export default function (routes, menuRoutes, contextRoot) {
 
   Object.defineProperty(router, 'computedRoutes', {
     get: function () {
-      console.log("Somebody wants to read router.computedRoutes");
       return registeredRoutes;
     }
   });
 
   Object.defineProperty(router, 'navigation', {
     get: function () {
-      console.log("Somebody wants to read router.navigation");
       return navigation;
     }
   });
@@ -67,7 +65,6 @@ function addRoutes(path, routes, registeredRoutes, callback, parent) {
     callback(pagePath, async (state, next) => {
       return Component;
     });
-    console.log('Register route ' + pagePath);
     if (Component.pages) {
       addRoutes(pagePath, Component.pages, registeredRoutes, callback, Component);
     }
@@ -109,7 +106,6 @@ function addMenuRoutes(path, menuRoutes, registeredRoutes, navigation, callback,
         value: parent
       });
     }
-    console.log('Register menu item ' + pagePath + ' as ' + (title || url));
     if (Component.pages) {
       addRoutes(pagePath, Component.pages, registeredRoutes, callback, Component);
     }
