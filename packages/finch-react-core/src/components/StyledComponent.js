@@ -20,7 +20,7 @@ function transformStyles(e, styles, i) {
       key: i,
       className: e.props.className && e.props.className
         .split(' ')
-        .map(name => styles.locals[name] ? styles.locals[name] : name)
+        .map(name => (styles.locals && styles.locals[name]) ? styles.locals[name] : name)
         .join(' ')
     },
     children
