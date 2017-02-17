@@ -46,9 +46,13 @@ export default class StyledComponent extends Component {
   }
 
   componentWillMount() {
-    if (this.context.onServerStyle) {
+    if (this.context && this.context.onServerStyle) {
       this.styles && this.context.onServerStyle(this.styles)
-    } else {
+    }
+    else if (this.props.context && this.props.context.onServerStyle){
+      this.styles && this.props.context.onServerStyle(this.styles)
+    }
+    else {
       this.styles && this.styles.use();
     }
   }
