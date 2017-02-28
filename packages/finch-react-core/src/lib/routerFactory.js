@@ -22,7 +22,6 @@ export default function (routes, menuRoutes, contextRoot) {
 
   let router = new Router((on) => {
     addRoutes(`${contextRoot}/`, routes, registeredRoutes, on);
-    addMenuRoutes(`${contextRoot}/`, menuRoutes, registeredRoutes, navigation, on);
   });
 
   Object.defineProperty(router, 'computedRoutes', {
@@ -50,80 +49,88 @@ function addRoutes(path, routes, registeredRoutes, callback, parent) {
 
   Object.keys(routes).map((key)=>{
     let pagePath;
+    let Component = {};
+    const currentRoute = routes[key];
+    const currentRouteName =  typeof currentRoute === "string" ? currentRoute : currentRoute['name'];
+
     if (key === 'error') {
       pagePath = key;
     } else {
       pagePath = '/' + (path + '/' + key).split('/').filter(path=>path).join('/');
     }
-    let Component = {type: routes[key]};
-    registeredRoutes[pagePath] = Component;
-    if (parent) {
-      Object.defineProperty(Component, '_parent', {
-        value: parent
-      });
-    }
-    callback(pagePath, async (state, next) => {
-      return Component;
-    });
-    if (Component.pages) {
-      addRoutes(pagePath, Component.pages, registeredRoutes, callback, Component);
-    }
-    if (Component.menu) {
-      let navigation = [];
-      Object.defineProperty(Component, '_menu', {
-        value: navigation
-      });
-      addMenuRoutes(pagePath, Component.menu, registeredRoutes, navigation, callback, Component);
-    }
-  });
-}
 
-function addMenuRoutes(path, menuRoutes, registeredRoutes, navigation, callback, parent) {
-  if (!menuRoutes) {
-    return;
-  }
-  menuRoutes.map((route)=>{
-    let { url, component, title } = route;
-    let Component = {type: component};
-    if (!Component) {
-      navigation.push({
-        url,
-        title
-      });
-      return;
-    }
-    let pagePath = '/' + (path + '/' + url).split('/').filter(path=>path).join('/');
+    Component.name = currentRouteName;
+    Component.params = currentRoute.params || undefined;
+    Component.renderer = currentRoute.renderer || currentRouteName;
+
     registeredRoutes[pagePath] = Component;
+
     callback(pagePath, async (state, next) => {
       return Component;
     });
-    navigation.push({
-      component,
-      title
-    });
-    if (parent) {
-      Object.defineProperty(Component, '_parent', {
-        value: parent
-      });
-    }
-    if (Component.pages) {
-      addRoutes(pagePath, Component.pages, registeredRoutes, callback, Component);
-    }
-    if (Component.menu) {
-      let subMenu = [];
-      Object.defineProperty(Component, '_menu', {
-        value: subMenu
-      });
-      addMenuRoutes(pagePath, Component.menu, registeredRoutes, subMenu, callback, Component);
-    }
   });
 }
 
 function ref(name, params) {
   const routes = params.routes;
-  const mask = Object.keys(routes).filter(key => {
-    return routes[key].type == name
-  })[0];
+
+  let routesClone = {...routes};
+  let routesMap = {};
+  Object.keys(routesClone).forEach((k) => {
+    if (typeof routesClone[k] === 'string') {
+      routesClone[k] = {name: routesClone[k]};
+    }
+    routesClone[k].url = k;
+    routesMap[routesClone[k].name] = routesMap[routesClone[k].name] || [];
+    routesMap[routesClone[k].name].push(routesClone[k]);
+  });
+
+  let mask = false;
+  Object.keys(routesMap).forEach(key => {
+    let route = routesMap[key];
+    route.forEach(item => {
+      if(mask){
+        return
+      }
+      if(item.name !== name){
+        return
+      }
+      if(item.name === name && !item.params){
+        mask = item.url
+      }
+      else {
+        Object.keys(item.params).forEach(param => {
+          if(item.params[param] === params.params[param]){
+            mask = item.url
+          }
+        })
+      }
+    });
+  });
+
+  // const mask = Object.keys(routes).filter(key => {
+  //   let isCoincided = true;
+  //   let route = routes[key];
+  //   let rendererName = Object.keys(routes[key])[0];
+  //   let rendererArray = route[rendererName];
+  //   if(rendererName == name){
+  //     if(rendererArray.params === {}){
+  //       return true
+  //     }
+  //     rendererArray.map(item => {
+  //       let itemParams = item.params;
+  //       Object.keys(itemParams).map(param => {
+  //         if(itemParams[param] !==  params.params[param]){
+  //           isCoincided = false;
+  //         }
+  //       });
+  //     });
+  //     return isCoincided
+  //
+  //   }
+  //   else return false
+  // });
+
   if(mask){
     let split = mask.split('/');
     let url = [];
@@ -146,5 +153,6 @@ function ref(name, params) {
     }
     return url.join('/');
   }
+  else return "/"
 
 }
