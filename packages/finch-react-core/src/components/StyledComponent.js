@@ -1,8 +1,8 @@
 import {PropTypes, Component} from "react";
 
 function transformStyles(e, styles, i) {
-  if(Array.isArray(e)) {
-    return e.map((e, i)=>transformStyles(e, styles, i));
+  if (Array.isArray(e)) {
+    return e.map((e, i) => transformStyles(e, styles, i));
   }
   if (!(typeof e == "object")) {
     return e;
@@ -15,13 +15,18 @@ function transformStyles(e, styles, i) {
       children = children.map((c, i) => transformStyles(c, styles, i))
     }
   }
+
+  let className = e.props.className || '';
+
+  className = (typeof className === "string" ? className.split(' ') : className)
+    .filter(e => e)
+    .map(name => (styles.locals && styles.locals[name]) ? styles.locals[name] : name)
+    .join(' ');
+
   return React.cloneElement(e,
     {
       key: i,
-      className: e.props.className && e.props.className
-        .split(' ')
-        .map(name => (styles.locals && styles.locals[name]) ? styles.locals[name] : name)
-        .join(' ')
+      className: className
     },
     children
   );
@@ -49,7 +54,7 @@ export default class StyledComponent extends Component {
     if (this.context && this.context.onServerStyle) {
       this.styles && this.context.onServerStyle(this.styles)
     }
-    else if (this.props.context && this.props.context.onServerStyle){
+    else if (this.props.context && this.props.context.onServerStyle) {
       this.styles && this.props.context.onServerStyle(this.styles)
     }
     else {
