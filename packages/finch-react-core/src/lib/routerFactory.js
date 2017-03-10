@@ -66,6 +66,22 @@ function addRoutes(path, routes, registeredRoutes, callback, parent) {
     registeredRoutes[pagePath] = Component;
 
     callback(pagePath, async (state, next) => {
+      if(pagePath === "error"){
+        if(state.statusCode === 404) {
+          return {
+            name: "Page404",
+            params: undefined,
+            renderer: "Page404"
+          }
+        }
+        else {
+          return {
+            name: "Page404",
+            params: undefined,
+            renderer: "Page500"
+          }
+        }
+      }
       return Component;
     });
   });
