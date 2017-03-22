@@ -89,7 +89,7 @@ function addRoutes(path, routes, registeredRoutes, callback, parent) {
 
 function ref(name, params) {
   const routes = params.routes;
-
+  const routeParams = params.params || params;
   let routesClone = {...routes};
   let routesMap = {};
   Object.keys(routesClone).forEach((k) => {
@@ -116,8 +116,9 @@ function ref(name, params) {
       }
       else {
         Object.keys(item.params).forEach(param => {
-          if(item.params[param] === params.params[param]){
-            mask = item.url
+          if(item.params[param] === routeParams[param]){
+            mask = item.url;
+            return
           }
         })
       }
