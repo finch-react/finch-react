@@ -4,7 +4,7 @@ function transformStyles(e, styles, i) {
   if (Array.isArray(e)) {
     return e.map((e, i) => transformStyles(e, styles, i));
   }
-  if (!(typeof e == "object")) {
+  if (typeof e !== "object" || e === null) {
     return e;
   }
   let children = e.props.children;
@@ -23,13 +23,19 @@ function transformStyles(e, styles, i) {
     .map(name => (styles.locals && styles.locals[name]) ? styles.locals[name] : name)
     .join(' ');
 
-  return React.cloneElement(e,
-    {
-      key: i,
-      className: className
-    },
-    children
-  );
+  try {
+    return React.cloneElement(e,
+      {
+        key: i,
+        className: className
+      },
+      children
+    );
+  }
+  catch(err) {
+    console.log("React.cloneElement Error: ", err);
+    return null
+  }
 }
 
 export default class StyledComponent extends Component {
