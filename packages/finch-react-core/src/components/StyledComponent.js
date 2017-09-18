@@ -26,7 +26,7 @@ function transformStyles(e, styles, i) {
   try {
     return React.cloneElement(e,
       {
-        key: i,
+        key: e.key !== null ? e.key : i,
         className: className
       },
       children
